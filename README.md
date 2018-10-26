@@ -23,7 +23,7 @@ $ python3 -m veracode.configure
 
 ```python
 In [1]: from veracode import SDK                                                                     
-In [2]: result = SDK.results.SummaryReport(2412498)
+In [2]: result = SDK.results.SummaryReport(build_id=2412498) # use a valid id for your app.
 In [3]: print(result.flaws_not_mitigated)                                                            
 161
 
