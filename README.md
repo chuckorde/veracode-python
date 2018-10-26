@@ -2,7 +2,7 @@
 
 This is a work in progress.  It currently only supports the [Results API](https://help.veracode.com/reader/LMv_dtSHyb7iIxAQznC~9w/WgCXPStuSb3isrDrHlmV9Q). New modules will be added as time permits.
 
-Documentation, test, and a proper setup comming soon. For now read the source, or use your tab key 🤪.
+Test, and a proper setup comming soon. For now read the source, or use your tab key 🤪.
 
 ## Install
 
