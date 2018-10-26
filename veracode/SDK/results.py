@@ -44,7 +44,7 @@ class GetAppBuilds(Base):
                       'include_in_progress':include_in_progress})
 
 
-class GetAppBuilds(Base):
+class ThirdPartyReportPDF(Base):
     def __init__(self, build_id):
         super(ThirdPartyReportPDF, self).__init__('ThirdPartyReportPDF',
                 {'build_id': build_id})
