@@ -1,4 +1,6 @@
 import requests
+import json
+import os
 from veracode.API.exceptions import *
 
 
@@ -9,11 +11,15 @@ class REST(object):
             self.data = data
 
     def __init__(self, end_point, api_version, username=None, password=None):
-        self.__username = 'verainternal_ctrautwein'
-        self.__password = 'Tay103105!'
-
-        if not (self.__username and self.__password):
-            # if not config...
+        self.__username = None
+        self.__password = None
+        try:
+            conf = json.load(open(
+                os.path.expanduser('~/.veracode/config.json')))
+            self.__username = conf.get('username')
+            self.__password = conf.get('password')
+        
+        except FileNotFoundError as e:
             raise VeracodeConfigError ((
                 'You must configure analysiscenter credentials before using'
                 ' the veracode API module.\n\n'
