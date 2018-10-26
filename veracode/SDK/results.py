@@ -1,25 +1,35 @@
-from veracode.SDK.core import BaseReport, BasePDF
+from veracode.SDK.core import Base, BasePDF
 
-class SummaryReport(BaseReport):
+class SummaryReport(Base):
     def __init__(self, build_id):
-        super(SummaryReport, self).__init__('SummaryReport',
-                {'build_id': build_id})
+        super(SummaryReport, self).__init__(
+                module='results', 
+                cls='SummaryReport', 
+                fn='build',
+                args={'build_id': build_id})
 
-class DetailedReport(BaseReport):
+class DetailedReport(Base):
     def __init__(self, build_id):
-        super(DetailedReport, self).__init__('DetailedReport',
-                {'build_id': build_id})
+        super(DetailedReport, self).__init__(
+                module='results', 
+                cls='DetailedReport',
+                fn='build', 
+                args={'build_id': build_id})
 
-class GetAccountCustomFieldList(BaseReport):
+class GetAccountCustomFieldList(Base):
     def __init__(self):
         super(GetAccountCustomFieldList, self).__init__(
-                'GetAccountCustomFieldList', fn='get')
+                module='results', 
+                cls='GetAccountCustomFieldList',
+                fn='get')
 
-class GetCallStacks(BaseReport):
+class GetCallStacks(Base):
     def __init__(self, build_id, flaw_id):
         super(GetCallStacks, self).__init__(
-                'GetCallStacks',
-                {'build_id':build_id, 'flaw_id':flaw_id}, fn='get')
+                module='results', 
+                cls='GetCallStacks', 
+                fn='get',
+                args={'build_id':build_id, 'flaw_id':flaw_id})
 
 # PDF reports
 class SummaryReportPDF(BasePDF):

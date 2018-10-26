@@ -31,12 +31,12 @@ class Parser(object):
             return [self._objectify(o) for o in obj]
         return obj
 
-class BaseReport(Parser):
-    def __init__(self, report, args=None, fn='build'):
+class Base(Parser):
+    def __init__(self, module, cls, fn, args=None):
         if args:
-            res = getattr(getattr(API.results, report),fn)(**args)
+            res = getattr(getattr(getattr(API, module),cls),fn)(**args)
         else:
-            res = getattr(getattr(API.results, report),fn)()
+            res = getattr(getattr(getattr(API, module),cls),fn)()
 
         self.data = res.data
         self.status_code = res.status_code
@@ -57,8 +57,8 @@ class BaseReport(Parser):
             setattr(self, k, getattr(getattr(data, root), k))
 
 class BasePDF(object):
-    def __init__(self, report, build_id):
-        res = getattr(API.results, report).build(build_id)
+    def __init__(self, module, build_id):
+        res = getattr(API.results, module).build(build_id)
         self.pdf = res.data
         self.status_code = res.status_code
 
