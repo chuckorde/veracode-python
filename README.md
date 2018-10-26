@@ -1,8 +1,8 @@
 # Veracode SDK / API 
 
-This is a work in progress.  It currently only supports the [Results API](https://help.veracode.com/reader/LMv_dtSHyb7iIxAQznC~9w/WgCXPStuSb3isrDrHlmV9Q). New modules will be added as time permits.
+This is a work in progress.  It currently only supports the [Results API](https://help.veracode.com/reader/LMv_dtSHyb7iIxAQznC~9w/WgCXPStuSb3isrDrHlmV9Q) and partial support for the [Upload API](https://help.veracode.com/reader/LMv_dtSHyb7iIxAQznC~9w/qUW0fV37Fd~NHav8afNqMg). New modules will be added as time permits.
 
-Test, and a proper setup comming soon. For now read the source, or use your tab key 🤪.
+Tests and a proper setup comming soon. For now read the docs, source, or use your tab key 🤪.
 
 ## Install
 
