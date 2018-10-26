@@ -16,7 +16,7 @@ $ export PYTHONPATH=${PYTHONPATH}:$(pwd)
 
 ## Configuration
 ```bash
-$ python3 -m veracode.config
+$ python3 -m veracode.configure
 ```
 
 ## Usage
