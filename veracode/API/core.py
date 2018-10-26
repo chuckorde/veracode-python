@@ -6,9 +6,10 @@ from veracode.API.exceptions import *
 
 class REST(object):
     class response:
-        def __init__(self, status_code, data):
+        def __init__(self, status_code, data, res):
             self.status_code = status_code
             self.data = data
+            self.res = res
 
     def __init__(self, end_point, api_version):
         self.__username = None
@@ -34,13 +35,13 @@ class REST(object):
         res = requests.get(
             self.__server, auth=(self.__username, self.__password), 
             params=query)
-        return self.response(res.status_code, getattr(res, format))
+        return self.response(res.status_code, getattr(res, format), res)
 
     def POST(self, data):
         res = requests.post(
             self.__server, auth=(self.__username, self.___password), 
             data=data)
-        return self.response(res.status_code, getattr(res, format))
+        return self.response(res.status_code, getattr(res, format), res)
 
     def PUT(self):
         raise VeracodeNotImplemented('PUT not implemented.')

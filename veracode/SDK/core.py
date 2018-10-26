@@ -40,11 +40,12 @@ class BaseReport(Parser):
 
         self.data = res.data
         self.status_code = res.status_code
+        self.__res = res.res
         self._update_properties()
 
     def _update_properties(self):
         if self.status_code != 200:
-            raise Exception(self.data)
+            self.__res.raise_for_status()
 
         data = self._objectify(self._parse_xml(self.data))
         xml = etree.XML(bytes(self.data, 'utf-8'))
