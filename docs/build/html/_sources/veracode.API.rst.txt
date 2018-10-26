@@ -1,0 +1,38 @@
+veracode.API package
+====================
+
+Submodules
+----------
+
+veracode.API.core module
+------------------------
+
+.. automodule:: veracode.API.core
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+veracode.API.exceptions module
+------------------------------
+
+.. automodule:: veracode.API.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+veracode.API.results module
+---------------------------
+
+.. automodule:: veracode.API.results
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: veracode.API
+    :members:
+    :undoc-members:
+    :show-inheritance:

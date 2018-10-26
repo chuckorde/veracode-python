@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>veracode.SDK package &mdash; Veracode Python SDK 0.001 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Veracode Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">veracode.SDK package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-veracode.SDK.core">veracode.SDK.core module</a></li>
+<li><a class="reference internal" href="#module-veracode.SDK.exceptions">veracode.SDK.exceptions module</a></li>
+<li><a class="reference internal" href="#module-veracode.SDK.results">veracode.SDK.results module</a></li>
+<li><a class="reference internal" href="#module-veracode.SDK">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Veracode Python SDK</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>veracode.SDK package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/veracode.SDK.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="veracode-sdk-package">
+<h1>veracode.SDK package<a class="headerlink" href="#veracode-sdk-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-veracode.SDK.core">
+<span id="veracode-sdk-core-module"></span><h2>veracode.SDK.core module<a class="headerlink" href="#module-veracode.SDK.core" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="veracode.SDK.core.BasePDF">
+<em class="property">class </em><code class="descclassname">veracode.SDK.core.</code><code class="descname">BasePDF</code><span class="sig-paren">(</span><em>report</em>, <em>build_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.core.BasePDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="veracode.SDK.core.BasePDF.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.core.BasePDF.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.core.BaseReport">
+<em class="property">class </em><code class="descclassname">veracode.SDK.core.</code><code class="descname">BaseReport</code><span class="sig-paren">(</span><em>report</em>, <em>args=None</em>, <em>fn='build'</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.core.BaseReport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.SDK.core.Parser" title="veracode.SDK.core.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.SDK.core.Parser</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.core.Parser">
+<em class="property">class </em><code class="descclassname">veracode.SDK.core.</code><code class="descname">Parser</code><a class="headerlink" href="#veracode.SDK.core.Parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.core.Struct">
+<em class="property">class </em><code class="descclassname">veracode.SDK.core.</code><code class="descname">Struct</code><span class="sig-paren">(</span><em>attrs</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.core.Struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-veracode.SDK.exceptions">
+<span id="veracode-sdk-exceptions-module"></span><h2>veracode.SDK.exceptions module<a class="headerlink" href="#module-veracode.SDK.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="veracode.SDK.exceptions.VeracodeInvalidArgumentError">
+<em class="property">exception </em><code class="descclassname">veracode.SDK.exceptions.</code><code class="descname">VeracodeInvalidArgumentError</code><a class="headerlink" href="#veracode.SDK.exceptions.VeracodeInvalidArgumentError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-veracode.SDK.results">
+<span id="veracode-sdk-results-module"></span><h2>veracode.SDK.results module<a class="headerlink" href="#module-veracode.SDK.results" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="veracode.SDK.results.DetailedReport">
+<em class="property">class </em><code class="descclassname">veracode.SDK.results.</code><code class="descname">DetailedReport</code><span class="sig-paren">(</span><em>build_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.results.DetailedReport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.SDK.core.BaseReport" title="veracode.SDK.core.BaseReport"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.SDK.core.BaseReport</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.results.DetailedReportPDF">
+<em class="property">class </em><code class="descclassname">veracode.SDK.results.</code><code class="descname">DetailedReportPDF</code><span class="sig-paren">(</span><em>build_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.results.DetailedReportPDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.SDK.core.BasePDF" title="veracode.SDK.core.BasePDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.SDK.core.BasePDF</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.results.GetAccountCustomFieldList">
+<em class="property">class </em><code class="descclassname">veracode.SDK.results.</code><code class="descname">GetAccountCustomFieldList</code><a class="headerlink" href="#veracode.SDK.results.GetAccountCustomFieldList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.SDK.core.BaseReport" title="veracode.SDK.core.BaseReport"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.SDK.core.BaseReport</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.results.GetCallStacks">
+<em class="property">class </em><code class="descclassname">veracode.SDK.results.</code><code class="descname">GetCallStacks</code><span class="sig-paren">(</span><em>build_id</em>, <em>flaw_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.results.GetCallStacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.SDK.core.BaseReport" title="veracode.SDK.core.BaseReport"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.SDK.core.BaseReport</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.results.SummaryReport">
+<em class="property">class </em><code class="descclassname">veracode.SDK.results.</code><code class="descname">SummaryReport</code><span class="sig-paren">(</span><em>build_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.results.SummaryReport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.SDK.core.BaseReport" title="veracode.SDK.core.BaseReport"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.SDK.core.BaseReport</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.results.SummaryReportPDF">
+<em class="property">class </em><code class="descclassname">veracode.SDK.results.</code><code class="descname">SummaryReportPDF</code><span class="sig-paren">(</span><em>build_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.results.SummaryReportPDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.SDK.core.BasePDF" title="veracode.SDK.core.BasePDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.SDK.core.BasePDF</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.SDK.results.ThirdPartyReportPDF">
+<em class="property">class </em><code class="descclassname">veracode.SDK.results.</code><code class="descname">ThirdPartyReportPDF</code><span class="sig-paren">(</span><em>build_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.SDK.results.ThirdPartyReportPDF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.SDK.core.BasePDF" title="veracode.SDK.core.BasePDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.SDK.core.BasePDF</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-veracode.SDK">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-veracode.SDK" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, corde@veracode.com
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
