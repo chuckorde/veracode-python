@@ -1,0 +1,2 @@
+class VeracodeInvalidArgumentError(Exception):
+    pass
