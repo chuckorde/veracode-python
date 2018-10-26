@@ -83,6 +83,7 @@
 <li><a class="reference internal" href="#module-veracode.API.core">veracode.API.core module</a></li>
 <li><a class="reference internal" href="#module-veracode.API.exceptions">veracode.API.exceptions module</a></li>
 <li><a class="reference internal" href="#module-veracode.API.results">veracode.API.results module</a></li>
+<li><a class="reference internal" href="#module-veracode.API.upload">veracode.API.upload module</a></li>
 <li><a class="reference internal" href="#module-veracode.API">Module contents</a></li>
 </ul>
 </li>
@@ -253,7 +254,7 @@
 
 <dl class="class">
 <dt id="veracode.API.results.GetAppBuilds">
-<em class="property">class </em><code class="descclassname">veracode.API.results.</code><code class="descname">GetAppBuilds</code><a class="headerlink" href="#veracode.API.results.GetAppBuilds" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">veracode.API.results.</code><code class="descname">GetAppBuilds</code><span class="sig-paren">(</span><em>report_changed_since=None</em>, <em>only_latest=None</em>, <em>include_in_progress=None</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.results.GetAppBuilds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
 <dl class="classmethod">
 <dt id="veracode.API.results.GetAppBuilds.get">
@@ -302,6 +303,97 @@
 <dl class="classmethod">
 <dt id="veracode.API.results.ThirdPartyReportPDF.build">
 <em class="property">classmethod </em><code class="descname">build</code><span class="sig-paren">(</span><em>build_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.results.ThirdPartyReportPDF.build" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-veracode.API.upload">
+<span id="veracode-api-upload-module"></span><h2>veracode.API.upload module<a class="headerlink" href="#module-veracode.API.upload" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="veracode.API.upload.GetAppInfo">
+<em class="property">class </em><code class="descclassname">veracode.API.upload.</code><code class="descname">GetAppInfo</code><a class="headerlink" href="#veracode.API.upload.GetAppInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
+<dl class="classmethod">
+<dt id="veracode.API.upload.GetAppInfo.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>app_id</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.upload.GetAppInfo.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.API.upload.GetAppList">
+<em class="property">class </em><code class="descclassname">veracode.API.upload.</code><code class="descname">GetAppList</code><a class="headerlink" href="#veracode.API.upload.GetAppList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
+<dl class="classmethod">
+<dt id="veracode.API.upload.GetAppList.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>include_user_info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.upload.GetAppList.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.API.upload.GetBuildInfo">
+<em class="property">class </em><code class="descclassname">veracode.API.upload.</code><code class="descname">GetBuildInfo</code><a class="headerlink" href="#veracode.API.upload.GetBuildInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
+<dl class="classmethod">
+<dt id="veracode.API.upload.GetBuildInfo.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>app_id</em>, <em>build_id=None</em>, <em>sandbox_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.upload.GetBuildInfo.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.API.upload.GetBuildList">
+<em class="property">class </em><code class="descclassname">veracode.API.upload.</code><code class="descname">GetBuildList</code><a class="headerlink" href="#veracode.API.upload.GetBuildList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
+<dl class="classmethod">
+<dt id="veracode.API.upload.GetBuildList.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>app_id</em>, <em>sandbox_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.upload.GetBuildList.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.API.upload.GetFileList">
+<em class="property">class </em><code class="descclassname">veracode.API.upload.</code><code class="descname">GetFileList</code><a class="headerlink" href="#veracode.API.upload.GetFileList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
+<dl class="classmethod">
+<dt id="veracode.API.upload.GetFileList.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>app_id</em>, <em>build_id=None</em>, <em>sandbox_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.upload.GetFileList.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.API.upload.GetPolicyList">
+<em class="property">class </em><code class="descclassname">veracode.API.upload.</code><code class="descname">GetPolicyList</code><a class="headerlink" href="#veracode.API.upload.GetPolicyList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
+<dl class="classmethod">
+<dt id="veracode.API.upload.GetPolicyList.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>app_id</em>, <em>build_id=None</em>, <em>sandbox_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.upload.GetPolicyList.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.API.upload.GetPreScanResults">
+<em class="property">class </em><code class="descclassname">veracode.API.upload.</code><code class="descname">GetPreScanResults</code><a class="headerlink" href="#veracode.API.upload.GetPreScanResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
+<dl class="classmethod">
+<dt id="veracode.API.upload.GetPreScanResults.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>app_id</em>, <em>build_id=None</em>, <em>sandbox_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.upload.GetPreScanResults.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="veracode.API.upload.GetVendorList">
+<em class="property">class </em><code class="descclassname">veracode.API.upload.</code><code class="descname">GetVendorList</code><a class="headerlink" href="#veracode.API.upload.GetVendorList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#veracode.API.core.REST" title="veracode.API.core.REST"><code class="xref py py-class docutils literal notranslate"><span class="pre">veracode.API.core.REST</span></code></a></p>
+<dl class="classmethod">
+<dt id="veracode.API.upload.GetVendorList.get">
+<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>app_id</em>, <em>file_id=None</em>, <em>sandbox_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#veracode.API.upload.GetVendorList.get" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

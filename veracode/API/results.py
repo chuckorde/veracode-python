@@ -55,12 +55,16 @@ class GetCallStacks(REST): # UNTESTED
 
 
 class GetAppBuilds(REST):
-    def __init__(self):
+    def __init__(self, report_changed_since=None, only_latest=None, 
+                        include_in_progress=None):
         super(GetAppBuilds, self).__init__('getappbuilds.do', 4.0)
 
     @classmethod
     def get(self):
-        return self().GET()
+        return self().GET({'report_changed_since':report_changed_since,
+                           'only_latest':only_latest,
+                           'include_in_progress':include_in_progress})
+
 
 class GetAccountCustomFieldList(REST):
     def __init__(self):
@@ -70,3 +74,5 @@ class GetAccountCustomFieldList(REST):
     @classmethod
     def get(self):
         return self().GET()
+
+

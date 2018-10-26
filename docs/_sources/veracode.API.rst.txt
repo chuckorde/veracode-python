@@ -28,6 +28,14 @@ veracode.API.results module
     :undoc-members:
     :show-inheritance:
 
+veracode.API.upload module
+--------------------------
+
+.. automodule:: veracode.API.upload
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
