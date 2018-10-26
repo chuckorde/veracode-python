@@ -1,5 +1,6 @@
 from veracode.SDK.core import Base
 
+
 class GetAppInfo(Base):
     def __init__(self, app_id):
         super(GetAppInfo, self).__init__(
