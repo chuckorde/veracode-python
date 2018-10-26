@@ -10,7 +10,7 @@ class REST(object):
             self.status_code = status_code
             self.data = data
 
-    def __init__(self, end_point, api_version, username=None, password=None):
+    def __init__(self, end_point, api_version):
         self.__username = None
         self.__password = None
         try:
