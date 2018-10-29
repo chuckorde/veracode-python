@@ -19,7 +19,7 @@ class REST(object):
                 os.path.expanduser('~/.veracode/config.json')))
             self.__username = conf.get('username')
             self.__password = conf.get('password')
-        
+
         except FileNotFoundError as e:
             raise VeracodeConfigError ((
                 'You must configure analysiscenter credentials before using'
