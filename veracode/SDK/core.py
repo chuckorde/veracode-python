@@ -12,8 +12,15 @@ class Struct(object):
                 attrs[key] = strconv.convert(attrs[key])
             except:
                 pass
+            try:
+                if key.endswith('s'):
+                    if ',' in attrs[key]:
+                        attrs[key] = attrs[key].split(',')
+                    else:
+                        attrs[key] = [attrs[key]]
+            except:
+                pass
         self.__dict__.update(**attrs)
-
 
 class Parser(object):
     @classmethod
@@ -57,8 +64,8 @@ class Base(Parser):
             setattr(self, k, getattr(getattr(data, root), k))
 
 class BasePDF(object):
-    def __init__(self, module, build_id):
-        res = getattr(API.results, module).build(build_id)
+    def __init__(self, cls, build_id):
+        res = getattr(API.results, cls).build(build_id)
         self.pdf = res.data
         self.status_code = res.status_code
 
@@ -66,3 +73,4 @@ class BasePDF(object):
         with open(path, 'wb') as f:
             f.write(self.pdf)
         return self.status_code == 200
+

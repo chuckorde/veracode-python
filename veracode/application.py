@@ -11,6 +11,7 @@ class Application(object):
         self._details = None
 
         self.app_id = self._app.app_id
+        self.app_name = self._app.app_name
 
     def _get_app_by_name(self, app_name):
         apps = SDK.upload.GetAppList()
@@ -50,3 +51,10 @@ class Application(object):
             self._details = SDK.results.DetailedReport(
                 build_id=self.build_info.build_id)
         return self._details
+
+    def update_teams(self, teams):
+        SDK.upload.UpdateApp(
+                app_name=self.app_name,
+                app_id=self.app_id,
+                teams=teams)        
+

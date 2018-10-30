@@ -44,24 +44,17 @@ class GetAppBuilds(Base):
                       'include_in_progress':include_in_progress})
 
 
-class ThirdPartyReportPDF(Base):
-    def __init__(self, build_id):
-        super(ThirdPartyReportPDF, self).__init__('ThirdPartyReportPDF',
-                {'build_id': build_id})
-
 # PDF reports
 class SummaryReportPDF(BasePDF):
     def __init__(self, build_id):
-        super(SummaryReportPDF, self).__init__('SummaryReportPDF',
-                {'build_id': build_id})
+        super(SummaryReportPDF, self).__init__('SummaryReportPDF', build_id)
 
 class DetailedReportPDF(BasePDF):
     def __init__(self, build_id):
-        super(DetailedReportPDF, self).__init__('DetailedReportPDF',
-                {'build_id': build_id})
+        super(DetailedReportPDF, self).__init__('DetailedReportPDF', build_id)
 
 class ThirdPartyReportPDF(BasePDF):
     def __init__(self, build_id):
-        super(ThirdPartyReportPDF, self).__init__('ThirdPartyReportPDF',
-                {'build_id': build_id})
+        super(ThirdPartyReportPDF, self).__init__(
+                'ThirdPartyReportPDF', build_id)
 

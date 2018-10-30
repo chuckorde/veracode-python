@@ -15,7 +15,6 @@ class GetAppInfo(REST):
 
     @classmethod
     def get(self, app_id):
-
         return self().GET({'app_id':app_id})
 
 
@@ -77,4 +76,43 @@ class GetVendorList(REST):
         return self().GET({'app_id':app_id, 'file_id':file_id,
                            'sandbox_id':sandbox_id})
 
+class UpdateApp(REST):
+    def __init__(self):
+        super(UpdateApp, self).__init__('updateapp.do', 5.0)
 
+    @classmethod
+    def update(self, app_id, app_name,
+            description=None,
+            business_criticality=None,
+            policy=None,
+            business_unit=None,
+            business_owner=None,
+            business_owner_email=None,
+            teams=None,
+            origin=None,
+            industry=None,
+            app_type=None,
+            deployment_method=None,
+            archer_app_name=None,
+            tags=None,
+            custom_field_name=None,
+            next_day_scheduling_enabled=None
+            ):
+        return self().GET({
+           'app_id':app_id, 'app_name':app_name,
+           'description':description,
+           'business_criticality':business_criticality,
+           'policy':policy,
+           'business_unit':business_unit,
+           'business_owner':business_owner,
+           'business_owner_email':business_owner_email,
+           'teams':teams,
+           'origin':origin,
+           'industry':industry,
+           'app_type':app_type,
+           'deployment_method':deployment_method,
+           'archer_app_name':archer_app_name,
+           'tags':tags,
+           'custom_field_name':custom_field_name,
+           'next_day_scheduling_enabled':next_day_scheduling_enabled
+            })
