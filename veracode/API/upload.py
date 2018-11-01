@@ -6,12 +6,12 @@ class BeginPreScan(REST):
         super(BeginPreScan, self).__init__('beginprescan.do', 5.0)
 
     @classmethod
-    def begin(self, app_id, 
-            auto_scan=None, 
-            sandbox_id=None, 
+    def begin(self, app_id,
+            auto_scan=None,
+            sandbox_id=None,
             scan_all_nonfatal_top_level_modules=None):
         return self().GET({
-            'app_id':app_id, 
+            'app_id':app_id,
             'auto_scan':auto_scan,
             'sandbox_id':sandbox_id,
             'scan_all_nonfatal_top_level_modules': \
@@ -24,14 +24,14 @@ class BeginScan(REST):
         super(BeginScan, self).__init__('beginscan.do', 5.0)
 
     @classmethod
-    def begin(self, app_id, 
-            modules=None
+    def begin(self, app_id,
+            modules=None,
             scan_all_top_level_modules=None,
             scan_selected_modules=None,
             scan_previously_selected_modules=None,
             sandbox_id=None):
         return self().GET({
-            'app_id':app_id, 
+            'app_id':app_id,
             'modules':modules,
             'scan_all_top_level_modules':scan_all_top_level_modules,
             'scan_selected_modules':scan_selected_modules,
@@ -85,7 +85,8 @@ class CreateBuild(REST):
         super(CreateBuild, self).__init__('createbuild.do', 5.0)
 
     @classmethod
-    def create(self, app_id
+    def create(self,
+            app_id,
             version,
             platform=None,
             lifecycle_stage=None,
@@ -287,7 +288,7 @@ class UploadFile(REST):
         return self().GET({
            'app_id':app_id,
            'file':file,
-           'sandbox_id':sandbox_id
+           'sandbox_id':sandbox_id,
            'save_as':save_as
             })
 

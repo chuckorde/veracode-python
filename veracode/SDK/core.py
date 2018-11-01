@@ -1,9 +1,22 @@
 import xmltodict
 import strconv
-import json, os
+import json, os, re
+from functools import wraps
+import inspect
 from lxml import etree
+
 import veracode.API as API
 from veracode.SDK.exceptions import *
+
+def flatten_if_list(obj):
+    if isinstance(obj, list):
+        return ','.join([str(o) if obj else '' for o in obj])
+    return obj
+
+
+def function_from_class_name(s):
+    return re.sub('([a-z])([A-Z])', r'\1 \2', s).split()[::-1].pop().lower()
+
 
 class Struct(object):
     def __init__(self, attrs):
@@ -41,6 +54,7 @@ class Parser(object):
 class Base(Parser):
     def __init__(self, module, cls, fn, args=None):
         if args:
+            # do list stuff
             res = getattr(getattr(getattr(API, module),cls),fn)(**args)
         else:
             res = getattr(getattr(getattr(API, module),cls),fn)()

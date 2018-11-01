@@ -1,13 +1,18 @@
-from veracode.SDK.core import Base
+import inspect
+from veracode import SDK
+from veracode.SDK.core import Base, flatten_if_list, function_from_class_name
+# REMOVE FLATTEN
 
 
 class CreateApp(Base):
-    def __init__(self, app_name, business_criticality,
+    def __init__(self,
+                app_name,
+                business_criticality,
                 vendor_id=None,
                 policy=None,
                 business_unit=None,
                 business_owner=None,
-                buisness_owner_email=None,
+                business_owner_email=None,
                 teams=None,
                 origin=None,
                 industry=None,
@@ -19,7 +24,7 @@ class CreateApp(Base):
                 next_day_scheduling_enabled=None
                 ):
         super(CreateApp, self).__init__(
-                module='admin',
+                module=__name__.split('.').pop(),
                 cls='CreateApp',
                 fn='create',
                 args={
@@ -29,34 +34,50 @@ class CreateApp(Base):
                     'policy':policy,
                     'business_unit':business_unit,
                     'business_owner':business_owner,
-                    'buisness_owner_email':buisness_owner_email,
-                    'teams':','.join([t if teams else '' for t in teams]),
+                    'business_owner_email':buisness_owner_email,
+                    'teams':flatten_if_list(teams),
                     'origin':origin,
                     'industry':industry,
                     'app_type':app_type,
                     'deployment_method':deployment_method,
                     'web_application':web_application,
                     'archer_app_name':archer_app_name,
-                    'tags':','.join([t if tags else '' for t in tags]),
+                    'tags':flatten_if_list(tags),
                     'next_day_scheduling_enabled':next_day_scheduling_enabled
                 })
 
 class GetAppInfo(Base):
     def __init__(self, app_id):
-        super(GetAppInfo, self).__init__(
-                module='upload',
-                cls='GetAppInfo',
-                fn='get',
-                args={'app_id':app_id})
+        self._module = __name__.split('.').pop()
+        self._cls = self.__class__.__name__
+        self._fn = function_from_class_name(self.__class__.__name__)
+        self._obj = getattr(getattr(SDK, self._module), self._cls)
+        _,_,_,args = inspect.getargvalues(inspect.currentframe()) 
+        args = {k:v for (k,v) in args.items() 
+                if (k != 'self' and k != '__class__')}
+        print(args)
+        super(self._obj, self).__init__(
+                module=self._module,
+                cls=self._cls,
+                fn=self._fn,
+                args=args)
 
 
 class GetAppList(Base):
     def __init__(self, include_user_info=None):
-        super(GetAppList, self).__init__(
-                module='upload',
-                cls='GetAppList',
-                fn='get',
-                args={'include_user_info': include_user_info})
+        self._module = __name__.split('.').pop()
+        self._cls = self.__class__.__name__
+        self._fn = function_from_class_name(self.__class__.__name__)
+        self._obj = getattr(getattr(SDK, self._module), self._cls)
+        _,_,_,args = inspect.getargvalues(inspect.currentframe()) 
+        args = {k:v for (k,v) in args.items() 
+                if (k != 'self' and k != '__class__')}
+
+        super(self._obj, self).__init__(
+                module=self._module,
+                cls=self._cls,
+                fn=self._fn,
+                args=args)
 
 
 class GetBuildInfo(Base):
@@ -147,7 +168,7 @@ class UpdateApp(Base):
                    'business_unit':business_unit,
                    'business_owner':business_owner,
                    'business_owner_email':business_owner_email,
-                   'teams':','.join([t if teams else '' for t in teams]),
+                   'teams':flatten_if_list(teams),
                    'origin':origin,
                    'industry':industry,
                    'app_type':app_type,
