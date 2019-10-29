@@ -16,7 +16,7 @@ class REST(object):
         self.__password = None
         try:
             conf = json.load(open(
-                os.path.expanduser('~/.veracode/config.json')))
+                os.path.expanduser('~/.veracode/api-credentials.json')))
             self.__username = conf.get('username')
             self.__password = conf.get('password')
 
@@ -33,13 +33,13 @@ class REST(object):
 
     def GET(self, query=None, format='text'):
         res = requests.get(
-            self.__server, auth=(self.__username, self.__password), 
+            self.__server, auth=(self.__username, self.__password),
             params=query)
         return self.response(res.status_code, getattr(res, format), res)
 
     def POST(self, data):
         res = requests.post(
-            self.__server, auth=(self.__username, self.___password), 
+            self.__server, auth=(self.__username, self.__password),
             data=data)
         return self.response(res.status_code, getattr(res, format), res)
 

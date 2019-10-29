@@ -1,5 +1,5 @@
 import sys
-import os
+import os, stat
 import json
 import getpass
 
@@ -19,9 +19,11 @@ def make_config():
             os.mkdir(config_dir)
 
     config = {'username':username, 'password':password}
-    json.dump(config, open(os.path.join(config_dir, 'config.json'), 'w'))
+    config_file = os.path.join(config_dir, 'api-credentials.json')
+    json.dump(config, open(config_file, 'w'))
+    # race condition, any sugestions?
+    os.chmod(config_file, stat.S_IREAD|stat.S_IWRITE)
     sys.exit('config created successfully')
-    
 
 if __name__ == '__main__':
     make_config()

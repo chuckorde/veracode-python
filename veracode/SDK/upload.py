@@ -1,10 +1,49 @@
 import inspect
 from veracode import SDK
-from veracode.SDK.core import Base, flatten_if_list, function_from_class_name
-# REMOVE FLATTEN
 
 
-class CreateApp(Base):
+class BeginPreScan(SDK.core.Base):
+    def __init__(self,
+                app_id,
+                auto_scan=None,
+                sandbox_id=None,
+                scan_all_nonfatal_top_level_modules=None
+                ):
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+
+
+class BeginScan(SDK.core.Base):
+    def __init__(self,
+                app_id,
+                scan_all_top_level_modules=None,
+                scan_selected_modules=None,
+                scan_previously_selected_modules=None,
+                sandbox_id=None
+                ):
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+
+
+class BeginScan(SDK.core.Base):
+    def __init__(self,
+                app_id,
+                scan_all_top_level_modules=None,
+                scan_selected_modules=None,
+                scan_previously_selected_modules=None,
+                sandbox_id=None
+                ):
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+
+
+class CreateApp(SDK.core.Base):
     def __init__(self,
                 app_name,
                 business_criticality,
@@ -23,131 +62,131 @@ class CreateApp(Base):
                 tags=None,
                 next_day_scheduling_enabled=None
                 ):
-        super(CreateApp, self).__init__(
-                module=__name__.split('.').pop(),
-                cls='CreateApp',
-                fn='create',
-                args={
-                    'app_name':app_name,
-                    'business_criticality':business_criticality,
-                    'vendor_id':vendor_id,
-                    'policy':policy,
-                    'business_unit':business_unit,
-                    'business_owner':business_owner,
-                    'business_owner_email':buisness_owner_email,
-                    'teams':flatten_if_list(teams),
-                    'origin':origin,
-                    'industry':industry,
-                    'app_type':app_type,
-                    'deployment_method':deployment_method,
-                    'web_application':web_application,
-                    'archer_app_name':archer_app_name,
-                    'tags':flatten_if_list(tags),
-                    'next_day_scheduling_enabled':next_day_scheduling_enabled
-                })
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
 
-class GetAppInfo(Base):
+
+class CreateBuild(SDK.core.Base):
+    def __init__(self,
+                app_id,
+                version,
+                # platform : deprecated
+                lifecycle_stage=None,
+                launch_stage=None,
+                sandbox_id=None,
+                legacy_scan_engine=None
+                ):
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+
+
+class DeleteApp(SDK.core.Base):
     def __init__(self, app_id):
-        self._module = __name__.split('.').pop()
-        self._cls = self.__class__.__name__
-        self._fn = function_from_class_name(self.__class__.__name__)
-        self._obj = getattr(getattr(SDK, self._module), self._cls)
-        _,_,_,args = inspect.getargvalues(inspect.currentframe()) 
-        args = {k:v for (k,v) in args.items() 
-                if (k != 'self' and k != '__class__')}
-        print(args)
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
         super(self._obj, self).__init__(
-                module=self._module,
-                cls=self._cls,
-                fn=self._fn,
-                args=args)
+                self._module, self._cls, self._fn, self._args)
 
 
-class GetAppList(Base):
+class DeleteBuild(SDK.core.Base):
+    def __init__(self,
+                app_id,
+                sandbox_id=None,
+                ):
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+
+
+
+class GetAppInfo(SDK.core.Base):
+    def __init__(self, app_id):
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+
+class GetAppList(SDK.core.Base):
     def __init__(self, include_user_info=None):
-        self._module = __name__.split('.').pop()
-        self._cls = self.__class__.__name__
-        self._fn = function_from_class_name(self.__class__.__name__)
-        self._obj = getattr(getattr(SDK, self._module), self._cls)
-        _,_,_,args = inspect.getargvalues(inspect.currentframe()) 
-        args = {k:v for (k,v) in args.items() 
-                if (k != 'self' and k != '__class__')}
-
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
         super(self._obj, self).__init__(
-                module=self._module,
-                cls=self._cls,
-                fn=self._fn,
-                args=args)
+                self._module, self._cls, self._fn, self._args)
 
 
-class GetBuildInfo(Base):
+class GetBuildInfo(SDK.core.Base):
     def __init__(self, app_id, build_id=None, sandbox_id=None):
-        super(GetBuildInfo, self).__init__(
-                module='upload',
-                cls='GetBuildInfo',
-                fn='get',
-                args={'app_id':app_id, 'build_id':build_id,
-                      'sandbox_id':sandbox_id})
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
 
 
-class GetBuildList(Base):
+class GetBuildList(SDK.core.Base):
     def __init__(self, app_id, sandbox_id=None):
-        super(GetBuildList, self).__init__(
-                module='upload',
-                cls='GetBuildList',
-                fn='get',
-                args={'app_id':app_id, 'sandbox_id':sandbox_id})
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
 
 
-class GetFileList(Base):
+class GetFileList(SDK.core.Base):
     def __init__(self, app_id, build_id=None, sandbox_id=None):
-        super(GetFileList, self).__init__(
-                module='upload',
-                cls='GetFileList',
-                fn='get',
-                args={'app_id':app_id, 'build_id':build_id,
-                      'sandbox_id':sandbox_id})
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
 
 
-class GetPolicyList(Base):
+class GetPolicyList(SDK.core.Base):
     def __init__(self, app_id, build_id=None, sandbox_id=None):
-        super(GetPolicyList, self).__init__(
-                module='upload',
-                cls='GetPolicyList',
-                fn='get',
-                args={'app_id':app_id, 'build_id':build_id,
-                      'sandbox_id':sandbox_id})
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
 
 
-class GetPreScanResults(Base):
+class GetPreScanResults(SDK.core.Base):
     def __init__(self, app_id, build_id=None, sandbox_id=None):
-        super(GetPreScanResults, self).__init__(
-                module='upload',
-                cls='GetPreScanResults',
-                fn='get',
-                args={'app_id':app_id, 'build_id':build_id,
-                      'sandbox_id':sandbox_id})
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
 
 
-class GetVendorList(Base):
+
+class GetVendorList(SDK.core.Base):
     def __init__(self, app_id, file_id, sandbox_id=None):
-        super(GetPreScanResults, self).__init__(
-                module='upload',
-                cls='GetVendorList',
-                fn='get',
-                args={'app_id':app_id, 'file_id':file_ide,
-                      'sandbox_id':sandbox_id})
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
 
-class UpdateApp(Base):
-    def __init__(self, 
-            app_id, app_name,
+
+class RemoveFile(SDK.core.Base):
+    def __init__(self, app_id, file_id, sandbox_id=None):
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+
+
+class UpdateApp(SDK.core.Base):
+    def __init__(self,
+            app_id,
+            app_name,
             description=None,
             business_criticality=None,
             policy=None,
             business_unit=None,
             business_owner=None,
             business_owner_email=None,
-            teams=[],
+            teams=None,
             origin=None,
             industry=None,
             app_type=None,
@@ -156,25 +195,22 @@ class UpdateApp(Base):
             tags=None,
             custom_field_name=None,
             next_day_scheduling_enabled=None):
-        super(UpdateApp, self).__init__(
-                module='upload',
-                cls='UpdateApp',
-                fn='update',
-                args={
-                   'app_id':app_id, 'app_name':app_name,
-                   'description':description,
-                   'business_criticality':business_criticality,
-                   'policy':policy,
-                   'business_unit':business_unit,
-                   'business_owner':business_owner,
-                   'business_owner_email':business_owner_email,
-                   'teams':flatten_if_list(teams),
-                   'origin':origin,
-                   'industry':industry,
-                   'app_type':app_type,
-                   'deployment_method':deployment_method,
-                   'archer_app_name':archer_app_name,
-                   'tags':tags,
-                   'custom_field_name':custom_field_name,
-                   'next_day_scheduling_enabled':next_day_scheduling_enabled
-                     })
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+
+class UpdateBuild(SDK.core.Base):
+    def __init__(self,
+            app_id,
+            build_id,
+            version,
+            lifecycle_stage=None,
+            launch_date=None,
+            sandbox_id=None
+            ):
+        self._module, self._cls, self._fn, self._obj, self._args = self.reflect(
+                self, __name__, inspect.currentframe())
+        super(self._obj, self).__init__(
+                self._module, self._cls, self._fn, self._args)
+

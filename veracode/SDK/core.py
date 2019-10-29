@@ -1,12 +1,14 @@
 import xmltodict
 import strconv
 import json, os, re
-from functools import wraps
 import inspect
+from functools import wraps
 from lxml import etree
 
+import veracode
 import veracode.API as API
 from veracode.SDK.exceptions import *
+
 
 def flatten_if_list(obj):
     if isinstance(obj, list):
@@ -76,6 +78,19 @@ class Base(Parser):
 
         for k in getattr(data, root).__dict__.keys():
             setattr(self, k, getattr(getattr(data, root), k))
+
+    def reflect(self, obj, name, frame):
+        module = name.split('.').pop()
+        cls = obj.__class__.__name__
+        fn = function_from_class_name(obj.__class__.__name__)
+        obj = getattr(getattr(veracode.SDK, module), cls)
+        _,_,_,args = inspect.getargvalues(frame) 
+        args = {
+                k:v for (k,v) in args.items() 
+                if (k != 'self' and k != '__class__' and not k.startswith('_'))
+                }
+        return (module, cls, fn, obj, args)
+
 
 class BasePDF(object):
     def __init__(self, cls, build_id):
