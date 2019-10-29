@@ -5,6 +5,9 @@ from lxml import etree
 import veracode.API as API
 from veracode.SDK.exceptions import *
 
+# I don't love the layout of this API.
+# There's a lot of cruft here to get it into a useble form. 
+
 class Struct(object):
     def __init__(self, attrs):
         for key in attrs.keys():
@@ -40,6 +43,7 @@ class Parser(object):
 
 class Base(Parser):
     def __init__(self, module, cls, fn, args=None):
+        # TODO: is this if required?
         if args:
             res = getattr(getattr(getattr(API, module),cls),fn)(**args)
         else:

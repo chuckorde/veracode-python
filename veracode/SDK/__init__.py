@@ -1,1 +1,2 @@
-from . import core, results, upload, admin
+from . import core, upload
+# from . import core, results, upload, admin
