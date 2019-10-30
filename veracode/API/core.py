@@ -70,6 +70,7 @@ class REST(object):
 
     def __prepared_request(self, method, query, files=None):
         logger.debug('{}, {}, STARTED'.format(self.__end_point, query))
+        
         session = requests.Session()
         session.mount(self.__server, HTTPAdapter(max_retries=3))
         request = requests.Request(method, self.__server, params=query)
@@ -77,6 +78,7 @@ class REST(object):
         prepared_request.headers['Authorization'] = self.__veracode_hmac(
             urlparse(self.__server).hostname, prepared_request.path_url, method)
         res = session.send(prepared_request)
+        
         logger.debug('{}, {}, COMPLETED'.format(self.__end_point, query))
         logger.info('request URL: {}'.format(res.request.path_url))
         

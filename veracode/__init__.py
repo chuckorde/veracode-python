@@ -1,2 +1,1 @@
-import veracode.API
-import veracode.SDK
+from . import SDK, API
