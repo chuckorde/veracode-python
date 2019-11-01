@@ -7,3 +7,6 @@ class VeracodeApplicationBuildError(Exception):
 
 class VeracodeSandboxError(Exception):
     pass
+
+class VeracodeBuildError(Exception):
+    pass

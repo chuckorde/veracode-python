@@ -11,8 +11,8 @@ def veracode_logger(name):
     if loglevel:
         logger.setLevel(getattr(logging, loglevel))
     else:
-        logger.setLevel(logging.DEBUG)
-        #logger.setLevel(logging.NOTSET)
+        # logger.setLevel(logging.DEBUG)
+        logger.setLevel(logging.NOTSET)
 
     logger.addHandler(handler)
     return logger
