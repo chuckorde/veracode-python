@@ -100,6 +100,7 @@ veracode:
         UpdateApp:
             version: 5.0
             params:
+                app_id: True
                 app_name: True
                 business_criticality: True
                 description: False

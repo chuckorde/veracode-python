@@ -226,8 +226,9 @@ class UpdateApp(Base):
     """ class: veracode.SDK.upload.UpdateApp
     
         params: 
-			business_criticality: required
+			app_id: required
 			app_name: required
+			business_criticality: required
 			web_application: optional
 			teams: optional
 			tags: optional
@@ -248,8 +249,9 @@ class UpdateApp(Base):
         returns: A python object that represents the returned API data.
     """
     def __init__(self,
-				business_criticality,
+				app_id,
 				app_name,
+				business_criticality,
 				web_application=None,
 				teams=None,
 				tags=None,
@@ -273,8 +275,9 @@ class UpdateApp(Base):
             cls='UpdateApp',
             fn='get', 
             args={
-				'business_criticality':business_criticality,
+				'app_id':app_id,
 				'app_name':app_name,
+				'business_criticality':business_criticality,
 				'web_application':web_application,
 				'teams':teams,
 				'tags':tags,

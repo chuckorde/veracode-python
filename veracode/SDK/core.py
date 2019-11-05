@@ -3,6 +3,7 @@ import strconv
 import json, os
 from lxml import etree
 import veracode.API as API
+# from .veracode import API
 from veracode.SDK.exceptions import *
 
 # I don't love the layout of this API.

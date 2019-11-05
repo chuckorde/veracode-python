@@ -1,8 +1,7 @@
 import sys, os
 import logging
 from glob import glob
-from . import SDK, build, sandbox
-# from veracode.SDK.exceptions import *
+from veracode import SDK, build, sandbox
 from veracode.exceptions import *
 
 if sys.version_info[0] >= 3:
@@ -17,15 +16,27 @@ class Application(object):
 
     @classmethod
     def list(self):
+        """ Returns a list of applications for the current account
+
+        >>> apps = Application.list()
+        >>> isinstance(apps, list)
+        True
+        """
         apps = SDK.upload.GetAppList()
         return [app.app_name for app in apps.app]
 
 
 class NewApplication(object):
+    """ NewApplication: Not directly called
+
+    >>> app = Application()
+    >>> app
+    <Veracode Application: [Not Saved]>
+
+    >>> isinstance(app, NewApplication)
+    True
+    """
     def __init__(self):
-        """
-        >>> app = Application()
-        """
         self.name = None
         self.vendor_id = None
         self.business_criticality = None
@@ -42,19 +53,29 @@ class NewApplication(object):
         self.archer_app_name = None
         self.tags = []
         self.next_day_scheduling_enabled = None
-        # where do you set the description
+        # where do you set the description?
 
     def save(self):
-        """Returns a new instance of ExistingApplication.
+        """ Returns a new instance of ExistingApplication.
         use `app = app.save()` after setting name and business_criticality
 
         >>> app = Application()
-        >>> app.name = 'TEST_APPLICATION'
+        >>> app.name = 'NEW_APPLICATION'
         >>> app.business_criticality = 'High'
         >>> app = app.save()
+
+        # TODO: update props and check after save
+
+        >>> isinstance(app, ExistingApplication)
+        True
+
         >>> app.name
-        'TEST_APPLICATION'
+        'NEW_APPLICATION'
+        >>> app.business_criticality
+        'High'
+
         >>> app.delete()
+        True
         """
         payload = {
             'app_name': self.name,
@@ -77,8 +98,34 @@ class NewApplication(object):
         SDK.upload.CreateApp(**payload)
         return ExistingApplication(self.name)
 
+    def __repr__(self):
+        return '<Veracode Application: [Not Saved]>'
+
 
 class ExistingApplication(object):
+    """ ExistingApplication: Not directly called
+
+    >>> app = Application()
+    >>> app.name = 'EXISTING_APPLICATION'
+    >>> app.business_criticality = 'High'
+    >>> app = app.save()
+
+    >>> app = ExistingApplication('EXISTING_APPLICATION')
+    >>> app.name
+    'EXISTING_APPLICATION'
+    >>> app.business_criticality
+    'High'
+
+    # TODO: handle sandbox and builds
+
+    >>> app.delete()
+    True
+
+    >>> app = ExistingApplication('APPLICATION_DOESNT_EXIST')
+    Traceback (most recent call last):
+        ...
+    veracode.exceptions.VeracodeApplicationError: The requested application does not exist.
+    """
     def __init__(self, app_name, sandbox_name=None, build_name=None):
         self._flaws = None
         self._build = None
@@ -89,52 +136,41 @@ class ExistingApplication(object):
         self._teams = None
         self._tags = None
 
-        self._app = self._get_app_by_name(app_name)
-        self.id = self._app.app_id
-        self.name = self._app.app_name
+        self.info = self._get_app_by_name(app_name).application
+        self.id = self.info.app_id
+        self.name = self.info.app_name
+        self.teams = []
+        self.tags = []
 
         self._sandbox = self._get_sandbox_by_name(sandbox_name)
         self._build = self._get_build_by_name(build_name)
 
-        self.business_criticality = None
-        self.policy = None
-        self.business_unit = None
-        self.business_owner = None
-        self.business_owner_email = None
-        self.teams = []
-        self.origin = None
-        self.industry = None
-        self.app_type = None
-        self.deployment_method = None
-        self.archer_app_name = None
-        self.tags = []
-        self.custom_field_name = None
-        self.custom_field_value = None
-        self.next_day_scheduling_enabled = None
-
-
+        props = [
+            'business_criticality',
+            'policy',
+            'business_owner',
+            'business_owner_email',
+            'business_unit',
+            'origin',
+            'industry',
+            'app_type',
+            'deployment_method',
+            'archer_app_name',
+            'custom_field_name',
+            'custom_field_value',
+            'next_day_scheduling_enabled'
+        ]
+        for prop in props:
+            if hasattr(self.info, prop):
+                setattr(self, prop, getattr(self.info, prop))
+            else:
+                setattr(self, prop, None)
 
     def _get_app_by_name(self, app_name):
-        """
-        Private method, should not be directly called
-
-        >>> app = Application()
-        >>> app.name = 'TEST_APPLICATION'
-        >>> app.business_criticality = 'High'
-        >>> app = app.save()
-        >>> app = ExistingApplication('TEST_APPLICATION')
-        >>> app.name
-        'TEST_APPLICATION'
-
-        >>> app = ExistingApplication('APPLICATION_DOESNT_EXIST')
-        Traceback (most recent call last):
-            ...
-        veracode.exceptions.VeracodeApplicationError: The requested application does not exist.
-        """
         apps = SDK.upload.GetAppList()
         for app in apps.app:
             if app.app_name == app_name:
-                return app
+                return SDK.upload.GetAppInfo(app.app_id)
         raise VeracodeApplicationError((
             'The requested application does not exist.'))
 
@@ -168,13 +204,13 @@ class ExistingApplication(object):
             'business_unit': self.business_unit,
             'business_owner': self.business_owner,
             'business_owner_email': self.business_owner_email,
-            'teams': list(self.teams),
+            'teams': self.teams,
             'origin': self.origin,
             'industry': self.industry,
             'app_type': self.app_type,
             'deployment_method': self.deployment_method,
             'archer_app_name': self.archer_app_name,
-            'tags': list(self.tags),
+            'tags': self.tags,
             'custom_field_name': self.custom_field_name,
             'custom_field_value': self.custom_field_value,
             'next_day_scheduling_enabled': self.next_day_scheduling_enabled
@@ -182,7 +218,7 @@ class ExistingApplication(object):
         SDK.upload.UpdateApp(**payload)
 
     def delete(self):
-        SDK.upload.DeleteApp(self.id)
+        return SDK.upload.DeleteApp(self.id).status_code == 200
 
     def upload_files(self, item, sandbox=None, fn=None):
         self.sandbox = sandbox if sandbox else None
@@ -252,203 +288,4 @@ class ExistingApplication(object):
             self._build = obj
         elif isinstance(obj, basestring):
             self._build = self._get_build_by_name(obj)
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
-
-#
-#     @property
-#     def builds(self):
-#         self._builds = _Builds(self).get()
-#         if isinstance(self._builds, list):
-#             builds = self._builds
-#         else:
-#             builds = [self._builds]
-#         if len(builds) > 0:
-#             self._build = builds[0]
-#         self._builds = builds
-#         return self._builds[::-1]
-#
-#     @property
-#     def has_builds(self):
-#         return len(self.builds) > 0
-#
-#     @property
-#     def build_info(self):
-#         try:
-#             self._build_info = SDK.upload.GetBuildInfo(
-#                     self.id,
-#                     sandbox_id=self.sandbox_id,
-#                     build_id=self.build.build_id)
-#         except VeracodeInvalidArgumentError as e:
-#             raise VeracodeApplicationBuildError((
-#                 'The application does not have any builds.'))
-#         return self._build_info
-#
-#
-#     @property
-#     def application_files(self):
-#         file_list = SDK.upload.GetFileList(
-#                 app_id=self.id, sandbox_id=self.sandbox_id)
-#         if isinstance(file_list.file, list):
-#             return [f.file_name for f in file_list.file]
-#         return [file_list.file.file_name]
-#
-#     @property
-#     def summary(self):
-#         if not self._summary:
-#             if not self._build_info:
-#                 self._build = self.build_info.build
-#             self._summary = SDK.results.SummaryReport(
-#                 build_id=self.build_info.build_id)
-#         return self._summary
-#
-#     @property
-#     def details(self):
-#         if not self._details:
-#             if not self._build_info:
-#                 self._build = self.build_info.build
-#             self._details = SDK.results.DetailedReport(
-#                 build_id=self.build_info.build_id)
-#         return self._details
-#
-#     @property
-#     def teams(self):
-#         if self.has_builds:
-#             teams_list =  _AppTeams(self)
-#             if isinstance(teams_list, list):
-#                 return teams_list
-#             return [teams_list]
-#         return []
-#
-#     @teams.setter
-#     def teams(self, item):
-#         self.teams.clear()
-#         if isinstance(item, list):
-#             for i in item:
-#                 self.teams.append(i)
-#         if isinstance(item, basestring):
-#             for i in item.split(','):
-#                 self.teams.append(i)
-#
-#     @property
-#     def tags(self):
-#         tag_list = _BuildTags(self)
-#         if isinstance(tag_list, list):
-#             return tag_list
-#         return [tag_list]
-#
-#     @tags.setter
-#     def tags(self, item):
-#         self.tags.clear()
-#         if isinstance(item, list):
-#             for i in item:
-#                 self.tags.append(i)
-#         if isinstance(item, basestring):
-#             for i in item.split(','):
-#                 self.tags.append(i)
-#
-#
-# class _AppTeams(list):
-#     def __init__(self, app):
-#         super(_AppTeams, self).__init__()
-#         self.app = app
-#         self._teams = self.app.summary.teams
-#
-#     def append(self, item):
-#         self._teams.append(item)
-#
-#     def remove(self, item):
-#         self._teams.remove(item)
-#
-#     def clear(self):
-#         self._teams.clear()
-#
-#     def __iter__(self):
-#         return iter(self._teams)
-#
-#     def __str__(self):
-#         return self._teams.__str__()
-#
-#     def __nonzero__(self):
-#         if self._teams.__len__() == 0:
-#             return True
-#         return self._teams.__len__()
-#
-#     __bool__ = __nonzero__
-#
-# # move to build class
-# class _BuildTags(list):
-#     def __init__(self, app):
-#         super(_BuildTags, self).__init__()
-#         self.app = app
-#         self._tags = self.app.summary.tags
-#
-#     def append(self, item):
-#         self._tags.append(item)
-#
-#     def remove(self, item):
-#         self._tags.remove(item)
-#
-#     def clear(self):
-#         self._tags.clear()
-#
-#     def __iter__(self):
-#         return iter(self._tags)
-#
-#     def __str__(self):
-#         return self._tags.__str__()
-#
-#     def __nonzero__(self):
-#         if self._tags.__len__() == 0:
-#             return True
-#         return self._tags.__len__()
-#
-#     __bool__ = __nonzero__
-#
-# class _Builds(list):
-#     def __init__(self, app):
-#         self.app = app
-#         super(_Builds, self).__init__()
-#
-#     def get(self):
-#         builds = SDK.upload.GetBuildList(self.app.id, self.app.sandbox_id)
-#         if not hasattr(builds, 'build'):
-#             return []
-#         return builds.build
-#
-# # TODO: move to utils
-# def _get_props(obj):
-#     if isinstance(obj, list):
-#         if len(obj) > 0:
-#             obj = obj[0]
-#     return [p for p in dir(obj) if not p.startswith('_')]
-#
-# def _find(obj, val, properties):
-#     data = []
-#     def find_obj(parent, obj):
-#         if isinstance(parent, list):
-#             for child in parent:
-#                 for prop in properties:
-#                     if hasattr(child, prop):
-#                         find_obj(getattr(child, prop), obj)
-#         else:
-#             if hasattr(parent, obj):
-#                 data.append(getattr(parent, obj))
-#             for prop in properties:
-#                 if hasattr(parent, prop):
-#                     if hasattr(parent, obj):
-#                         data.append(getattr(parent, obj))
-#                     else:
-#                         find_obj(getattr(parent, prop), obj)
-#     find_obj(obj, val)
-#     flat_data = []
-#     for d in data:
-#         if isinstance(d, list):
-#             for f in d:
-#                 flat_data.append(f)
-#         else:
-#             flat_data.append(d)
-#     return flat_data
 
