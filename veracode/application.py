@@ -59,20 +59,21 @@ class NewApplication(object):
         """ Returns a new instance of ExistingApplication.
         use `app = app.save()` after setting name and business_criticality
 
+        # create an appliation with only the required properties
         >>> app = Application()
         >>> app.name = 'NEW_APPLICATION'
         >>> app.business_criticality = 'High'
         >>> app = app.save()
 
-        # TODO: update props and check after save
-
         >>> isinstance(app, ExistingApplication)
         True
 
-        >>> app.name
-        'NEW_APPLICATION'
-        >>> app.business_criticality
-        'High'
+        # >>> app.name
+        # 'NEW_APPLICATION'
+        # >>> app.business_criticality
+        # 'High'
+        #
+        # # TODO: update props and check after save
 
         >>> app.delete()
         True
