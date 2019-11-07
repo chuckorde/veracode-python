@@ -1,3 +1,5 @@
+from veracode.SDK.exceptions import *
+from veracode.API.exceptions import *
 
 class VeracodeApplicationError(Exception):
     pass

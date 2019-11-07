@@ -8,6 +8,8 @@ if sys.version_info[0] >= 3:
     basestring = str
 
 class Application(object):
+    """ Application: This is the main application class.
+    """
     def __new__(self, name=None, sandbox=None, build=None):
         if name:
             return ExistingApplication(name, sandbox, build)
@@ -65,16 +67,11 @@ class NewApplication(object):
         >>> app.business_criticality = 'High'
         >>> app = app.save()
 
+        # returned instance should be ExistingApplication
         >>> isinstance(app, ExistingApplication)
         True
 
-        # >>> app.name
-        # 'NEW_APPLICATION'
-        # >>> app.business_criticality
-        # 'High'
-        #
-        # # TODO: update props and check after save
-
+        # clean up test application
         >>> app.delete()
         True
         """
@@ -96,7 +93,12 @@ class NewApplication(object):
             'tags': self.tags,
             'next_day_scheduling_enabled':self.next_day_scheduling_enabled
         }
-        SDK.upload.CreateApp(**payload)
+        try:
+            SDK.upload.CreateApp(**payload)
+        except VeracodeInvalidArgumentError:
+            raise VeracodeApplicationError(('Failed to save application '
+                'did you set the required values (name, business_criticality)?'
+                ))
         return ExistingApplication(self.name)
 
     def __repr__(self):
@@ -106,26 +108,22 @@ class NewApplication(object):
 class ExistingApplication(object):
     """ ExistingApplication: Not directly called
 
+    # create a new app for testing
     >>> app = Application()
     >>> app.name = 'EXISTING_APPLICATION'
     >>> app.business_criticality = 'High'
     >>> app = app.save()
 
-    >>> app = ExistingApplication('EXISTING_APPLICATION')
-    >>> app.name
-    'EXISTING_APPLICATION'
-    >>> app.business_criticality
-    'High'
-
-    # TODO: handle sandbox and builds
-
-    >>> app.delete()
-    True
-
-    >>> app = ExistingApplication('APPLICATION_DOESNT_EXIST')
+    # attempting to fetch an app that doesn't exist should raise VeracodeApplicationError.
+    >>> app = Application('APPLICATION_DOESNT_EXIST')
     Traceback (most recent call last):
         ...
     veracode.exceptions.VeracodeApplicationError: The requested application does not exist.
+
+    # clean up test application
+    >>> app.delete()
+    True
+
     """
     def __init__(self, app_name, sandbox_name=None, build_name=None):
         self._flaws = None
@@ -219,7 +217,7 @@ class ExistingApplication(object):
             'custom_field_value': self.custom_field_value,
             'next_day_scheduling_enabled': self.next_day_scheduling_enabled
         }
-        SDK.upload.UpdateApp(**payload)
+        return SDK.upload.UpdateApp(**payload).status_code == 200
 
     def delete(self):
         return SDK.upload.DeleteApp(self.id).status_code == 200

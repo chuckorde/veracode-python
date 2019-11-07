@@ -1,1 +1,2 @@
-from veracode.API import core, admin, flawreport, mitigation, results, sandbox, upload, exceptions
+# from veracode.API import core, admin, flawreport, mitigation, results, sandbox, upload, exceptions
+from . import *
