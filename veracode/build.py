@@ -69,7 +69,7 @@ class ExistingBuild(object):
         if not hasattr(builds, 'build'):
             return []
         if isinstance(builds.build, list):
-            return [NewBuild(build, self.app_id) for build in builds.build][::-1]
+            return [NewBuild(build, self.app_id) for build in builds.build]
         return [NewBuild(builds.build, self.app_id)]
 
 
@@ -82,7 +82,7 @@ class Analysis(object):
         self.status = obj.status[0]
 
     def __repr__(self):
-        return "<Veracode Build Analysis: type='{}', status={}>".format(
+        return "<Veracode Build Analysis: type='{}', status='{}'>".format(
             self.type, self.status)
 
 class Policy(object):

@@ -168,6 +168,9 @@ class ExistingApplication(object):
                 setattr(self, prop, None)
 
     def _get_app_by_name(self, app_name):
+        """ Private function: not directly called
+        # isisntance GetAppInfot
+        """
         apps = SDK.upload.GetAppList()
         for app in apps.app:
             if app.app_name == app_name:
