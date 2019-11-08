@@ -8,6 +8,15 @@ if sys.version_info[0] >= 3:
     basestring = str
 
 class Application(object):
+    """
+    # create an appliation with only the required properties
+    >>> app = Application()
+    >>> app.name = 'TEST_APPLICATION'
+    >>> app.business_criticality = 'High'
+
+    # save returns a new object
+    >>> app = app.save()
+    """
     def __new__(self, name=None, sandbox=None, build=None):
         if name:
             return ExistingApplication(name, sandbox, build)
@@ -59,17 +68,19 @@ class NewApplication(object):
         """ Returns a new instance of ExistingApplication.
         use `app = app.save()` after setting name and business_criticality
 
-        # create an appliation with only the required properties
         >>> app = Application()
-        >>> app.name = 'NEW_APPLICATION'
-        >>> app.business_criticality = 'High'
+        >>> app.name = 'TEMP_APPLICATION'
+        >>> app.business_criticality = 'Low'
         >>> app = app.save()
+
+        # confirm that the app was created
+        >>> app = Application('TEMP_APPLICATION')
 
         # returned instance should be ExistingApplication
         >>> isinstance(app, ExistingApplication)
         True
 
-        # clean up test application
+        # clean up
         >>> app.delete()
         True
         """
@@ -91,12 +102,7 @@ class NewApplication(object):
             'tags': self.tags,
             'next_day_scheduling_enabled':self.next_day_scheduling_enabled
         }
-        # try:
         SDK.upload.CreateApp(**payload)
-        # except VeracodeInvalidArgumentError:
-        #     raise VeracodeApplicationError(('Failed to save application '
-        #         'did you set the required values (name, business_criticality)?'
-        #         ))
         return ExistingApplication(self.name)
 
     def __repr__(self):
@@ -106,14 +112,8 @@ class NewApplication(object):
 class ExistingApplication(object):
     """ ExistingApplication: Not directly called
 
-    # create a new app for testing
-    >>> app = Application()
-    >>> app.name = 'EXISTING_APPLICATION'
-    >>> app.business_criticality = 'High'
-    >>> app = app.save()
-
-    # fetch the test application by name
-    >>> app = Application('EXISTING_APPLICATION')
+    # fetch the test application
+    >>> app = Application('TEST_APPLICATION')
     >>> isinstance(app, ExistingApplication)
     True
 
@@ -122,12 +122,8 @@ class ExistingApplication(object):
     Traceback (most recent call last):
         ...
     veracode.exceptions.VeracodeApplicationError: The requested application does not exist.
-
-    # clean up test application
-    >>> app.delete()
-    True
-
     """
+
     def __init__(self, app_name, sandbox_name=None, build_name=None):
         self._flaws = None
         self._build = None
@@ -222,16 +218,16 @@ class ExistingApplication(object):
     def delete(self):
         return SDK.upload.DeleteApp(self.id).status_code == 200
 
-    def upload_files(self, item, sandbox=None, fn=None):
-        self.sandbox = sandbox if sandbox else None
-        if isinstance(item, list):
-            self._new_files = os.path.expanduser(item)
-        elif isinstance(item, basestring):
-            self._new_files = [os.path.expanduser(f) for f in glob(item)]
-        for f in self._new_files:
-            if fn: fn(f)
-            SDK.upload.UploadFile(
-                    app_id=self.id, sandbox_id=self.sandbox.id, file=f)
+    # def upload_files(self, item, sandbox=None, fn=None):
+    #     self.sandbox = sandbox if sandbox else None
+    #     if isinstance(item, list):
+    #         self._new_files = os.path.expanduser(item)
+    #     elif isinstance(item, basestring):
+    #         self._new_files = [os.path.expanduser(f) for f in glob(item)]
+    #     for f in self._new_files:
+    #         if fn: fn(f)
+    #         SDK.upload.UploadFile(
+    #                 app_id=self.id, sandbox_id=self.sandbox.id, file=f)
 
     # def scan(self, sandbox=None, auto_scan=True,
     #         scan_all_nonfatal_top_level_modules=True):
@@ -245,43 +241,6 @@ class ExistingApplication(object):
 
     @property
     def sandboxes(self):
-        """
-        # create an appliation with only the required properties
-        >>> app = Application()
-        >>> app.name = 'NEW_APPLICATION'
-        >>> app.business_criticality = 'High'
-        >>> app = app.save()
-
-        # check default states
-        >>> app.sandbox == None
-        True
-        >>> app.sandboxes
-        []
-
-        # create a sandbox and assign it to the app
-        >>> sb = sandbox.Sandbox()
-        >>> sb.name = 'TEST_APP_SANDBOX1'
-        >>> app.sandbox = sb
-
-        # create another sandbox and assign it to the app
-        >>> sb = sandbox.Sandbox()
-        >>> sb.name = 'TEST_APP_SANDBOX2'
-        >>> app.sandbox = sb
-
-        # check the results
-        >>> len(app.sandboxes) == 2
-        True
-        >>> app.sandbox.name
-        'TEST_APP_SANDBOX2'
-        >>> app.sandboxes[0].name
-        'TEST_APP_SANDBOX1'
-        >>> app.sandboxes[1].name
-        'TEST_APP_SANDBOX2'
-
-        # clean up
-        >>> app.delete()
-        True
-        """
         if not self._sandboxes:
             self._sandboxes = sandbox.Sandbox.list(app_id=self.info.app_id)
         return self._sandboxes

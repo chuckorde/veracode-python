@@ -5,4 +5,7 @@ if __name__ == '__main__':
 
     doctest.testmod(application)
 
+    app = application.Application('TEST_APPLICATION')
+    app.delete()
+
 # pycco veracode/*.py veracode/SDK veracode/API -ips
