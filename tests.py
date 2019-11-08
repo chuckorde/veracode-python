@@ -4,3 +4,5 @@ if __name__ == '__main__':
     from veracode.exceptions import *
 
     doctest.testmod(application)
+
+# pycco veracode/*.py veracode/SDK veracode/API -ips

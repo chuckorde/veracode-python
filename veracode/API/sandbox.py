@@ -30,15 +30,15 @@ class CreateSandbox(REST):
         return self().GET(args, format='text')
         
     
-class getSandboxList(REST):
-    """ class: veracode.API.sandbox.getSandboxList
+class GetSandboxList(REST):
+    """ class: veracode.API.sandbox.GetSandboxList
     
-        params: dynamic, see veracode.SDK.sandbox.getSandboxList for more info
+        params: dynamic, see veracode.SDK.sandbox.GetSandboxList for more info
         
         returns: XML data from veracode API
     """
     def __init__(self, args=None):
-        super(getSandboxList, self).__init__('getsandboxlist.do', 5.0)
+        super(GetSandboxList, self).__init__('getsandboxlist.do', 5.0)
 
     @classmethod
     def get(self, **args):
