@@ -17,8 +17,8 @@ $ cd veracode-SDK
 $ export PYTHONPATH=${PYTHONPATH}:$(pwd)
 ```
 
-<img src='/public/Application.png' width=800px />
-![Application](/public/Application.png)
+<img src='/public/Application.png' width=100% />
+<!-- ![Application](/public/Application.png) -->
 
 ## Usage
 
