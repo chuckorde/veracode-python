@@ -18,7 +18,7 @@ $ export PYTHONPATH=${PYTHONPATH}:$(pwd)
 ```
 
 <img src='/public/Application.svg' width=100% />
-<!-- ![Application](/public/Application.png) -->
+![Application](/public/Application.svg)
 
 ## Usage
 
