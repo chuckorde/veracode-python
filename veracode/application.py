@@ -241,18 +241,55 @@ class ExistingApplication(object):
 
     @property
     def sandboxes(self):
+        """ property: a list of zero or more sandboxes for the current application
+
+            args: None
+
+            returns: list of Sandbox objects, or empty list
+
+        >>> app = Application('TEST_APPLICATION')
+        >>> isinstance(app.sandboxes, list)
+        True
+        """
         if not self._sandboxes:
             self._sandboxes = sandbox.Sandbox.list(app_id=self.info.app_id)
         return self._sandboxes
 
     @property
     def sandbox(self):
+        """ property: the current application sandbox (if exists)
+
+            args: None
+
+            returns: a Sandbox object or None
+
+        # should return None if current app has not sandbox
+        >>> app = Application('TEST_APPLICATION')
+        >>> app.sandbox == None
+        True
+
+        # passing a string will lookup the sandbox by name, and raise exception
+        # if no sandbox by that name exists
+        >>> app.sandbox = 'TEST_SANDBOX1'
+        Traceback (most recent call last):
+            ...
+        veracode.exceptions.VeracodeSandboxError: The requested sandbox does not exist.
+        """
         if self._sandbox.id:
             return self._sandbox
         return None
 
     @sandbox.setter
     def sandbox(self, obj):
+        """  property (setter): updates the app sandbox with a Sandbox object
+             or a string name of an existing Sandbox
+
+             args: existing sandbox name, or Sandbox object
+
+             returns: None
+
+             tests: doctest runs from the getter
+        """
         if not obj:
             self._sandbox = sandbox.Sandbox()
         elif isinstance(obj, basestring):

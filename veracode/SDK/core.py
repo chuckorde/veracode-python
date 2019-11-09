@@ -7,7 +7,7 @@ import veracode.API as API
 from veracode.SDK.exceptions import *
 
 # I don't love the layout of this API.
-# There's a lot of cruft here to get it into a useble form. 
+# There's a lot of cruft here to get it into a useble form.
 
 class Struct(object):
     def __init__(self, attrs):
@@ -20,8 +20,8 @@ class Struct(object):
                 if key.endswith('s'):
                     if ',' in attrs[key]:
                         attrs[key] = attrs[key].split(',')
-                    else:
-                        attrs[key] = [attrs[key]]
+                    # else:
+                    #     attrs[key] = [attrs[key]]
             except:
                 pass
         self.__dict__.update(**attrs)
@@ -36,7 +36,7 @@ class Parser(object):
     def _objectify(self, obj):
         if isinstance(obj, dict):
             return Struct({
-                k.replace('-','_').replace(':','_'): 
+                k.replace('-','_').replace(':','_'):
                     self._objectify(v) for k,v in obj.items()})
         if isinstance(obj, list):
             return [self._objectify(o) for o in obj]

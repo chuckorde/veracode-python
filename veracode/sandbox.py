@@ -11,7 +11,7 @@ if sys.version_info[0] >= 3:
 class Sandbox(object):
     """
     # create an appliation with only the required properties
-    >>> app = Application()
+    >>> app = application.Application()
     >>> app.name = 'NEW_APPLICATION'
     >>> app.business_criticality = 'High'
     >>> app = app.save()
@@ -23,12 +23,12 @@ class Sandbox(object):
     []
 
     # create a sandbox and assign it to the app
-    >>> sb = sandbox.Sandbox()
+    >>> sb = Sandbox()
     >>> sb.name = 'NEW_APP_SANDBOX1'
     >>> app.sandbox = sb
 
     # create another sandbox and assign it to the app
-    >>> sb = sandbox.Sandbox()
+    >>> sb = Sandbox()
     >>> sb.name = 'NEW_APP_SANDBOX2'
     >>> app.sandbox = sb
 
