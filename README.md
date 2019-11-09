@@ -17,7 +17,7 @@ $ cd veracode-SDK
 $ export PYTHONPATH=${PYTHONPATH}:$(pwd)
 ```
 
-![Application](/public/Application.png =600px)
+![Application](/public/Application.png) { width: 600px }
 
 ## Usage
 
