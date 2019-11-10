@@ -10,6 +10,11 @@ unit_test:
     - python
 
   script:
+    - cat << EOF > credentials
+      [DEFAULT]
+      VERACODE_API_ID = ${VERACODE_API_ID}
+      VERACODE_API_SECRET = ${VERACODE_API_SECRET}
+      EOF
     - pip3 install -r requirements.txt
     - python3 tests.py
 
