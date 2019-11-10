@@ -1,11 +1,14 @@
-image: alpine:latest
+stages:
+  - build
+  - test
+  - deploy
 
-pages:
-  stage: deploy
+unit_test:
+  stage: test
+
+  tags:
+    - python
+
   script:
-  - echo 'Nothing to do...'
-  artifacts:
-    paths:
-    - public
-  only:
-  - master
+    python3 tests.py
+
