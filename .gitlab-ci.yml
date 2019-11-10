@@ -10,6 +10,9 @@ unit_test:
     - python
 
   script:
+    - pwd
+    - ls -la $(pwd)
+    - ls -la ~ 
     - mkdir ~/.veracode
     - echo "[DEFAULT]" > ~/.veracode/credentials
     - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >> ~/.veracode/credentials
