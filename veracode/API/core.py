@@ -29,13 +29,7 @@ class REST(object):
             self.__api_id = conf.get('DEFAULT', 'VERACODE_API_ID')
             self.__api_secret = conf.get('DEFAULT', 'VERACODE_API_SECRET')
         except FileNotFoundError as e:
-            try:
-                conf = configparser.ConfigParser()
-                conf.read(os.path.expanduser('./credentials'))
-                self.__api_id = conf.get('DEFAULT', 'VERACODE_API_ID')
-                self.__api_secret = conf.get('DEFAULT', 'VERACODE_API_SECRET')
-            except FileNotFoundError as e:
-                raise VeracodeConfigError ('No credentials file found')
+            raise VeracodeConfigError ('No credentials file found')
 
         self.__api_server = server or 'https://analysiscenter.veracode.com/api/'
         self.__end_point = end_point
