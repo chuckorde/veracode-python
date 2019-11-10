@@ -14,6 +14,7 @@ unit_test:
       VERACODE_API_ID = ${VERACODE_API_ID} \n
       VERACODE_API_SECRET = ${VERACODE_API_SECRET} \n
       " > credentials
+    - cat credentials
     - pip3 install -r requirements.txt
     - python3 tests.py
 
