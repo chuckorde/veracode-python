@@ -23,21 +23,22 @@ class NewBuild(object):
         self.app_id = app_id
         self.id = None
         self.version = None
-
-        self.grace_period_expired = None
-        self.legacy_scan_engine = None
-        self.lifecycle_stage = None
-        self.platform = None
-        self.results_ready = None
-        self.scan_overdue = None
-        self.submitter = None
+        self.info = Info()
         self._report = None
+
+        # self.grace_period_expired = None
+        # self.legacy_scan_engine = None
+        # self.lifecycle_stage = None
+        # self.platform = None
+        # self.results_ready = None
+        # self.scan_overdue = None
+        # self.submitter = None
 
         if obj:
             self.id = obj.build_id
             self.version = obj.version
 
-            self._info = SDK.upload.GetBuildInfo(app_id=self.app_id)
+            self.info = Info(SDK.upload.GetBuildInfo(app_id=self.app_id))
             # self.grace_period_expired = self._info.build.grace_period_expired
             # self.legacy_scan_engine = self._info.build.legacy_scan_engine
             # self.lifecycle_stage = self._info.build.lifecycle_stage
@@ -45,8 +46,8 @@ class NewBuild(object):
             # self.results_ready = self._info.build.results_ready
             # self.scan_overdue = self._info.build.scan_overdue
             # self.submitter = self._info.build.submitter
-            self.analysis = Analysis(self._info.build.analysis_unit)
-            self.policy = Policy(self._info.build)
+            self.analysis = Analysis(self.info)
+            #self.policy = Policy(self.info)
 
     def delete(self):
         res = SDK.upload.DeleteBuild(app_id=self.app_id,
@@ -81,12 +82,36 @@ class ExistingBuild(object):
         return [NewBuild(builds.build, self.app_id)]
 
 
+class Info(object):
+    def __init__(self, obj=None):
+        self.grace_period_expired = None
+        self.legacy_scan_engine = None
+        self.lifecycle_stage = None
+        self.platform = None
+        self.results_ready = None
+        self.scan_overdue = None
+        self.submitter = None
+
+        if obj:
+            self.obj = obj
+        # self.compliance = obj.policy_compliance_status[0]
+        # self.name = obj.policy_name
+        # self.updated_date = obj.policy_updated_date
+        # self.version = obj.policy_version
+
+    def __repr__(self):
+        return "<Veracode Build Info: results_ready='{}', submitter={}>".format(
+            self.results_ready, self.submitter)
+
 class Analysis(object):
     def __init__(self, obj):
         self.type = None
         self.engine_version = None
         self.published_date = None
         self.status = None
+
+        if hasattr(obj, 'analysis_unit'):
+            obj = obj.analsys_unit
 
         self.type = self._update_prop(obj, 'analysis_type')
         self.engine_version = self._update_prop(obj, 'engine_version')
