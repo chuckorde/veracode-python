@@ -8,6 +8,8 @@ if sys.version_info[0] >= 3:
 
 
 class Build(object):
+    """ class: veracode.build.Build
+    """
     def __new__(self, app_id=None, sandbox_id=None):
         if app_id:
             return ExistingBuild(app_id=app_id,sandbox_id=sandbox_id )
@@ -15,6 +17,8 @@ class Build(object):
             return NewBuild()
 
 class NewBuild(object):
+    """ class: veracode.build.NewBuild
+    """
     def __init__(self, obj=None, app_id=None):
         self.app_id = app_id
         self.id = None
@@ -29,21 +33,25 @@ class NewBuild(object):
         self.submitter = None
         self._report = None
 
-
         if obj:
             self.id = obj.build_id
             self.version = obj.version
 
             self._info = SDK.upload.GetBuildInfo(app_id=self.app_id)
-            self.grace_period_expired = self._info.build.grace_period_expired
-            self.legacy_scan_engine = self._info.build.legacy_scan_engine
-            self.lifecycle_stage = self._info.build.lifecycle_stage
-            self.platform = self._info.build.platform
-            self.results_ready = self._info.build.results_ready
-            self.scan_overdue = self._info.build.scan_overdue
-            self.submitter = self._info.build.submitter
+            # self.grace_period_expired = self._info.build.grace_period_expired
+            # self.legacy_scan_engine = self._info.build.legacy_scan_engine
+            # self.lifecycle_stage = self._info.build.lifecycle_stage
+            # self.platform = self._info.build.platform
+            # self.results_ready = self._info.build.results_ready
+            # self.scan_overdue = self._info.build.scan_overdue
+            # self.submitter = self._info.build.submitter
             self.analysis = Analysis(self._info.build.analysis_unit)
             self.policy = Policy(self._info.build)
+
+    def delete(self):
+        res = SDK.upload.DeleteBuild(app_id=self.app_id,
+                sandbox_id=self.report.sandbox_id)
+        return res.status_code == 200
 
     @property
     def report(self):
@@ -52,13 +60,13 @@ class NewBuild(object):
                 self._report = Report(self)
         return self._report
 
-
-
     def __repr__(self):
         return "<Veracode Build: version='{}', id={}>".format(self.version, self.id)
 
 
 class ExistingBuild(object):
+    """ class: veracode.build.ExistingBuild
+    """
     def __init__(self, app_id, sandbox_id=None):
         if isinstance(app_id, int):
             self.app_id = app_id
@@ -75,11 +83,20 @@ class ExistingBuild(object):
 
 class Analysis(object):
     def __init__(self, obj):
-        self.type = obj.analysis_type
-        self.engine_version = obj.engine_version
-        self.published_date = obj.published_date
-        # self.published_date_sec = obj.published_date_sec
-        self.status = obj.status[0]
+        self.type = None
+        self.engine_version = None
+        self.published_date = None
+        self.status = None
+
+        self.type = self._update_prop(obj, 'analysis_type')
+        self.engine_version = self._update_prop(obj, 'engine_version')
+        self.published_date = self._update_prop(obj, 'published_date')
+        self.status = self._update_prop(obj, 'status')
+
+    def _update_prop(self, obj, prop):
+        if hasattr(obj, prop):
+            return getattr(obj, prop)
+        return None
 
     def __repr__(self):
         return "<Veracode Build Analysis: type='{}', status='{}'>".format(

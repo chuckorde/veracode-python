@@ -317,7 +317,7 @@ class ExistingApplication(object):
             return self._build
         # do we want an empty build object or a nontype except on build.report?
         if len(self.builds) <= 0:
-            return None
+            return build.Build()
         return self.builds[0]
 
     @build.setter
