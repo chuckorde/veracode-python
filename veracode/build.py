@@ -1,6 +1,7 @@
 import sys, os
 import logging
 from veracode import SDK
+from veracode.SDK.utils import Properties
 from veracode.exceptions import *
 
 if sys.version_info[0] >= 3:
@@ -15,54 +16,6 @@ class Build(object):
             return ExistingBuild(app_id=app_id,sandbox_id=sandbox_id )
         else:
             return NewBuild()
-
-class NewBuild(object):
-    """ class: veracode.build.NewBuild
-    """
-    def __init__(self, obj=None, app_id=None):
-        self.app_id = app_id
-        self.id = None
-        self.version = None
-        self.info = Info()
-        self._report = None
-
-        # self.grace_period_expired = None
-        # self.legacy_scan_engine = None
-        # self.lifecycle_stage = None
-        # self.platform = None
-        # self.results_ready = None
-        # self.scan_overdue = None
-        # self.submitter = None
-
-        if obj:
-            self.id = obj.build_id
-            self.version = obj.version
-
-            self.info = Info(SDK.upload.GetBuildInfo(app_id=self.app_id))
-            # self.grace_period_expired = self._info.build.grace_period_expired
-            # self.legacy_scan_engine = self._info.build.legacy_scan_engine
-            # self.lifecycle_stage = self._info.build.lifecycle_stage
-            # self.platform = self._info.build.platform
-            # self.results_ready = self._info.build.results_ready
-            # self.scan_overdue = self._info.build.scan_overdue
-            # self.submitter = self._info.build.submitter
-            self.analysis = Analysis(self.info)
-            #self.policy = Policy(self.info)
-
-    def delete(self):
-        res = SDK.upload.DeleteBuild(app_id=self.app_id,
-                sandbox_id=self.report.sandbox_id)
-        return res.status_code == 200
-
-    @property
-    def report(self):
-        if not self._report:
-            if self.id:
-                self._report = Report(self)
-        return self._report
-
-    def __repr__(self):
-        return "<Veracode Build: version='{}', id={}>".format(self.version, self.id)
 
 
 class ExistingBuild(object):
@@ -82,61 +35,106 @@ class ExistingBuild(object):
         return [NewBuild(builds.build, self.app_id)]
 
 
-class Info(object):
-    def __init__(self, obj=None):
-        self.grace_period_expired = None
-        self.legacy_scan_engine = None
-        self.lifecycle_stage = None
-        self.platform = None
-        self.results_ready = None
-        self.scan_overdue = None
-        self.submitter = None
+class NewBuild(Properties):
+    """ class: veracode.build.NewBuild
+    """
+    def __init__(self, obj=None, app_id=None):
+        self.app_id = app_id
 
-        if obj:
-            self.obj = obj
-        # self.compliance = obj.policy_compliance_status[0]
-        # self.name = obj.policy_name
-        # self.updated_date = obj.policy_updated_date
-        # self.version = obj.policy_version
+        self._properties = ['build_id', 'version']
+        self._renamed_properties = ['id', 'version']
+        self._update_properties(obj)
+
+        self.info = Info()
+        self.analysis = Analysis()
+        self.policy = Policy()
+
+        self._report = None
+
+        if self.app_id:
+            info = SDK.upload.GetBuildInfo(app_id=self.app_id, build_id=self.id)
+            if hasattr(info, 'build'):
+                self.info = Info(info.build)
+                self.analysis = Analysis(info.build)
+                self.policy = Policy(info.build)
+
+    def save(self):
+        pass
+
+    def delete(self):
+        res = SDK.upload.DeleteBuild(app_id=self.app_id,
+                sandbox_id=self.report.sandbox_id)
+        return res.status_code == 200
+
+    @property
+    def report(self):
+        if not self._report:
+            if self.id:
+                self._report = Report(self)
+        return self._report
 
     def __repr__(self):
-        return "<Veracode Build Info: results_ready='{}', submitter={}>".format(
-            self.results_ready, self.submitter)
+        return "<Veracode Build: version='{}', id={}>".format(self.version, self.id)
 
-class Analysis(object):
-    def __init__(self, obj):
-        self.type = None
-        self.engine_version = None
-        self.published_date = None
-        self.status = None
+
+class Info(Properties):
+    def __init__(self, obj=None):
+        self._properties = [
+            'grace_period_expired',
+            'legacy_scan_engine',
+            'lifecycle_stage',
+            'platform',
+            'rules_status',
+            'scan_overdue',
+            'submitter',
+            'version'
+        ]
+        self._update_properties(obj)
+
+    def __repr__(self):
+        return "<Veracode Build Info: scan_overdue='{}', submitter={}>".format(
+            self.scan_overdue, self.submitter)
+
+class Analysis(Properties):
+    def __init__(self, obj=None):
+        self._properties = [
+            'analysis_type',
+            'engine_version',
+            'publish_date',
+            'status'
+        ]
+        self._renamed_properties = [
+                'type', 'engine_version','publish_date','status']
+        self._update_properties()
 
         if hasattr(obj, 'analysis_unit'):
-            obj = obj.analsys_unit
+            self._update_properties(obj.analysis_unit)
 
-        self.type = self._update_prop(obj, 'analysis_type')
-        self.engine_version = self._update_prop(obj, 'engine_version')
-        self.published_date = self._update_prop(obj, 'published_date')
-        self.status = self._update_prop(obj, 'status')
-
-    def _update_prop(self, obj, prop):
-        if hasattr(obj, prop):
-            return getattr(obj, prop)
-        return None
+    def __bool__(self):
+        return self.type is not None
 
     def __repr__(self):
         return "<Veracode Build Analysis: type='{}', status='{}'>".format(
             self.type, self.status)
 
-class Policy(object):
-    def __init__(self, obj):
-        self.compliance = obj.policy_compliance_status[0]
-        self.name = obj.policy_name
-        self.updated_date = obj.policy_updated_date
-        self.version = obj.policy_version
+class Policy(Properties):
+    def __init__(self, obj=None):
+        self._properties = [
+            'policy_compliance_status',
+            'policy_name',
+            'policy_updaed_date',
+            'policy_version'
+        ]
+        self._renamed_properties = ['compliance', 'name', 'updated', 'version']
+        self._update_properties(obj)
 
     def __repr__(self):
         return "<Veracode Build Policy: name='{}', compliance={}>".format(
             self.name, self.compliance)
+
+    def __bool__(self):
+        return self.name is not None
+
 
 class Report(object):
     def __init__(self, obj):
@@ -205,10 +203,6 @@ class Flaw(object):
             else:
                 setattr(self, prop, None)
 
-        if len(self.remediation_status) > 0:
-            self.remediation_status = self.remediation_status[0].capitalize()
-        if len(self.mitigation_status) > 0:
-            self.mitigation_status = self.mitigation_status[0].capitalize()
             if self.mitigation_status == 'None':
                 self.mitigation_status = None
 

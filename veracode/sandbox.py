@@ -26,21 +26,27 @@ class Sandbox(object):
     >>> sb = Sandbox()
     >>> sb.name = 'NEW_APP_SANDBOX1'
     >>> app.sandbox = sb
+    >>> app.sandbox.name
+    'NEW_APP_SANDBOX1'
+
+    # sleep to give the API time.
+    >>> import time
+    >>> time.sleep(3)
 
     # create another sandbox and assign it to the app
     >>> sb = Sandbox()
     >>> sb.name = 'NEW_APP_SANDBOX2'
     >>> app.sandbox = sb
+    >>> app.sandbox.name
+    'NEW_APP_SANDBOX2'
 
     # check the results
     >>> len(app.sandboxes) == 2
     True
-    >>> app.sandbox.name
-    'NEW_APP_SANDBOX2'
     >>> app.sandboxes[0].name
-    'NEW_APP_SANDBOX1'
-    >>> app.sandboxes[1].name
     'NEW_APP_SANDBOX2'
+    >>> app.sandboxes[1].name
+    'NEW_APP_SANDBOX1'
 
     # clean up
     >>> app.delete()
@@ -58,7 +64,7 @@ class Sandbox(object):
         if not hasattr(sandboxes, 'sandbox'):
             return []
         if isinstance(sandboxes.sandbox, list):
-            return [NewSandbox(sandbox) for sandbox in sandboxes.sandbox]
+            return [NewSandbox(sandbox) for sandbox in sandboxes.sandbox][::-1]
         return [NewSandbox(sandboxes.sandbox)]
 
 class NewSandbox(object):

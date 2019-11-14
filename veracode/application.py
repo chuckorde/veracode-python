@@ -158,6 +158,7 @@ class ExistingApplication(object):
             'custom_field_value',
             'next_day_scheduling_enabled'
         ]
+        # TODO: use util class
         for prop in props:
             if hasattr(self.info, prop):
                 setattr(self, prop, getattr(self.info, prop))
