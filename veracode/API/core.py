@@ -10,8 +10,10 @@ from requests.adapters import HTTPAdapter
 from urllib.parse import urlparse
 from veracode.API.exceptions import *
 
-import logging
-logger = logging.getLogger('veracode')
+# import logging
+# logger = logging.getLogger('veracode')
+from veracode.log import veracode_logger
+logger = veracode_logger('veracode')
 
 class REST(object):
     class response:

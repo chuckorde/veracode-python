@@ -6,7 +6,7 @@ def veracode_logger(name):
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
     logger = logging.getLogger(name)
-    loglevel = os.environ.get('VERACODE_LOG_LEVEL')
+    loglevel = os.environ.get('VERACODE_LOG_LEVEL', None)
 
     if loglevel:
         logger.setLevel(getattr(logging, loglevel))
