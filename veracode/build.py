@@ -92,7 +92,7 @@ class Info(Properties):
         self._update_properties(obj)
 
     def __repr__(self):
-        return "<Veracode Build Info: scan_overdue='{}', submitter={}>".format(
+        return "<Veracode Build Info: scan_overdue='{}', submitter='{}'>".format(
             self.scan_overdue, self.submitter)
 
 class Analysis(Properties):
@@ -140,6 +140,7 @@ class Report(object):
     def __init__(self, obj):
         self._build = obj
         data = SDK.results.DetailedReport(build_id=self._build.id)
+        # TODO: this needs more inspection and should use util class
         for prop in dir(data):
             if prop.startswith('_'):
                 continue
@@ -164,7 +165,7 @@ class Report(object):
     def __repr__(self):
         if not hasattr(self, 'sandbox_name'):
             self.sandbox_name = None
-        return "<Veracode Report: application='{}', sandbox='{}' build='{}' flaws={}>".format(
+        return "<Veracode Report: application='{}', sandbox='{}', build='{}', flaws={}>".format(
             self.app_name, self.sandbox_name, self._build.version, self.total_flaws)
 
 class Flaw(object):

@@ -10,8 +10,10 @@ from requests.adapters import HTTPAdapter
 from urllib.parse import urlparse
 from veracode.API.exceptions import *
 
-from veracode import log
-logger = log.veracode_logger('veracode')
+# import logging
+# logger = logging.getLogger('veracode')
+from veracode.log import veracode_logger
+logger = veracode_logger('veracode')
 
 class REST(object):
     class response:
@@ -97,3 +99,4 @@ class REST(object):
 
     def DELETE(self):
         raise VeracodeNotImplemented('DELETE not implemented.')
+

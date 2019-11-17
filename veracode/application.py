@@ -253,7 +253,7 @@ class ExistingApplication(object):
         True
         """
         if not self._sandboxes:
-            self._sandboxes = sandbox.Sandbox.list(app_id=self.info.app_id)
+            self._sandboxes = sandbox.Sandbox.list(app_id=self.id)
         return self._sandboxes
 
     @property
@@ -314,16 +314,15 @@ class ExistingApplication(object):
 
     @property
     def build(self):
-        if self._build.id:
+        if self._build != None:
             return self._build
-        # do we want an empty build object or a nontype except on build.report?
         if len(self.builds) <= 0:
             return build.Build()
         return self.builds[0]
 
     @build.setter
     def build(self, obj):
-        if not obj:
+        if obj == None:
             self._build = build.NewBuild()
         elif isinstance(obj, build.NewBuild):
             self._build = obj
