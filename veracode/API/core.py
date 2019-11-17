@@ -10,8 +10,8 @@ from requests.adapters import HTTPAdapter
 from urllib.parse import urlparse
 from veracode.API.exceptions import *
 
-import logging
-logger = logging.getLogger('veracode')
+from veracode import log
+logger = log.veracode_logger('veracode')
 
 class REST(object):
     class response:
@@ -21,16 +21,16 @@ class REST(object):
             self.res = res
 
     def __init__(self, end_point, api_version, server=None):
-        self.__api_id = None
-        self.__api_secret = None
-        try:
-            conf = configparser.ConfigParser()
-            conf.read(os.path.expanduser('~/.veracode/credentials'))
-            self.__api_id = conf.get('DEFAULT', 'VERACODE_API_ID')
-            self.__api_secret = conf.get('DEFAULT', 'VERACODE_API_SECRET')
-        except FileNotFoundError as e:
-            raise VeracodeConfigError ('No credentials file found')
+        self.profile = os.environ.get('VERACODE_API_PROFILE', 'DEFAULT')
+        conf = configparser.ConfigParser()
+        conf.read(os.path.expanduser('~/.veracode/credentials'))
+        have_credentials = conf.has_option(self.profile, 'VERACODE_API_ID') and \
+                           conf.has_option(self.profile, 'VERACODE_API_SECRET')
+        if not have_credentials:
+            raise VeracodeConfigError ('There is a problem with your credentials')
 
+        self.__api_id = conf.get(self.profile, 'VERACODE_API_ID')
+        self.__api_secret = conf.get(self.profile, 'VERACODE_API_SECRET')
         self.__api_server = server or 'https://analysiscenter.veracode.com/api/'
         self.__end_point = end_point
         if api_version:
