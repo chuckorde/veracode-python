@@ -309,12 +309,13 @@ class ExistingApplication(object):
     def builds(self):
         if not self._builds:
             self._builds = build.Build(self.id, self._sandbox.id).list()
-        return self._builds
+        return self._builds[::-1]
 
 
     @property
     def build(self):
-        if self._build != None:
+        # if self._build != None:
+        if self._build.id:
             return self._build
         if len(self.builds) <= 0:
             return build.Build()

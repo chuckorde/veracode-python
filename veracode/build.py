@@ -168,9 +168,9 @@ class Report(object):
         return "<Veracode Report: application='{}', sandbox='{}', build='{}', flaws={}>".format(
             self.app_name, self.sandbox_name, self._build.version, self.total_flaws)
 
-class Flaw(object):
+class Flaw(Properties):
     def __init__(self, flaw):
-        props =[
+        self._properties =[
             'affects_policy_compliance',
             'categoryid',
             'categoryname',
@@ -198,14 +198,10 @@ class Flaw(object):
             'sourcefilepath',
             'type'
         ]
-        for prop in props:
-            if hasattr(flaw, prop):
-                setattr(self, prop, getattr(flaw, prop))
-            else:
-                setattr(self, prop, None)
+        self._update_properties(flaw)
 
-            if self.mitigation_status == 'None':
-                self.mitigation_status = None
+        if self.mitigation_status.lower() == 'none':
+            self.mitigation_status = None
 
     def __repr__(self):
         return "<Veracode Flaw: CWE='{}', severity={}>".format(self.cweid, self.severity)
