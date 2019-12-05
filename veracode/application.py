@@ -46,6 +46,7 @@ class NewApplication(object):
     True
     """
     def __init__(self):
+        self.id = None
         self.name = None
         self.vendor_id = None
         self.business_criticality = None
@@ -307,7 +308,7 @@ class ExistingApplication(object):
     @property
     def builds(self):
         if not self._builds:
-            self._builds = build.Build(self.id, self._sandbox.id).list()
+            self._builds = build.Build(self).list()
         return self._builds[::-1]
 
     @property
