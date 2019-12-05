@@ -194,6 +194,27 @@ class ExistingApplication(object):
         return "<Veracode Application: name='{}', id={}>".format(
                 self.name, self.id)
 
+    # def upload(self, files, compress=False):
+    #     if isinstance(files, list):
+    #         files = [os.path.expanduser(f) for f in files]
+    #
+    #     elif isinstance(files, basestring):
+    #         files = glob(os.path.expanduser(files))
+    #
+    #     for f in files:
+    #         SDK.upload.UploadFile(
+    #                 app_id=self.id, sandbox_id=self.sandbox.id, file=f)
+    #
+    # def scan(self, sandbox=None, auto_scan=True,
+    #         scan_all_nonfatal_top_level_modules=True):
+    #
+    #     self.sandbox = sandbox if sandbox else None
+    #     SDK.upload.BeginPrescan(
+    #             app_id=self.id,
+    #             sandbox_id=self.sandbox.id,
+    #             auto_scan=auto_scan,
+    #             scan_all_nonfatal_top_level_modules=\
+    #                     scan_all_nonfatal_top_level_modules)
 
     def save(self):
         payload = {
@@ -220,27 +241,6 @@ class ExistingApplication(object):
     def delete(self):
         return SDK.upload.DeleteApp(self.id).status_code == 200
 
-    # def upload_files(self, item, sandbox=None, fn=None):
-    #     self.sandbox = sandbox if sandbox else None
-    #     if isinstance(item, list):
-    #         self._new_files = os.path.expanduser(item)
-    #     elif isinstance(item, basestring):
-    #         self._new_files = [os.path.expanduser(f) for f in glob(item)]
-    #     for f in self._new_files:
-    #         if fn: fn(f)
-    #         SDK.upload.UploadFile(
-    #                 app_id=self.id, sandbox_id=self.sandbox.id, file=f)
-
-    # def scan(self, sandbox=None, auto_scan=True,
-    #         scan_all_nonfatal_top_level_modules=True):
-    #
-    #     self.sandbox = sandbox if sandbox else None
-    #     SDK.upload.BeginPrescan(
-    #             app_id=self.id,
-    #             sandbox_id=self.sandbox.id,
-    #             auto_scan=auto_scan,
-    #             scan_all_nonfatal_top_level_modules=scan_all_nonfatal_top_level_modules)
-
     @property
     def sandboxes(self):
         """ property: a list of zero or more sandboxes for the current application
@@ -265,7 +265,6 @@ class ExistingApplication(object):
 
             returns: a Sandbox object or None
 
-        # should return None if current app has not sandbox
         >>> app = Application('TEST_APPLICATION')
 
         # passing a string will lookup the sandbox by name, and raise exception
@@ -311,10 +310,8 @@ class ExistingApplication(object):
             self._builds = build.Build(self.id, self._sandbox.id).list()
         return self._builds[::-1]
 
-
     @property
     def build(self):
-        # if self._build != None:
         if self._build.id:
             return self._build
         if len(self.builds) <= 0:
@@ -325,8 +322,11 @@ class ExistingApplication(object):
     def build(self, obj):
         if obj == None:
             self._build = build.NewBuild()
-        elif isinstance(obj, build.NewBuild):
-            self._build = obj
         elif isinstance(obj, basestring):
             self._build = self._get_build_by_name(obj)
-
+        elif not obj.id:
+            SDK.upload.CreateBuild(
+                    version=obj.version,
+                    app_id=self.id,
+                    sandbox_id=self.sandbox.id)
+            self._build = self._get_build_by_name(obj.version)

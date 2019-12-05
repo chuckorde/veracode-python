@@ -3,10 +3,15 @@ if __name__ == '__main__':
     from veracode import application, sandbox
     from veracode.exceptions import *
 
-    doctest.testmod(application)
-    doctest.testmod(sandbox)
+    try:
+        doctest.testmod(application, raise_on_error=True)
+        doctest.testmod(sandbox, raise_on_error=True)
 
-    app = application.Application('TEST_APPLICATION')
-    app.delete()
+    except:
+        pass
+
+    finally:
+        app = application.Application('TEST_APPLICATION')
+        app.delete()
 
 # pycco veracode/*.py veracode/SDK veracode/API -ips

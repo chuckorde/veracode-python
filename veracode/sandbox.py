@@ -13,8 +13,7 @@ class Sandbox(object):
     # fetch application create in application testa
     >>> app = application.Application('TEST_APPLICATION')
 
-    # check default states
-    # should return False if empty
+    # check default states, should return False if empty
     >>> assert not app.sandbox
     >>> app.sandboxes
     []
@@ -26,7 +25,7 @@ class Sandbox(object):
     >>> app.sandbox.name
     'TEST_APP_SANDBOX1'
 
-    # sleep to give the API time
+    # sleep to give the API time, probably not needed
     >>> import time
     >>> time.sleep(3)
 
