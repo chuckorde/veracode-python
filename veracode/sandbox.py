@@ -14,8 +14,8 @@ class Sandbox(object):
     >>> app = application.Application('TEST_APPLICATION')
 
     # check default states
-    >>> app.sandbox == None
-    True
+    # should return False if empty
+    >>> assert not app.sandbox
     >>> app.sandboxes
     []
 
@@ -79,6 +79,9 @@ class NewSandbox(object):
 
     def __repr__(self):
         return "<Veracode Sandbox: name='{}', id={}>".format(self.name, self.id)
+
+    def __bool__(self):
+        return self.name != None
 
 
 class ExistingSandbox(object):

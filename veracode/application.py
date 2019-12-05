@@ -267,8 +267,6 @@ class ExistingApplication(object):
 
         # should return None if current app has not sandbox
         >>> app = Application('TEST_APPLICATION')
-        >>> app.sandbox == None
-        True
 
         # passing a string will lookup the sandbox by name, and raise exception
         # if no sandbox by that name exists
@@ -279,7 +277,7 @@ class ExistingApplication(object):
         """
         if self._sandbox.id:
             return self._sandbox
-        return None
+        return sandbox.Sandbox()
 
     @sandbox.setter
     def sandbox(self, obj):
