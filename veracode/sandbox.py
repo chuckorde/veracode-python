@@ -10,7 +10,7 @@ if sys.version_info[0] >= 3:
 
 class Sandbox(object):
     """
-    # fetch application creatde in application testa
+    # fetch application create in application testa
     >>> app = application.Application('TEST_APPLICATION')
 
     # check default states

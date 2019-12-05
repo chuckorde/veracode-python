@@ -27,7 +27,8 @@ class ExistingBuild(object):
             self.sandbox_id = sandbox_id
 
     def list(self):
-        builds = SDK.upload.GetBuildList(app_id=self.app_id, sandbox_id=self.sandbox_id)
+        builds = SDK.upload.GetBuildList(
+                app_id=self.app_id, sandbox_id=self.sandbox_id)
         if not hasattr(builds, 'build'):
             return []
         if isinstance(builds.build, list):
@@ -74,8 +75,8 @@ class NewBuild(Properties):
         return self._report
 
     def __repr__(self):
-        return "<Veracode Build: version='{}', id={}>".format(self.version, self.id)
-
+        return "<Veracode Build: version='{}', id={}>".format(
+                self.version, self.id)
 
 class Info(Properties):
     def __init__(self, obj=None):
@@ -92,8 +93,8 @@ class Info(Properties):
         self._update_properties(obj)
 
     def __repr__(self):
-        return "<Veracode Build Info: scan_overdue='{}', submitter='{}'>".format(
-            self.scan_overdue, self.submitter)
+        return "<Veracode Build Info: scan_overdue='{}', submitter='{}'>"\
+                .format(self.scan_overdue, self.submitter)
 
 class Analysis(Properties):
     def __init__(self, obj=None):
@@ -204,5 +205,6 @@ class Flaw(Properties):
             self.mitigation_status = None
 
     def __repr__(self):
-        return "<Veracode Flaw: CWE='{}', severity={}>".format(self.cweid, self.severity)
+        return "<Veracode Flaw: CWE='{}', severity={}>".format(
+                self.cweid, self.severity)
 

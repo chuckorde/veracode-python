@@ -191,7 +191,8 @@ class ExistingApplication(object):
         raise VeracodeBuildError(('The requested build does not exist.'))
 
     def __repr__(self):
-        return "<Veracode Application: name='{}', id={}>".format(self.name, self.id)
+        return "<Veracode Application: name='{}', id={}>".format(
+                self.name, self.id)
 
 
     def save(self):
@@ -298,7 +299,8 @@ class ExistingApplication(object):
         elif isinstance(obj, sandbox.NewSandbox):
             if not obj.id:
                 sandbox_name = obj.name
-                SDK.sandbox.CreateSandbox(app_id=self.id, sandbox_name=sandbox_name)
+                SDK.sandbox.CreateSandbox(
+                        app_id=self.id, sandbox_name=sandbox_name)
                 self._sandboxes = None
                 obj = self._get_sandbox_by_name(sandbox_name)
             self._sandbox = obj
