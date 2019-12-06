@@ -25,6 +25,7 @@ deploy:
     script:
         - export VERSION=$(python3 increment_version.py)
         - echo $VERSION
+        - cat setup.py
 
     only:
         - master
