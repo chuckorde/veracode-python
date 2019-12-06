@@ -18,6 +18,10 @@ unit_test:
 
 deploy:
     stage: deploy
+
+    tags:
+        - python
+
     script:
         - export VERSION=$(python3 increment_version.py)
         - echo $VERSION
