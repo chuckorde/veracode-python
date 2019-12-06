@@ -16,7 +16,6 @@ def update_version(doc, version_function):
         version = re.search('\d\.\d\.\d', lines).group()
         version = semantic_version.Version(version)
         version = getattr(version, version_function)()
-        version = '0.1.0'
         lines = re.sub('\d\.\d\.\d', f'{version}', lines)
 
     with open(doc,'w') as setup:
@@ -24,8 +23,7 @@ def update_version(doc, version_function):
         return version
 
 repo = git.Repo('.')
-commit = repo.head.commit
-version_index = commit.message.split(':')
+version_index = repo.head.commit.message.split(':')
 
 if len(version_index) == 2:
     version_index = version_index[0].upper()

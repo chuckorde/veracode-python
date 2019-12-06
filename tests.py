@@ -6,7 +6,6 @@ if __name__ == '__main__':
     try:
         doctest.testmod(application, raise_on_error=True)
         doctest.testmod(sandbox, raise_on_error=True)
-
     except:
         pass
 
