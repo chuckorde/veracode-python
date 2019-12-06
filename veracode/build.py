@@ -22,9 +22,6 @@ class ExistingBuild(object):
     """ class: veracode.build.ExistingBuild
     """
     def __init__(self, app):
-        # if isinstance(app_id, int):
-        #     self.app_id = app_id
-        #     self.sandbox_id = sandbox_id
         self.app = app
 
     def list(self):
