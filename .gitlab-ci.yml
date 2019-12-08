@@ -43,13 +43,15 @@ gitlab_tag:
     only: # only tag on merge into master
         - master
 
-github_publish:
+github_publish: # Create a release on github
     stage: deploy
 
     tags:
         - python
 
     script:
+        - apt-get update
+        - apt-get install curl git -y
         - export VERSION=$(
             python3 -c'import veracode;
             print(veracode.__version__)')
