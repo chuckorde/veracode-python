@@ -33,7 +33,7 @@ gitlab_tag:
         - git config --global user.name "${GITLAB_USER_LOGIN}"
         - git remote set-url --push origin ${CI_PUSH_URL}
         - git checkout master
-        - git pull origin master
+        - git pull origin master -f
         - export VERSION=$(python3 increment_version.py)
         - git commit -am "Version ${VERSION} [skip ci]"
         - git push origin master
