@@ -16,8 +16,8 @@ unit_test:
             ~/.veracode/credentials
         - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >>
             ~/.veracode/credentials
-        - pip3 install -r requirements.txt
-        - python3 tests.py
+        # - pip3 install -r requirements.txt
+        # - python3 tests.py
 
 gitlab_tag:
     stage: tag
@@ -57,5 +57,4 @@ github_publish: # Create a release on github
             print(veracode.__version__)')
         - sed -e "s/VERSION/$VERSION/g" github_api.json > data
         - curl --data @data 
-          https://api.github.com/repos/chuckorde/veracode-python/releases?
-          access_token=${GITHUB_API_TOKEN}
+          https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
