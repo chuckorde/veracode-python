@@ -14,8 +14,8 @@ unit_test:
         - echo "[DEFAULT]" > ~/.veracode/credentials
         - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >> ~/.veracode/credentials
         - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >> ~/.veracode/credentials
-        # - pip3 install -r requirements.txt
-        # - python3 tests.py
+        - pip3 install -r requirements.txt
+        - python3 tests.py
 
 gitlab_tag:
     stage: tag

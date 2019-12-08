@@ -48,9 +48,9 @@ Using the top level classes you can do fairly complex tasks with a few lines of 
 <Veracode Application: name='verademo', id=552948>
 
 >>> app.build
-<Veracode Build: version='Wed Oct 30 18:31:14 UTC 2019 8522bfa6', id=5347783>
+<Veracode Build: version='Wed Oct 30 18:31 - 8522bfa6', id=5347783>
 
-In[5]: app.policy
+>>> app.policy
 'Production - Critical + SCA'
 
 >>>  app.sandbox
@@ -65,10 +65,10 @@ In[5]: app.policy
 
 >>> app.sandbox = None
 >>> app.build
-<Veracode Build: version='Wed Oct 30 18:31:14 UTC 2019 8522bfa6', id=5347783>
+<Veracode Build: version='Wed Oct 30 18:31 - 8522bfa6', id=5347783>
 
 >>> app.build.report
-<Veracode Report: application='verademo', sandbox='None', build='Wed Oct 30 18:31:14 UTC 2019 8522bfa6', flaws=160>
+<Veracode Report: application='verademo', sandbox='None', build='Wed Oct 30 18:31 - 8522bfa6', flaws=160>
 
 >>> list(app.build.report.flaws)[0]
 <Veracode Flaw: CWE='78', severity=5>
@@ -84,7 +84,7 @@ Returns a python object with a one-to-one mapping to the returned XML.
 ```python
 from veracode import SDK
 
-result = SDK.results.SummaryReport(build_id=4324494) # use a valid id for your app.
+result = SDK.results.SummaryReport(build_id=5347783)
 print('The number of unmitigated flaws is:', result.flaws_not_mitigated)
 ```
 ```
