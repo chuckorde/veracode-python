@@ -64,7 +64,6 @@ github_publish: # Create a release on github
           https://github.com/chuckorde/veracode-python.git
         - git remote -v
         - git checkout master
-        # - git pull origin master
         - git commit -am "Version ${VERSION}"
         - git push origin master
 
