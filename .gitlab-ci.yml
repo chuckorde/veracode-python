@@ -3,6 +3,9 @@ stages:
     - tag
     - deploy
 
+variables:
+  GIT_STRATEGY: clone
+
 unit_test:
     stage: test
 
@@ -29,11 +32,11 @@ gitlab_tag:
         - apt-get update
         - apt-get install git -y
         - pip3 install semantic_version gitpython
-        - git config --global user.email "${GITLAB_USER_EMAIL}"
-        - git config --global user.name "${GITLAB_USER_LOGIN}"
-        - git remote set-url --push origin ${CI_PUSH_URL}
-        - git checkout master
-        - git pull origin master -f
+        # - git config --global user.email "${GITLAB_USER_EMAIL}"
+        # - git config --global user.name "${GITLAB_USER_LOGIN}"
+        # - git remote set-url --push origin ${CI_PUSH_URL}
+        # - git checkout master
+        # - git pull origin master -f
         - export VERSION=$(python3 increment_version.py)
         - git commit -am "Version ${VERSION} [skip ci]"
         - git push origin master
