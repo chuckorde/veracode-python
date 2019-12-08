@@ -52,6 +52,7 @@ github_publish: # Create a release on github
     script:
         - apt-get update
         - apt-get install curl git -y
+        - pip3 install -r requirements.txt
         - export VERSION=$(
             python3 -c'import veracode;
             print(veracode.__version__)')
