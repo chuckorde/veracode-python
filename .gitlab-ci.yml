@@ -12,8 +12,10 @@ unit_test:
     script: # Set up API credentials and run tests
         - mkdir ~/.veracode
         - echo "[DEFAULT]" > ~/.veracode/credentials
-        - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >> ~/.veracode/credentials
-        - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >> ~/.veracode/credentials
+        - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >>
+            ~/.veracode/credentials
+        - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >>
+            ~/.veracode/credentials
         - pip3 install -r requirements.txt
         - python3 tests.py
 
@@ -23,7 +25,7 @@ gitlab_tag:
     tags:
         - python
 
-    script: # Update package version and create a tag 
+    script: # Update package version and create a tag
         - apt-get update
         - apt-get install git -y
         - pip3 install semantic_version gitpython
@@ -40,3 +42,18 @@ gitlab_tag:
 
     only: # only tag on merge into master
         - master
+
+github_publish:
+    stage: deploy
+
+    tags:
+        - python
+
+    script:
+        - export VERSION=$(
+            python3 -c'import veracode;
+            print(veracode.__version__)')
+        - sed -e "s/VERSION/$VERSION/g" github_api.json > data
+        - curl --data @data 
+          https://api.github.com/repos/chuckorde/veracode-python/releases?
+          access_token=${GITHUB_API_TOKEN}
