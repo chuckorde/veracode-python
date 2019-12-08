@@ -32,8 +32,8 @@ gitlab_tag:
         - apt-get update
         - apt-get install git -y
         - pip3 install semantic_version gitpython
-        # - git config --global user.email "${GITLAB_USER_EMAIL}"
-        # - git config --global user.name "${GITLAB_USER_LOGIN}"
+        - git config --global user.email "${GITLAB_USER_EMAIL}"
+        - git config --global user.name "${GITLAB_USER_LOGIN}"
         # - git remote set-url --push origin ${CI_PUSH_URL}
         # - git checkout master
         # - git pull origin master -f
