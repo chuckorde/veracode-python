@@ -61,7 +61,7 @@ github_publish: # Create a release on github
         - git config user.email "chuckorde@gmail.com"
         - git config user.name "chuckorde"
         - git remote set-url --push origin
-          https://github.com/chuckorde/veracode-python
+          https://github.com/chuckorde/veracode-python.git
         - git checkout master
         - git pull origin master
         - git commit -am "Version ${VERSION}"
