@@ -32,11 +32,12 @@ gitlab_tag:
         - apt-get update
         - apt-get install git -y
         - pip3 install semantic_version gitpython
+        - export VERSION=$(python3 increment_version.py)
+        - echo ${VERSION}
         - git config --global user.email "${GITLAB_USER_EMAIL}"
         - git config --global user.name "${GITLAB_USER_LOGIN}"
         - git remote set-url --push origin ${CI_PUSH_URL}
-        - export VERSION=$(python3 increment_version.py)
-        - echo ${VERSION}
+        - git checkout master
         - git commit -am "Version ${VERSION} [skip ci]"
         - git push origin master
         - git tag -a v${VERSION} -m "Version ${VERSION}"
@@ -62,7 +63,7 @@ github_publish: # Create a release on github
         - git remote set-url origin
           https://github.com/chuckorde/veracode-python.git
         - git remote -v
-        # - git checkout master
+        - git checkout master
         # - git pull origin master
         - git commit -am "Version ${VERSION}"
         - git push origin master
