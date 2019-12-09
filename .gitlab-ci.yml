@@ -42,11 +42,7 @@ gitlab_tag:
         - git checkout master
 
         # Create badges. 37 pieces of flare.
-        - python3 cicd/make_badge.py
-        # - export SCORE=$(python -c"from veracode import Application as App;print(App('verademo').build.report.static_analysis.score)")
-        # - export COLOR=brightgreen
-        # - sed -i "s/[0-9]\{2,3\}/${SCORE}/g" cicd/veracode_score.json
-        # - sed -Ei "s/(brightgreen|red)/${COLOR}/g" cicd/veracode_score.json
+        - python3 cicd/make_badge.py ${CI_PROJECT_NAME}
 
         # Push updates to gitlab
         - export VERSION=$(python3 cicd/increment_version.py)
