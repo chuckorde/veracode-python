@@ -58,6 +58,7 @@ github_publish: # Create a release on github
         - apt-get update
         - apt-get install git curl git -y
         - echo $GITHUB_SSH_KEY
+        - eval $(ssh-agent -s)
         - echo ${GITHUB_SSH_KEY} | ssh-add -
         - mkdir -p ~/.ssh
         - chmod 700 ~/.ssh
