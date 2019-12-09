@@ -59,6 +59,7 @@ github_publish: # Create a release on github
         - apt-get install curl git -y
         - pip3 install -r requirements.txt
 
+        # Set up github ssh key
         - mkdir -p ~/.ssh
         - echo "${GITHUB_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
         - ssh-keyscan -H github.com > ~/.ssh/known_hosts
@@ -76,15 +77,12 @@ github_publish: # Create a release on github
         - git config --global user.name "chuckorde@gmail.com"
         - git remote set-url origin
           git@github.com:chuckorde/veracode-python.git
-        - git remote -v
-        - git pull origin master
-        # - git push --set-upstream origin master
         - git add LICENSE.txt README.md setup.* veracode
         - git status
+        - git pull --allow-unrelated-histories
         - git commit -m "Version ${VERSION}"
         - git push --set-upstream origin master
-        # - git push origin master
-        #
+
         # # Create release
         # - sed -e "s/VERSION/$VERSION/g" github_api.json > data
         # - curl --data @data
