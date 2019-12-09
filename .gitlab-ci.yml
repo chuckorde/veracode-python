@@ -38,6 +38,7 @@ gitlab_tag:
         - git remote -v
         - git checkout master
         - export VERSION=$(python3 increment_version.py)
+        - echo $VERSION
         - git commit -am "Version ${VERSION} [skip ci]"
         # - git push origin master
         - git push --set-upstream origin master
