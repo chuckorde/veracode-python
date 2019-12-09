@@ -6,7 +6,7 @@ stages:
 variables:
   GIT_STRATEGY: clone
 
-.veracode_credentials: &veracode_credentials
+.template: &veracode_credentials
     script:
         - mkdir ~/.veracode
         - echo "[DEFAULT]" > ~/.veracode/credentials
@@ -37,7 +37,6 @@ gitlab_tag:
     tags:
         - python
 
-    <<: *veracode_credentials
     script: # Update package version and create a tag
         - apt-get update
         - apt-get install git -y
@@ -53,6 +52,7 @@ gitlab_tag:
         - git checkout master
 
         # Create badges. 37 pieces of flare.
+        - *veracode_credentials
         - python3 cicd/make_badge.py ${CI_PROJECT_NAME}
 
         # Push updates to gitlab
