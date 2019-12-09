@@ -1,11 +1,10 @@
 stages:
     - test
-    - tag
+    - package
     - deploy
 
 variables:
   GIT_STRATEGY: clone
-  VVERSION: "NONE"
 
 .template: &veracode_credentials |
     mkdir ~/.veracode
@@ -13,17 +12,17 @@ variables:
     echo "VERACODE_API_ID = ${VERACODE_API_ID}" >> ~/.veracode/credentials
     echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >> ~/.veracode/credentials
 
-# run_unit_test:
-#     stage: test
-#     tags: python
-#
-#     script: # Set up API credentials and run tests
-        # - *veracode_credentials
-#         - pip3 install -r cicd/requirements.txt
-#         - python3 tests.py
+run_unit_test:
+    stage: test
+    tags: python
 
-gitlab_tag:
-    stage: tag
+    script: # Set up API credentials and run tests
+        - *veracode_credentials
+        - pip3 install -r cicd/requirements.txt
+        - python3 tests.py
+
+package gitlab repo:
+    stage: package
     tags: 
         - python
 
@@ -37,12 +36,12 @@ gitlab_tag:
         # Configure repo
         - git config user.email "${GITLAB_USER_EMAIL}"
         - git config user.name "${GITLAB_USER_LOGIN}"
-        - git remote set-url origin ${CI_PUSH_URL}
+        - git remote set-url origin "${CI_PUSH_URL}"
         - git checkout master
 
         # Create badges. 37 pieces of flare.
         - *veracode_credentials
-        - python3 cicd/make_badge.py ${CI_PROJECT_NAME}
+        - python3 cicd/make_badge.py "${CI_PROJECT_NAME}"
 
         # Push updates to gitlab
         - export VERSION=$(python3 cicd/increment_version.py)
@@ -51,17 +50,14 @@ gitlab_tag:
         - git tag -a v${VERSION} -m "Version ${VERSION}"
         - git push origin v${VERSION}
 
-        - echo $VVERSION
-        - export VVERSION=$VERSION
-
     only: 
         - master # only tag on merge into master
 
 
-github_release: # Create a release on github
+publish github release: # Create a release on github
     stage: deploy
     tags: 
-        -python
+        - python
 
     script:
         - apt-get update
@@ -83,33 +79,32 @@ github_release: # Create a release on github
         - git remote set-url origin
           git@github.com:chuckorde/veracode-python.git
         - git rm -r --cache *
-
         - export VERSION=$(
             python3 -c'import veracode;
             print(veracode.__version__)')
         - git add LICENSE.txt README.md setup.* veracode cicd
         - git commit -m "Version ${VERSION}"
         - git push --set-upstream origin master --force
-        - echo $VVERSION
 
         # Create release
-        # - sed -e "s/VERSION/$VERSION/g" cicd/github_api.json > data
-        # - curl --data @data
-        #   https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
+        - sed -e "s/VERSION/$VERSION/g" cicd/github_api.json > data
+        - curl --data @data
+          https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
 
     only:
         - master # only deploy on merge into master
 
-# pypi_publish: # publish on PyPi
-#     stage: deploy
-    # tags: 
-    #     - python
-#
-#     script:
-#          - rm -rf dist
-#          - pip3 install twine
-#          - python3 setup.py sdist
-#          - twine upload dist/*
-#
-    # only: 
-    #     - master # only on merge into master
+publish to pypi: # publish on PyPi
+    stage: deploy
+    tags: 
+        - python
+
+    script:
+         - rm -rf dist
+         - pip3 install twine
+         - python3 setup.py sdist
+         - twine upload dist/*
+
+    only: 
+        - master # only on merge into master
+# define TWINE_USER...
