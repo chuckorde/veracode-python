@@ -83,7 +83,7 @@ github_publish: # Create a release on github
         - git add LICENSE.txt README.md setup.* veracode
         - git status
         - git commit -m "Version ${VERSION}"
-        - git push origin master
+        - git push origin master --force
         #
         # # Create release
         # - sed -e "s/VERSION/$VERSION/g" github_api.json > data
