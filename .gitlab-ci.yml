@@ -46,7 +46,7 @@ gitlab_tag:
     only: # only tag on merge into master
         - master
 
-github_publish: # Create a release on github
+github_release: # Create a release on github
     stage: deploy
 
     tags:
@@ -87,3 +87,17 @@ github_publish: # Create a release on github
 
     only: # only deploy on merge into master
         - master
+
+pypi_publish:
+    stage: deploy
+
+    tags:
+        - python
+
+     script:
+         - pip3 install twine
+         - python3 setup.py sdist
+         - twine upload dist/*
+
+     only:
+         - master
