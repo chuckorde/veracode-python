@@ -62,6 +62,7 @@ github_publish: # Create a release on github
         - echo "${GITHUB_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
         - mkdir -p ~/.ssh
         - chmod 400 ~/.ssh
+        - echo "${GITHUB_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
         - git config --global user.email "chuckorde@gmail.com"
         - git config --global user.name "chuckorde@gmail.com"
         - ssh -vT git@github.com
