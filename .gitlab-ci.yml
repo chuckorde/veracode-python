@@ -35,10 +35,10 @@ gitlab_tag:
         - git config --global user.email "${GITLAB_USER_EMAIL}"
         - git config --global user.name "${GITLAB_USER_LOGIN}"
         - git remote set-url --push origin ${CI_PUSH_URL}
-        - git checkout master
         - export VERSION=$(python3 increment_version.py)
         - echo ${VERSION}
         - git commit -am "Version ${VERSION} [skip ci]"
+        - git checkout master
         - git push origin master
         - git tag -a v${VERSION} -m "Version ${VERSION}"
         - git push origin v${VERSION}
