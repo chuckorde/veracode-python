@@ -81,8 +81,9 @@ github_publish: # Create a release on github
         - git add LICENSE.txt README.md setup.* veracode
         - git status
         - git commit -m "Version ${VERSION}"
-        - git push --set-upstream origin master
-        # - git push origin master
+        - git rebase origin/master
+        # - git push --set-upstream origin master
+        - git push origin master
         #
         # # Create release
         # - sed -e "s/VERSION/$VERSION/g" github_api.json > data
