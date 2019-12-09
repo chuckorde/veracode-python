@@ -43,6 +43,12 @@ gitlab_tag:
         - git checkout master
 
         # Create badges. 37 pieces of flare.
+        - mkdir ~/.veracode
+        - echo "[DEFAULT]" > ~/.veracode/credentials
+        - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >>
+            ~/.veracode/credentials
+        - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >>
+            ~/.veracode/credentials
         - python3 cicd/make_badge.py ${CI_PROJECT_NAME}
 
         # Push updates to gitlab
