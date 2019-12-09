@@ -94,10 +94,10 @@ pypi_publish:
     tags:
         - python
 
-     script:
+    script:
          - pip3 install twine
          - python3 setup.py sdist
          - twine upload dist/*
 
-     only:
-         - master
+    only:
+        - master
