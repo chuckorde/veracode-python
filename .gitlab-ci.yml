@@ -54,7 +54,8 @@ gitlab_tag:
         - echo $VVERSION
         - export VVERSION=$VERSION
 
-    only: master # only tag on merge into master
+    only: 
+        - master # only tag on merge into master
 
 
 github_release: # Create a release on github
@@ -96,7 +97,8 @@ github_release: # Create a release on github
         # - curl --data @data
         #   https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
 
-    only: master # only deploy on merge into master
+    only:
+        - master # only deploy on merge into master
 
 # pypi_publish: # publish on PyPi
 #     stage: deploy
@@ -109,4 +111,5 @@ github_release: # Create a release on github
 #          - python3 setup.py sdist
 #          - twine upload dist/*
 #
-#     only: master # only on merge into master
+    # only: 
+    #     - master # only on merge into master
