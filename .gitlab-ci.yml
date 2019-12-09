@@ -57,9 +57,9 @@ github_publish: # Create a release on github
     script:
         - apt-get update
         - apt-get install git curl git -y
-        - echo "${GITHUB_SSH_KEY}"
+        - echo "${GITHUB_SSH_PRIVATE_KEY}"
         - eval $(ssh-agent -s)
-        - echo "${GITHUB_SSH_KEY}" | tr -d '\r' | ssh-add -
+        - echo "${GITHUB_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
         - mkdir -p ~/.ssh
         - chmod 700 ~/.ssh
         - ssh -T git@gitlab.com
