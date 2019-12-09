@@ -1,2 +1,2 @@
-# from veracode import SDK, API
+from application import Application
 __version__ = '0.1.39'

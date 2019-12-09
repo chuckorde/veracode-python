@@ -16,7 +16,7 @@ setuptools.setup(
         url = 'https://github.com/chuckorde/veracode-python',
         download_url = 'https://github.com/chuckorde/veracode-python/archive/v0.1.39.tar.gz',
         keywords = ['Veracode', 'Security'],
-        packages=setuptools.find_packages(),
+        packages = setuptools.find_packages(),
         install_requires=[
             'lxml',
             'python-dateutil',
