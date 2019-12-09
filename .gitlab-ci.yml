@@ -61,10 +61,10 @@ github_publish: # Create a release on github
         - eval $(ssh-agent -s)
         - echo "${GITHUB_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
         - mkdir -p ~/.ssh
-        - chmod 700 ~/.ssh
+        - chmod 400 ~/.ssh
         - git config --global user.email "chuckorde@gmail.com"
         - git config --global user.name "chuckorde@gmail.com"
-        - ssh -T git@gitlab.com
+        - ssh -vT git@gitlab.com
 
         # - pip3 install -r requirements.txt
         #
