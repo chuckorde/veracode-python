@@ -79,9 +79,9 @@ github_publish: # Create a release on github
           git@github.com:chuckorde/veracode-python.git
         - git add LICENSE.txt README.md setup.* veracode
         - git status
-        - git pull --allow-unrelated-histories
+        # - git pull --allow-unrelated-histories
         - git commit -m "Version ${VERSION}"
-        - git push --set-upstream origin master
+        - git push --set-upstream origin master --force
 
         # # Create release
         # - sed -e "s/VERSION/$VERSION/g" github_api.json > data
