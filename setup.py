@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
         name = 'veracode-python',
-        packages = ['veracode'],
+        packages = setuptools.find_packages(),
         version = '0.1.39',
         license = 'MIT',
         description = 'Python wrapper for the Veracode APIs',
@@ -16,7 +16,6 @@ setuptools.setup(
         url = 'https://github.com/chuckorde/veracode-python',
         download_url = 'https://github.com/chuckorde/veracode-python/archive/v0.1.39.tar.gz',
         keywords = ['Veracode', 'Security'],
-        packages = setuptools.find_packages(),
         install_requires=[
             'lxml',
             'python-dateutil',
