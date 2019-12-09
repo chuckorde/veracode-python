@@ -32,7 +32,8 @@ gitlab_tag:
         - apt-get update
         - apt-get install git -y
         - pip3 install semantic_version gitpython
-        - pip3 install -r cicd/requirements.txt
+        # ouroboros
+        - pip3 install veracode-python
         
         # Set up ssh key
         # Configure repo
@@ -42,7 +43,6 @@ gitlab_tag:
         - git checkout master
 
         # Create badges. 37 pieces of flare.
-        - ls -la
         - python3 cicd/make_badge.py ${CI_PROJECT_NAME}
 
         # Push updates to gitlab
