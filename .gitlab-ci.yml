@@ -46,43 +46,43 @@ gitlab_tag:
     only: # only tag on merge into master
         - master
 
-# github_publish: # Create a release on github
-#     stage: deploy
-#
-#     tags:
-#         - python
-#
-#     script:
-#         - apt-get update
-#         - apt-get install curl git -y
-#         - pip3 install -r requirements.txt
-#
-#         # Set up github ssh key
-#         - mkdir -p ~/.ssh
-#         - echo "${GITHUB_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
-#         - ssh-keyscan -H github.com > ~/.ssh/known_hosts
-#         - eval $(ssh-agent -s)
-#         - chmod -R 400 ~/.ssh
-#         - ssh-add ~/.ssh/id_rsa
-#
-#         # Push updates to github
-#         - git checkout master
-#         - export VERSION=$(
-#             python3 -c'import veracode;
-#             print(veracode.__version__)')
-#         - git config --global user.email "chuckorde@gmail.com"
-#         - git config --global user.name "chuckorde@gmail.com"
-#         - git remote set-url origin
-#           git@github.com:chuckorde/veracode-python.git
-#         - git add LICENSE.txt README.md setup.* veracode
-#         - git commit -m "Version ${VERSION}"
-#         - git push --set-upstream origin master --force
-#
-#         # # Create release
-#         # - sed -e "s/VERSION/$VERSION/g" github_api.json > data
-#         # - curl --data @data
-#         #   https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
-#
-#     only: # only deploy on merge into master
-#         - master
-#
+github_publish: # Create a release on github
+    stage: deploy
+
+    tags:
+        - python
+
+    script:
+        - apt-get update
+        - apt-get install curl git -y
+        - pip3 install -r requirements.txt
+
+        # Set up github ssh key
+        - mkdir -p ~/.ssh
+        - echo "${GITHUB_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+        - ssh-keyscan -H github.com > ~/.ssh/known_hosts
+        - eval $(ssh-agent -s)
+        - chmod -R 400 ~/.ssh
+        - ssh-add ~/.ssh/id_rsa
+
+        # Push updates to github
+        - git checkout master
+        - export VERSION=$(
+            python3 -c'import veracode;
+            print(veracode.__version__)')
+        - git config --global user.email "chuckorde@gmail.com"
+        - git config --global user.name "chuckorde@gmail.com"
+        - git remote set-url origin
+          git@github.com:chuckorde/veracode-python.git
+        - git add LICENSE.txt README.md setup.* veracode
+        - git commit -m "Version ${VERSION}"
+        - git push --set-upstream origin master --force
+
+        # Create release
+        - sed -e "s/VERSION/$VERSION/g" github_api.json > data
+        - curl --data @data
+          https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
+
+    only: # only deploy on merge into master
+        - master
+
