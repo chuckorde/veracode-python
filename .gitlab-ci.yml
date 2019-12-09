@@ -6,48 +6,45 @@ stages:
 variables:
   GIT_STRATEGY: clone
 
-unit_test:
-    stage: test
-
-    tags:
-        - python
-
-    script: # Set up API credentials and run tests
-        - mkdir ~/.veracode
-        - echo "[DEFAULT]" > ~/.veracode/credentials
-        - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >>
-            ~/.veracode/credentials
-        - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >>
-            ~/.veracode/credentials
-        - pip3 install -r requirements.txt
-        - python3 tests.py
-
-     only:
-         - dev
-
-gitlab_tag:
-    stage: tag
-
-    tags:
-        - python
-
-    script: # Update package version and create a tag
-        - apt-get update
-        - apt-get install git -y
-        - pip3 install semantic_version gitpython
-        - git config --global user.email "${GITLAB_USER_EMAIL}"
-        - git config --global user.name "${GITLAB_USER_LOGIN}"
-        - git remote set-url --push origin ${CI_PUSH_URL}
-        - export VERSION=$(python3 increment_version.py)
-        - echo ${VERSION}
-        - git commit -am "Version ${VERSION} [skip ci]"
-        # - git checkout master
-        - git push origin master
-        - git tag -a v${VERSION} -m "Version ${VERSION}"
-        - git push origin v${VERSION}
-
-    only: # only tag on merge into master
-        - dev
+# unit_test:
+#     stage: test
+#
+#     tags:
+#         - python
+#
+#     script: # Set up API credentials and run tests
+#         - mkdir ~/.veracode
+#         - echo "[DEFAULT]" > ~/.veracode/credentials
+#         - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >>
+#             ~/.veracode/credentials
+#         - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >>
+#             ~/.veracode/credentials
+#         - pip3 install -r requirements.txt
+#         - python3 tests.py
+#
+# gitlab_tag:
+#     stage: tag
+#
+#     tags:
+#         - python
+#
+#     script: # Update package version and create a tag
+#         - apt-get update
+#         - apt-get install git -y
+#         - pip3 install semantic_version gitpython
+#         - git config --global user.email "${GITLAB_USER_EMAIL}"
+#         - git config --global user.name "${GITLAB_USER_LOGIN}"
+#         - git remote set-url --push origin ${CI_PUSH_URL}
+#         - export VERSION=$(python3 increment_version.py)
+#         - echo ${VERSION}
+#         - git commit -am "Version ${VERSION} [skip ci]"
+#         # - git checkout master
+#         - git push origin master
+#         - git tag -a v${VERSION} -m "Version ${VERSION}"
+#         - git push origin v${VERSION}
+#
+#     only: # only tag on merge into master
+#         - master
 
 github_publish: # Create a release on github
     stage: deploy
