@@ -6,14 +6,11 @@ stages:
 variables:
   GIT_STRATEGY: clone
 
-.template: &veracode_credentials
-    script:
-        - mkdir ~/.veracode
-        - echo "[DEFAULT]" > ~/.veracode/credentials
-        - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >>
-            ~/.veracode/credentials
-        - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >>
-            ~/.veracode/credentials
+.template: &veracode_credentials |
+    mkdir ~/.veracode
+    echo "[DEFAULT]" > ~/.veracode/credentials
+    echo "VERACODE_API_ID = ${VERACODE_API_ID}" >> ~/.veracode/credentials
+    echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >> ~/.veracode/credentials
 
 # run_unit_test:
 #     stage: test
