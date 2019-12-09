@@ -113,4 +113,3 @@ github_release: # Create a release on github
 #
 #     only:
 #         - master # only on merge into master
-
