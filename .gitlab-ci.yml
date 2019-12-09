@@ -39,6 +39,7 @@ gitlab_tag:
         - git remote -v
         - git commit -am "Version ${VERSION} [skip ci]"
         # - git checkout master
+        - git checkout dev
         # - git push origin master
         - git push --set-upstream origin dev
         # - git push --set-upstream origin master
