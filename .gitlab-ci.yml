@@ -95,6 +95,7 @@ pypi_publish:
         - python
 
     script:
+         - rm -rf dist
          - pip3 install twine
          - python3 setup.py sdist
          - twine upload dist/*
