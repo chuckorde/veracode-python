@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
   "label": "Veracode Policy Score",
-  "message": "50",
-  "color": "red"
+  "message": "100",
+  "color": "brightgreen"
 }
