@@ -60,10 +60,10 @@ github_publish: # Create a release on github
         - pip3 install -r requirements.txt
 
         - mkdir -p ~/.ssh
-        - chmod 400 ~/.ssh
         - echo "${GITHUB_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
         - ssh-keyscan -H github.com > ~/.ssh/known_hosts
         - eval $(ssh-agent -s)
+        - chmod -R 400 ~/.ssh
         - ssh-add ~/.ssh/id_rsa
 
         # Push updates to github
