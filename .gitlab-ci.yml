@@ -61,10 +61,10 @@ github_publish: # Create a release on github
 
         - mkdir -p ~/.ssh
         - chmod 400 ~/.ssh
-        - eval $(ssh-agent -s)
-        - echo "${GITHUB_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
         - echo "${GITHUB_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
         - ssh-keyscan -H github.com > ~/.ssh/known_hosts
+        - eval $(ssh-agent -s)
+        - ssh-add ~/.ssh/id_rsa
 
         # Push updates to github
         - git checkout master
