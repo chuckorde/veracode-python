@@ -41,12 +41,12 @@ gitlab_tag:
         - git checkout master
 
         # Create badges
-        - echo \{
-             "schemaVersion": 1\,
-             "label": "Veracode Policy Score"\,
-             "message": "100"\,
-             "color": "brightgreen"
-        \} > badges/veracode_score.json
+        - echo "{
+             \"schemaVersion\": 1,
+             \"label\": \"Veracode Policy Score\",
+             \"message\": "100",
+             \"color\": "brightgreen"
+        }" > badges/veracode_score.json
 
         # Push updates to gitlab
         - export VERSION=$(python3 increment_version.py)
