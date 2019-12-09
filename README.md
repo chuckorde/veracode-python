@@ -1,5 +1,6 @@
 # Veracode API wrapper
-[!veracode badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/chuckorde/badgetests/master/cicd/veracode_score.json)](https://veracode.com)
+[[!veracode badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/chuckorde/badgetests/master/cicd/veracode_score.json)](https://veracode.com)]
+
 ### A python wrapper for communicating with the [Veracode](https://www.veracode.com) APIs.
 This python module currently supports the following APIs.
 - [Results](https://help.veracode.com/reader/LMv_dtSHyb7iIxAQznC~9w/WgCXPStuSb3isrDrHlmV9Q)
