@@ -63,7 +63,7 @@ github_publish: # Create a release on github
         - mkdir -p ~/.ssh
         - chmod 700 ~/.ssh
         - git config --global user.email "chuckorde@gmail.com"
-        - git config --global user.name "chuckorde#gmail.com"
+        - git config --global user.name "chuckorde@gmail.com"
         - ssh -T git@gitlab.com
 
         # - pip3 install -r requirements.txt
