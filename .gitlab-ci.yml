@@ -57,16 +57,15 @@ github_publish: # Create a release on github
     script:
         - apt-get update
         - apt-get install curl git -y
+        - mkdir -p ~/.ssh
+        - chmod 400 ~/.ssh
         - echo "${GITHUB_SSH_PRIVATE_KEY}"
         - eval $(ssh-agent -s)
         - echo "${GITHUB_SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
-        - mkdir -p ~/.ssh
-        - chmod 400 ~/.ssh
         - echo "${GITHUB_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
         - git config --global user.email "chuckorde@gmail.com"
         - git config --global user.name "chuckorde@gmail.com"
-        - ls -al ~
-        - cat ~/.ssh/id_rsa
+        - ls -al ~/.ssh
         - ssh -i ~/.ssh/id_rsa -vT git@github.com
 
         # - pip3 install -r requirements.txt
