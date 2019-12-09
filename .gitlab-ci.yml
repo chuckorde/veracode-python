@@ -42,6 +42,7 @@ gitlab_tag:
         - git checkout master
 
         # Create badges. 37 pieces of flare.
+        - ls -la
         - python3 cicd/make_badge.py ${CI_PROJECT_NAME}
 
         # Push updates to gitlab
