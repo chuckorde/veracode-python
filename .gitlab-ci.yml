@@ -79,7 +79,7 @@ github_publish: # Create a release on github
         # - git remote set-url --push origin
         #   https://github.com/chuckorde/veracode-python.git
         - git remote -v
-        - git push --set-upstream origin master
+        # - git push --set-upstream origin master
         - git add LICENSE.txt README.md setup.* veracode
         - git status
         - git commit -m "Version ${VERSION}"
