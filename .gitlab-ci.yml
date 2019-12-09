@@ -19,7 +19,7 @@ variables:
 #             ~/.veracode/credentials
 #         - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >>
 #             ~/.veracode/credentials
-#         - pip3 install -r requirements.txt
+#         - pip3 install -r cicd/requirements.txt
 #         - python3 tests.py
 
 gitlab_tag:
@@ -40,16 +40,12 @@ gitlab_tag:
         - git remote set-url origin ${CI_PUSH_URL}
         - git checkout master
 
-        # Create badges
-        - echo "\{
-            \"schemaVersion\": 1\,
-            \"label\": \"Veracode Policy Score\"\,
-            \"message\": "100"\,
-            \"color\": "brightgreen"
-        \}" > badges/veracode_score.json
+        # Create badges. 37 pieces of flare.
+        sed -i "s/[0-9]\{2,3\}/${SCORE}/g" cicd/veracode_score.json
+        sed -i "s/(brightgreen|red)/${COLOR}/g" cicd/veracode_score.json
 
         # Push updates to gitlab
-        - export VERSION=$(python3 increment_version.py)
+        - export VERSION=$(python3 cicd/increment_version.py)
         - git commit -am "Version ${VERSION} [skip ci]"
         - git push --set-upstream origin master
         - git tag -a v${VERSION} -m "Version ${VERSION}"
@@ -68,7 +64,7 @@ github_release: # Create a release on github
     script:
         - apt-get update
         - apt-get install curl git -y
-        - pip3 install -r requirements.txt
+        - pip3 install -r cicd/requirements.txt
 
         # Set up github ssh key
         - mkdir -p ~/.ssh
@@ -94,7 +90,7 @@ github_release: # Create a release on github
         - git push --set-upstream origin master --force
 
         # Create release
-        # - sed -e "s/VERSION/$VERSION/g" github_api.json > data
+        # - sed -e "s/VERSION/$VERSION/g" cicd/github_api.json > data
         # - curl --data @data
         #   https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
 
