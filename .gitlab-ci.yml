@@ -57,6 +57,7 @@ github_publish: # Create a release on github
     script:
         - apt-get update
         - apt-get install curl git -y
+        - ls -la ~/ ; rm -rf ~/.ssh
         - mkdir -p ~/.ssh
         - chmod 400 ~/.ssh
         - echo "${GITHUB_SSH_PRIVATE_KEY}"
