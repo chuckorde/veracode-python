@@ -32,6 +32,7 @@ gitlab_tag:
         - apt-get update
         - apt-get install git -y
         - pip3 install semantic_version gitpython
+        - pip3 install -r cicd/requirements.txt
         
         # Set up ssh key
         # Configure repo
