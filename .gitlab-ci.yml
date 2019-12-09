@@ -12,9 +12,10 @@ variables:
     echo "VERACODE_API_ID = ${VERACODE_API_ID}" >> ~/.veracode/credentials
     echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >> ~/.veracode/credentials
 
-run_unit_test:
+run unit tests:
     stage: test
-    tags: python
+    tags: 
+        - python
 
     script: # Set up API credentials and run tests
         - *veracode_credentials
