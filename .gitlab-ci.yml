@@ -78,15 +78,16 @@ github_release: # Create a release on github
 
         # Push updates to github
         - git checkout master
-        - export VERSION=$(
-            python3 -c'import veracode;
-            print(veracode.__version__)')
         - git config --global user.email "chuckorde@gmail.com"
         - git config --global user.name "chuckorde@gmail.com"
         - git remote set-url origin
           git@github.com:chuckorde/veracode-python.git
         - git rm -r --cache *
-        - find . -name '__pycache__' -exec rm -rf "{}" +
+        # - find . -name '__pycache__' -exec rm -rf "{}" +
+
+        - export VERSION=$(
+            python3 -c'import veracode;
+            print(veracode.__version__)')
         - git add LICENSE.txt README.md setup.* veracode cicd
         - git commit -m "Version ${VERSION}"
         - git push --set-upstream origin master --force
