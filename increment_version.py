@@ -13,10 +13,10 @@ actions = {
 def update_version(doc, version_function):
     with open(doc) as setup:
         lines = setup.read()
-        version = re.search('\d\.\d\.\d', lines).group()
+        version = re.search('\d+\.\d+\.\d+', lines).group()
         version = semantic_version.Version(version)
         version = getattr(version, version_function)()
-        lines = re.sub('\d\.\d\.\d', f'{version}', lines)
+        lines = re.sub('\d+\.\d+\.\d+', f'{version}', lines)
 
     with open(doc,'w') as setup:
         setup.write(lines)

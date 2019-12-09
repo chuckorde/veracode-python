@@ -35,7 +35,6 @@ gitlab_tag:
         - git config --global user.email "${GITLAB_USER_EMAIL}"
         - git config --global user.name "${GITLAB_USER_LOGIN}"
         - git remote set-url origin ${CI_PUSH_URL}
-        - git remote -v
         - git checkout master
         - export VERSION=$(python3 increment_version.py)
         - echo $VERSION
