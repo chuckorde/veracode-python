@@ -24,7 +24,8 @@ variables:
 
 gitlab_tag:
     stage: tag
-    tags: python
+    tags: 
+        - python
 
     script: # Update package version and create a tag
         - apt-get update
@@ -58,7 +59,8 @@ gitlab_tag:
 
 github_release: # Create a release on github
     stage: deploy
-    tags: python
+    tags: 
+        -python
 
     script:
         - apt-get update
@@ -98,7 +100,8 @@ github_release: # Create a release on github
 
 # pypi_publish: # publish on PyPi
 #     stage: deploy
-#     tags: python
+    # tags: 
+    #     - python
 #
 #     script:
 #          - rm -rf dist
