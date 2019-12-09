@@ -1,5 +1,5 @@
 # Veracode API wrapper
-
+[!veracode badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/chuckorde/badgetests/master/badges/badge.json)](https://veracode.com)
 ### A python wrapper for communicating with the [Veracode](https://www.veracode.com) APIs.
 This python module currently supports the following APIs.
 - [Results](https://help.veracode.com/reader/LMv_dtSHyb7iIxAQznC~9w/WgCXPStuSb3isrDrHlmV9Q)
@@ -48,7 +48,7 @@ Using the top level classes you can do fairly complex tasks with a few lines of 
 <Veracode Application: name='verademo', id=552948>
 
 >>> app.build
-<Veracode Build: version='Wed Oct 30 18:31 - 8522bfa6', id=5347783>
+<Veracode Build: version='Wed Oct 30 - 8522bfa6', id=5347783>
 
 >>> app.policy
 'Production - Critical + SCA'
@@ -65,10 +65,10 @@ Using the top level classes you can do fairly complex tasks with a few lines of 
 
 >>> app.sandbox = None
 >>> app.build
-<Veracode Build: version='Wed Oct 30 18:31 - 8522bfa6', id=5347783>
+<Veracode Build: version='Wed Oct 30 - 8522bfa6', id=5347783>
 
 >>> app.build.report
-<Veracode Report: application='verademo', sandbox='None', build='Wed Oct 30 18:31 - 8522bfa6', flaws=160>
+<Veracode Report: application='verademo', sandbox='None', build='Wed Oct 30 - 8522bfa6', flaws=160>
 
 >>> list(app.build.report.flaws)[0]
 <Veracode Flaw: CWE='78', severity=5>
