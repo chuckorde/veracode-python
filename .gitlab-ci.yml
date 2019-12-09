@@ -86,3 +86,4 @@ gitlab_tag:
 #
 #     only: # only deploy on merge into master
 #         - master
+#
