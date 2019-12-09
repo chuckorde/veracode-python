@@ -1,10 +1,16 @@
-from distutils.core import setup
-setup(
+import setuptools
+
+with open('README.md', 'r') as f:
+    long_description = f.read()
+
+setuptools.setup(
         name = 'veracode-python',
-        packages = ['veracode-python'],
+        packages = ['veracode'],
         version = '0.1.33',
         license = 'MIT',
         description = 'Python wrapper for the Veracode APIs',
+        long_description=long_description,
+        long_description_content_type='text/markdown',
         author = 'Chuck Orde',
         author_email = 'chuckorde@gmail.com',
         url = 'https://github.com/chuckorde/veracode-python',
@@ -20,11 +26,11 @@ setup(
         classifiers=[
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
-            'Topic :: Software Development :: Build Tools',
             'License :: OSI Approved :: MIT License',
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6',
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
          ],
+        python_requires='>=3.5',
 )
