@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
         name = 'veracode-python',
         packages = ['veracode-python'],
-        version = '0.1.30',
+        version = '0.1.31',
         license = 'MIT',
         description = 'Python wrapper for the Veracode APIs',
         author = 'Chuck Orde',
         author_email = 'chuckorde@gmail.com',
         url = 'https://github.com/chuckorde/veracode-python',
-        download_url = 'https://github.com/chuckorde/veracode-python/archive/v0.1.30.tar.gz',
+        download_url = 'https://github.com/chuckorde/veracode-python/archive/v0.1.31.tar.gz',
         keywords = ['Veracode', 'Security'],
         install_requires=[
             'lxml',
