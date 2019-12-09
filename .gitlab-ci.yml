@@ -44,8 +44,8 @@ gitlab_tag:
         - git tag -a v${VERSION} -m "Version ${VERSION}"
         - git push origin v${VERSION}
 
-    # only: # only tag on merge into master
-    #     - master
+    only: # only tag on merge into master
+        - master
 
 # github_publish: # Create a release on github
 #     stage: deploy
