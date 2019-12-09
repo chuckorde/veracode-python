@@ -21,6 +21,7 @@ unit_test:
             ~/.veracode/credentials
         - pip3 install -r requirements.txt
         - python3 tests.py
+
      only:
          - dev
 
