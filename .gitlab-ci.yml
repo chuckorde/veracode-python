@@ -38,7 +38,7 @@ gitlab_tag:
         - export VERSION=$(python3 increment_version.py)
         - echo ${VERSION}
         - git commit -am "Version ${VERSION} [skip ci]"
-        - git checkout master
+        # - git checkout master
         - git push origin master
         - git tag -a v${VERSION} -m "Version ${VERSION}"
         - git push origin v${VERSION}
