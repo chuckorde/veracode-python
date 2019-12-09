@@ -93,4 +93,3 @@ github_publish: # Create a release on github
 
     only: # only deploy on merge into master
         - master
-
