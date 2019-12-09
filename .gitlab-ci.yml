@@ -5,6 +5,7 @@ stages:
 
 variables:
   GIT_STRATEGY: clone
+  VVERSION: "NONE"
 
 .template: &veracode_credentials |
     mkdir ~/.veracode
@@ -14,37 +15,27 @@ variables:
 
 # run_unit_test:
 #     stage: test
-#
-#     tags:
-#         - python
+#     tags: python
 #
 #     script: # Set up API credentials and run tests
-#         - mkdir ~/.veracode
-#         - echo "[DEFAULT]" > ~/.veracode/credentials
-#         - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >>
-#             ~/.veracode/credentials
-#         - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >>
-#             ~/.veracode/credentials
+        # - *veracode_credentials
 #         - pip3 install -r cicd/requirements.txt
 #         - python3 tests.py
 
 gitlab_tag:
     stage: tag
-
-    tags:
-        - python
+    tags: python
 
     script: # Update package version and create a tag
         - apt-get update
         - apt-get install git -y
         - pip3 install semantic_version gitpython
-        # ouroboros
-        - pip3 install veracode-python
+        - pip3 install veracode-python # ouroboros
         
         # Set up ssh key
         # Configure repo
-        - git config --global user.email "${GITLAB_USER_EMAIL}"
-        - git config --global user.name "${GITLAB_USER_LOGIN}"
+        - git config user.email "${GITLAB_USER_EMAIL}"
+        - git config user.name "${GITLAB_USER_LOGIN}"
         - git remote set-url origin ${CI_PUSH_URL}
         - git checkout master
 
@@ -59,15 +50,15 @@ gitlab_tag:
         - git tag -a v${VERSION} -m "Version ${VERSION}"
         - git push origin v${VERSION}
 
+        - echo $VVERSION
+        - export VVERSION=$VERSION
 
-    only: # only tag on merge into master
-        - master
+    only: master # only tag on merge into master
+
 
 github_release: # Create a release on github
     stage: deploy
-
-    tags:
-        - python
+    tags: python
 
     script:
         - apt-get update
@@ -96,20 +87,18 @@ github_release: # Create a release on github
         - git add LICENSE.txt README.md setup.* veracode cicd
         - git commit -m "Version ${VERSION}"
         - git push --set-upstream origin master --force
+        - echo $VVERSION
 
         # Create release
         # - sed -e "s/VERSION/$VERSION/g" cicd/github_api.json > data
         # - curl --data @data
         #   https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
 
-    only: # only deploy on merge into master
-        - master
+    only: master # only deploy on merge into master
 
 # pypi_publish: # publish on PyPi
 #     stage: deploy
-#
-#     tags:
-#         - python
+#     tags: python
 #
 #     script:
 #          - rm -rf dist
@@ -117,5 +106,4 @@ github_release: # Create a release on github
 #          - python3 setup.py sdist
 #          - twine upload dist/*
 #
-#     only:
-#         - master # only on merge into master
+#     only: master # only on merge into master
