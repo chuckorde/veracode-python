@@ -42,7 +42,7 @@ package gitlab repo:
 
         # Create badges. 37 pieces of flare.
         - *veracode_credentials
-        - python3 cicd/make_badge.py "${CI_PROJECT_NAME}"
+        # - python3 cicd/make_badge.py "${CI_PROJECT_NAME}"
 
         # Push updates to gitlab
         - export VERSION=$(python3 cicd/increment_version.py)
