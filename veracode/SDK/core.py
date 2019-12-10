@@ -1,10 +1,16 @@
 import xmltodict
 import strconv
 import json, os
-from lxml import etree
 import veracode.API as API
-# from .veracode import API
 from veracode.SDK.exceptions import *
+
+try:
+    # lxml is ~9x faster
+    from lxml import etree
+    parser = 'lxml'
+except:
+    import xml
+    parser = 'xml'
 
 # I don't love the layout of this API.
 # There's a lot of cruft here to get it into a useble form.
@@ -60,10 +66,17 @@ class Base(Parser):
             self.__res.raise_for_status()
 
         data = self._objectify(self._parse_xml(self.data))
-        xml = etree.XML(bytes(self.data, 'utf-8'))
-        root = etree.QName(xml.tag).localname
+        if parser == 'lxml':
+            xmldoc = etree.XML(bytes(self.data, 'utf-8'))
+            root = etree.QName(xmldoc.tag).localname
+            err = xmldoc.text
+        else:
+            xmldoc = xml.dom.minidom.parseString(self.data).documentElement
+            err = xmldoc.firstChild.nodeValue
+            root = xmldoc.tagName
+
         if root == 'error':
-            raise VeracodeInvalidArgumentError(xml.text)
+            raise VeracodeInvalidArgumentError(err)
 
         for k in getattr(data, root).__dict__.keys():
             setattr(self, k, getattr(getattr(data, root), k))
