@@ -4,15 +4,6 @@ import json, os
 import veracode.API as API
 from veracode.SDK.exceptions import *
 
-try:
-    # lxml is ~9x faster
-    from lxml import etree
-    from lxml.etree import XML
-    parser = 'lxml'
-except:
-    import xml
-    parser = 'xml'
-
 # I don't love the layout of this API.
 # There's a lot of cruft here to get it into a useble form.
 
@@ -21,16 +12,12 @@ class Struct(object):
         for key in attrs.keys():
             try:
                 attrs[key] = strconv.convert(attrs[key])
-            except:
-                pass
+            except: pass
             try:
                 if key.endswith('s'):
                     if ',' in attrs[key]:
                         attrs[key] = attrs[key].split(',')
-                    # else:
-                    #     attrs[key] = [attrs[key]]
-            except:
-                pass
+            except: pass
         self.__dict__.update(**attrs)
 
 class Parser(object):
@@ -51,12 +38,7 @@ class Parser(object):
 
 class Base(Parser):
     def __init__(self, module, cls, fn, args=None):
-        # TODO: is this if required?
-        if args:
-            res = getattr(getattr(getattr(API, module),cls),fn)(**args)
-        else:
-            res = getattr(getattr(getattr(API, module),cls),fn)()
-
+        res = getattr(getattr(getattr(API, module),cls),fn)(**args)
         self.data = res.data
         self.status_code = res.status_code
         self.__res = res.res
@@ -67,20 +49,12 @@ class Base(Parser):
             self.__res.raise_for_status()
 
         data = self._objectify(self._parse_xml(self.data))
-        if parser == 'lxml':
-            xmldoc = etree.XML(bytes(self.data, 'utf-8'))
-            root = etree.QName(xmldoc.tag).localname
-            err = xmldoc.text
-        else:
-            xmldoc = xml.dom.minidom.parseString(self.data).documentElement
-            err = xmldoc.firstChild.nodeValue
-            root = xmldoc.tagName
+        tag, value = list(data.__dict__.items())[0]
+        if tag == 'error':
+            raise VeracodeInvalidArgumentError(value)
 
-        if root == 'error':
-            raise VeracodeInvalidArgumentError(err)
-
-        for k in getattr(data, root).__dict__.keys():
-            setattr(self, k, getattr(getattr(data, root), k))
+        for k in getattr(data, tag).__dict__.keys():
+            setattr(self, k, getattr(getattr(data, tag), k))
 
 class BasePDF(object):
     def __init__(self, cls, build_id):
