@@ -108,4 +108,5 @@ publish to pypi: # publish on PyPi
 
     only: 
         - master # only on merge into master
+
 # define TWINE_USER...

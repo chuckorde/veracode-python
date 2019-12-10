@@ -92,4 +92,3 @@ class BasePDF(object):
         with open(path, 'wb') as f:
             f.write(self.pdf)
         return self.status_code == 200
-
