@@ -7,6 +7,7 @@ from veracode.SDK.exceptions import *
 try:
     # lxml is ~9x faster
     from lxml import etree
+    from lxml.etree import XML
     parser = 'lxml'
 except:
     import xml
