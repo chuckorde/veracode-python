@@ -65,6 +65,10 @@ class NewApplication(object):
         self.next_day_scheduling_enabled = None
         # where do you set the description?
 
+        # needed for pre-save sanity
+        # self.sandbox = sandbox.Sandbox(app_name=self.name)
+
+
     def save(self):
         """ Returns a new instance of ExistingApplication.
         use `app = app.save()` after setting name and business_criticality
@@ -118,7 +122,8 @@ class ExistingApplication(object):
     >>> isinstance(app, ExistingApplication)
     True
 
-    # attempting to fetch an app that doesn't exist should raise VeracodeApplicationError.
+    # attempting to fetch an app that doesn't exist should raise 
+    # VeracodeApplicationError
     >>> app = Application('APPLICATION_DOESNT_EXIST')
     Traceback (most recent call last):
         ...
@@ -331,3 +336,4 @@ class ExistingApplication(object):
                     app_id=self.id,
                     sandbox_id=self.sandbox.id)
             self._build = self._get_build_by_name(obj.version)
+

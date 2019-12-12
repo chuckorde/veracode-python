@@ -70,7 +70,9 @@ class NewBuild(Properties):
 
         for f in self._modules:
             SDK.upload.UploadFile(
-                    app_id=self.app.id, sandbox_id=self.app.sandbox.id, file=f)
+                    app_id=self.app.id,
+                    sandbox_id=self.app.sandbox.id,
+                    file=f)
 
     def scan(self, sandbox=None, auto_scan=True,
             scan_all_nonfatal_top_level_modules=True):
