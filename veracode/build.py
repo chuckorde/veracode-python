@@ -79,7 +79,7 @@ class NewBuild(Properties):
                     sandbox_id=self._app.sandbox.id,
                     file=f)
 
-    def scan(self, sandbox=None, auto_scan=True,
+    def scan(self,  auto_scan=True,
             scan_all_nonfatal_top_level_modules=True):
 
         SDK.upload.BeginPrescan(

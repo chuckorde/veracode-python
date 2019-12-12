@@ -66,7 +66,7 @@ class NewApplication(object):
         # where do you set the description?
 
         # needed for pre-save sanity
-        # self.sandbox = sandbox.Sandbox(app_name=self.name)
+        self.sandbox = sandbox.Sandbox(app_name=self.name)
 
 
     def save(self):
@@ -322,7 +322,10 @@ class ExistingApplication(object):
         if self._build.id:
             return self._build
         if len(self.builds) <= 0:
-            return build.NewBuild(app=self)
+            self._build = build.NewBuild()
+            self._build._app = self
+            self._builds.append(self._build)
+            return self._build
         return self.builds[0]
 
     @build.setter
