@@ -9,9 +9,7 @@ class GetAppList(Base):
 
         returns: A python object that represents the returned API data.
     """
-    def __init__(self,
-                include_user_info=None,
-        ):
+    def __init__(self, include_user_info=None):
 
         super(GetAppList, self).__init__(
             module='upload',

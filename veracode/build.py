@@ -1,5 +1,6 @@
 import sys, os
 import logging
+from datetime import datetime
 from veracode import SDK, application
 from veracode.SDK.utils import Properties
 from veracode.exceptions import *
@@ -22,16 +23,16 @@ class ExistingBuild(object):
     """ class: veracode.build.ExistingBuild
     """
     def __init__(self, app):
-        self.app = app
+        self._app = app
 
     def list(self):
         builds = SDK.upload.GetBuildList(
-                app_id=self.app.id, sandbox_id=self.app.sandbox.id)
+                app_id=self._app.id, sandbox_id=self._app.sandbox.id)
         if not hasattr(builds, 'build'):
             return []
         if isinstance(builds.build, list):
-            return [NewBuild(build, self.app) for build in builds.build]
-        return [NewBuild(builds.build, self.app)]
+            return [NewBuild(build, self._app) for build in builds.build]
+        return [NewBuild(builds.build, self._app)]
 
 
 class NewBuild(Properties):
@@ -40,7 +41,7 @@ class NewBuild(Properties):
     def __init__(self, obj=None, app=None):
         if not app:
             app = application.Application()
-        self.app = app
+        self._app = app
 
         self._properties = ['build_id', 'version']
         self._renamed_properties = ['id', 'version']
@@ -53,8 +54,11 @@ class NewBuild(Properties):
         self._report = None
         self._modules = []
 
-        if self.app.id:
-            info = SDK.upload.GetBuildInfo(app_id=self.app.id,
+        if not self.version:
+            self.version = datetime.today().strftime("%c - Static")
+
+        if self._app.id:
+            info = SDK.upload.GetBuildInfo(app_id=self._app.id,
                                            build_id=self.id)
             if hasattr(info, 'build'):
                 self.info = Info(info.build)
@@ -70,23 +74,23 @@ class NewBuild(Properties):
 
         for f in self._modules:
             SDK.upload.UploadFile(
-                    app_id=self.app.id,
-                    sandbox_id=self.app.sandbox.id,
+                    app_id=self._app.id,
+                    sandbox_id=self._app.sandbox.id,
                     file=f)
 
     def scan(self, sandbox=None, auto_scan=True,
             scan_all_nonfatal_top_level_modules=True):
 
         SDK.upload.BeginPrescan(
-                app_id=self.app.id,
-                sandbox_id=self.sandbox.id,
+                app_id=self._app.id,
+                sandbox_id=self._app.sandbox.id,
                 auto_scan=auto_scan,
                 scan_all_nonfatal_top_level_modules=\
                         scan_all_nonfatal_top_level_modules)
 
     def delete(self):
-        res = SDK.upload.DeleteBuild(app_id=self.app.id,
-                sandbox_id=self.app.sandbox.id)
+        res = SDK.upload.DeleteBuild(app_id=self._app.id,
+                sandbox_id=self._app.sandbox.id)
         return res.status_code == 200
 
     @property
@@ -145,10 +149,11 @@ class Policy(Properties):
         self._properties = [
             'policy_compliance_status',
             'policy_name',
-            'policy_updaed_date',
+            'policy_updated_date',
             'policy_version'
         ]
-        self._renamed_properties = ['compliance', 'name', 'updated', 'version']
+        self._renamed_properties = [
+                'compliance', 'name', 'updated', 'version']
         self._update_properties(obj)
 
     def __repr__(self):
@@ -188,9 +193,9 @@ class Report(object):
     def __repr__(self):
         if not hasattr(self, 'sandbox_name'):
             self.sandbox_name = None
-        return ("<Veracode Report: application='{}', sandbox='{}', build='{}',"
-                " flaws={}>".format(
-                     self.app_name, self.sandbox_name,
+        return ("<Veracode Report: application='{}', sandbox='{}',"
+                "build='{}', flaws={}>".format(
+                     self._app_name, self.sandbox_name,
                      self._build.version, self.total_flaws))
 
 class Flaw(Properties):

@@ -249,7 +249,8 @@ class ExistingApplication(object):
 
     @property
     def sandboxes(self):
-        """ property: a list of zero or more sandboxes for the current application
+        """ property: a list of zero or more sandboxes for the current 
+        application.
 
             args: None
 
@@ -278,7 +279,7 @@ class ExistingApplication(object):
         >>> app.sandbox = 'TEST_SANDBOX1'
         Traceback (most recent call last):
             ...
-        veracode.exceptions.VeracodeSandboxError: The requested sandbox does not exist.
+        veracode.exceptions.VeracodeSandboxError: ... sandbox does not exist.
         """
         if self._sandbox.id:
             return self._sandbox
@@ -307,8 +308,8 @@ class ExistingApplication(object):
                 self._sandboxes = None
                 obj = self._get_sandbox_by_name(sandbox_name)
             self._sandbox = obj
-        self._build = build.Build()
-        self._builds = None
+        self._build = build.NewBuild(app=self)
+        self._builds = []
 
     @property
     def builds(self):
@@ -321,7 +322,7 @@ class ExistingApplication(object):
         if self._build.id:
             return self._build
         if len(self.builds) <= 0:
-            return build.Build()
+            return build.NewBuild(app=self)
         return self.builds[0]
 
     @build.setter
