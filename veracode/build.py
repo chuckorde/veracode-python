@@ -55,7 +55,8 @@ class NewBuild(Properties):
         self._modules = []
 
         if not self.version:
-            self.version = datetime.today().strftime("%c - Static")
+            # match the Veracode default
+            self.version = datetime.today().strftime("%d %b %Y Static")
 
         if self._app.id:
             info = SDK.upload.GetBuildInfo(app_id=self._app.id,

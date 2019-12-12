@@ -328,7 +328,7 @@ class ExistingApplication(object):
     @build.setter
     def build(self, obj):
         if obj == None:
-            self._build = build.NewBuild()
+            self._build = build.NewBuild(app=self)
         elif isinstance(obj, basestring):
             self._build = self._get_build_by_name(obj)
         elif not obj.id:
