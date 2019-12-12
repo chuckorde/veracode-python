@@ -68,12 +68,13 @@ class REST(object):
             nonce=nonce,
             sig=signature)
 
-    def __prepared_request(self, method, query, files=None):
+    def __prepared_request(self, method, query, file=None):
         logger.debug('{}, {}, STARTED'.format(self.__end_point, query))
 
         session = requests.Session()
         session.mount(self.__server, HTTPAdapter(max_retries=3))
-        request = requests.Request(method, self.__server, params=query)
+        request = requests.Request(method, self.__server, params=query,
+                files=file)
         prepared_request = request.prepare()
         prepared_request.headers['Authorization'] = self.__veracode_hmac(
             urlparse(self.__server).hostname, prepared_request.path_url, method)
@@ -90,7 +91,7 @@ class REST(object):
         return self.response(res.status_code, getattr(res, format), res)
 
     def POST(self, query=None, file=None):
-        res = self.__prepared_request('POST', query, file)
+        res = self.__prepared_request('POST', query=query, file=file)
         return self.response(res.status_code, res.text, res)
 
     def PUT(self):

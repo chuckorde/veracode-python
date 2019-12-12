@@ -1,4 +1,5 @@
 from veracode.SDK.core import Base
+import os
 
 class GetAppList(Base):
     """ class: veracode.SDK.upload.GetAppList
@@ -495,9 +496,10 @@ class UploadFile(Base):
         super(UploadFile, self).__init__(
             module='upload',
             cls='UploadFile',
-            fn='get',
+            fn='post',
             args={
-                'file':file,
+                'file':{
+                    'file':(os.path.basename(file), open(file, 'rb').read())},
                 'app_id':app_id,
                 'save_as':save_as,
                 'sandbox_id':sandbox_id,

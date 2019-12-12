@@ -236,8 +236,10 @@ class UploadFile(REST):
         super(UploadFile, self).__init__('uploadfile.do', 5.0)
 
     @classmethod
-    def get(self, **args):
-        return self().GET(args, format='text')
+    def post(self, **args):
+        file = args['file']
+        del args['file']
+        return self().POST(args, file=file)
 
 
 class BeginScan(REST):
@@ -253,7 +255,6 @@ class BeginScan(REST):
     @classmethod
     def get(self, **args):
         return self().GET(args, format='text')
-
 
 class RemoveFile(REST):
     """ class: veracode.API.upload.RemoveFile
