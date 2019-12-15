@@ -47,7 +47,7 @@ Unit Test:
         - python
 
     script: # Set up API credentials and run tests
-        - *veracode_credentials
+        - *create_veracode_credentials
         - pip3 install -r cicd/requirements.txt
         - python3 tests.py
     
