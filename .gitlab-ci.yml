@@ -61,6 +61,20 @@ SCA Test:
         - *install_common_tools
         - curl -sSL https://download.sourceclear.com/ci.sh | bash 
 
+SAST Sandbox Test:
+    stage: test
+
+    tags:
+        - python
+
+    script: 
+        - echo 'SAST Sandbox Test...'
+
+    except:
+        - master
+
+############################## Master Only ####################################
+
 SAST Test:
     stage: test
 
@@ -70,7 +84,8 @@ SAST Test:
     script: 
         - echo 'SAST Test...'
 
-############################## Master Only ####################################
+    only:
+        - master
 
 Create Release:
     stage: package
