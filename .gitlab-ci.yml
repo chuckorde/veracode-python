@@ -114,7 +114,7 @@ Github Mirror: # mirror Github and use API to create release
         - export SSH_PRIVATE_KEY=${GITHUB_SSH_PRIVATE_KEY}
         - *configure_git_repo
 
-        - git push -u origin master
+        - git push -u origin master --force
         - pip3 install requests # needed for github release
         - python3 setup.py github --create-release ${GITHUB_API_TOKEN}
 
