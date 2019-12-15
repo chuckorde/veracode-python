@@ -1,6 +1,5 @@
-import sys, os
-import logging
-from glob import glob
+import sys
+# import logging
 from veracode import SDK, application
 from veracode.exceptions import *
 
@@ -80,7 +79,7 @@ class NewSandbox(object):
         return "<Veracode Sandbox: name='{}', id={}>".format(self.name, self.id)
 
     def __bool__(self):
-        return self.name != None
+        return self.name is not None
 
 
 class ExistingSandbox(object):

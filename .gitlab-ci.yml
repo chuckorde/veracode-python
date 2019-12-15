@@ -28,7 +28,7 @@
     VERACODE_API_SECRET = ${VERACODE_API_SECRET}
     EOF
 
-################################ Set Up #######################################
+################################# Set Up ######################################
 
 variables:
     GIT_STRATEGY: clone
@@ -39,15 +39,17 @@ stages:
     - publish
 
 ############################## All Branches ###################################
-#
+
 Unit Test:
     stage: test
 
     tags:
         - python
 
-    script: 
-        - echo 'unit test...'
+    script: # Set up API credentials and run tests
+        - *veracode_credentials
+        - pip3 install -r cicd/requirements.txt
+        - python3 tests.py
     
 SCA Test:
     stage: test
@@ -87,7 +89,6 @@ Create Release:
         - git pull origin master
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
-        - echo $RELEASE
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
         - git add .
         - git commit -m "Release v${VERSION} [skip ci]"

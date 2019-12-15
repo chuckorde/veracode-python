@@ -1,4 +1,5 @@
-import logging, os
+import logging
+import os
 
 def veracode_logger(name):
     formatter = logging.Formatter(fmt='%(asctime)s, %(levelname)s, %(message)s')
