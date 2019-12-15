@@ -112,7 +112,7 @@ class Github(setuptools.Command):
             "tag_name": "v{}".format(version),
             "target_commitish": "master",
             "name": "v{}".format(version),
-            "body": "Release of version v{}".format(version),
+            "body": "Release v{}".format(version),
             "draft": False,
             "prerelease": False
         }

@@ -90,9 +90,9 @@ Create Release:
         - echo $RELEASE
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
         - git add .
-        - git commit -m "Version v${VERSION} [skip ci]"
+        - git commit -m "Release v${VERSION} [skip ci]"
         - git push origin master
-        - git tag -a v${VERSION} -m "Version ${VERSION}"
+        - git tag -a v${VERSION} -m "Release ${VERSION}"
         - git push origin v${VERSION}
 
     only: 
