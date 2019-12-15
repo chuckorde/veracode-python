@@ -1,112 +1,140 @@
+############################ Helper Anchors ###################################
+
+.install_common_tools: &install_common_tools |
+    apt-get update -yqq
+    apt-get -qy install ssh git curl > /dev/null
+
+.configure_git_repo: &configure_git_repo |
+    export GIT_PROJECT_URL=\
+    "git@${GIT_HOST}:${GIT_USER_NAME}/${CI_PROJECT_NAME}.git"
+    export DOMAIN=$(echo ${GIT_PROJECT_URL} | cut -d\@ -f2 | cut -d\: -f1)
+    umask 077
+    mkdir -p ~/.ssh
+    echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+    ssh-keyscan -H $DOMAIN > ~/.ssh/known_hosts
+    eval $(ssh-agent -s)
+    ssh-add ~/.ssh/id_rsa
+
+    git config user.name  ${GIT_USER_NAME}
+    git config user.email ${GIT_USER_EMAIL}
+    git remote rm origin
+    git remote add origin ${GIT_PROJECT_URL}
+
+.create_veracode_credentials: &create_veracode_credentials |
+    mkdir ~/.veracode
+    cat <<EOF> ~/.veracode/credentials
+    [DEFAULT]
+    VERACODE_API_ID = ${VERACODE_API_ID}
+    VERACODE_API_SECRET = ${VERACODE_API_SECRET}
+    EOF
+
+################################ Set Up #######################################
+
+variables:
+    GIT_STRATEGY: clone
+
 stages:
     - test
     - package
-    - deploy
+    - publish
 
-variables:
-  GIT_STRATEGY: clone
-
-.template: &veracode_credentials |
-    mkdir ~/.veracode
-    echo "[DEFAULT]" > ~/.veracode/credentials
-    echo "VERACODE_API_ID = ${VERACODE_API_ID}" >> ~/.veracode/credentials
-    echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >> ~/.veracode/credentials
-
-run unit tests:
+############################## All Branches ###################################
+#
+Unit Test:
     stage: test
-    tags: 
-        - python
 
-    script: # Set up API credentials and run tests
-        - *veracode_credentials
-        - pip3 install -r cicd/requirements.txt
-        - python3 tests.py
+    tags:
+        - test_runner
 
-package gitlab repo:
+    script: 
+        - echo 'unit test...'
+    
+SCA Test:
+    stage: test
+
+    tags:
+        - test_runner
+
+    script: 
+        - *install_common_tools
+        - curl -sSL https://download.sourceclear.com/ci.sh | bash 
+
+SAST Test:
+    stage: test
+
+    tags:
+        - test_runner
+
+    script: 
+        - echo 'SAST Test...'
+
+############################## Master Only ####################################
+
+Create Release:
     stage: package
-    tags: 
-        - python
+    tags:
+        - test_runner
 
-    script: # Update package version and create a tag
-        - apt-get update
-        - apt-get install git -y
-        - pip3 install semantic_version gitpython
-        - pip3 install veracode-python # ouroboros
+    script:
+        - *install_common_tools
+
+        - export GIT_USER_NAME="chuck"
+        - export GIT_USER_EMAIL="chuck@gitlab.mothership"
+        - export GIT_HOST="gitlab.mothership"
+        - export SSH_PRIVATE_KEY=${GITLAB_SSH_PRIVATE_KEY}
+        - *configure_git_repo
         
-        # Set up ssh key
-        # Configure repo
-        - git config user.email "${GITLAB_USER_EMAIL}"
-        - git config user.name "${GITLAB_USER_LOGIN}"
-        - git remote set-url origin "${CI_PUSH_URL}"
+        - git pull origin master
         - git checkout master
-
-        # Create badges. 37 pieces of flare.
-        - *veracode_credentials
-        # - python3 cicd/make_badge.py "${CI_PROJECT_NAME}"
-
-        # Push updates to gitlab
-        - export VERSION=$(python3 cicd/increment_version.py)
-        - git commit -am "Version ${VERSION} [skip ci]"
-        - git push --set-upstream origin master
+        - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
+        - echo $RELEASE
+        - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
+        - git add .
+        - git commit -m "Version v${VERSION} [skip ci]"
+        - git push origin master
         - git tag -a v${VERSION} -m "Version ${VERSION}"
         - git push origin v${VERSION}
 
     only: 
-        - master # only tag on merge into master
+        - master 
 
-
-publish github release: # Create a release on github
-    stage: deploy
-    tags: 
-        - python
+Github Mirror: # mirror Github and use API to create release
+    stage: publish
+    tags:
+        - test_runner
 
     script:
-        - apt-get update
-        - apt-get install curl git -y
-        - pip3 install -r cicd/requirements.txt
-
-        # Set up github ssh key
-        - mkdir -p ~/.ssh
-        - echo "${GITHUB_SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
-        - ssh-keyscan -H github.com > ~/.ssh/known_hosts
-        - eval $(ssh-agent -s)
-        - chmod -R 400 ~/.ssh
-        - ssh-add ~/.ssh/id_rsa
-
-        # Push updates to github
+        - *install_common_tools
+        - git pull origin master
         - git checkout master
-        - git config --global user.email "chuckorde@gmail.com"
-        - git config --global user.name "chuckorde@gmail.com"
-        - git remote set-url origin
-          git@github.com:chuckorde/veracode-python.git
-        - git rm -r --cache *
-        - export VERSION=$(
-            python3 -c'import veracode;
-            print(veracode.__version__)')
-        - git add LICENSE.txt README.md setup.* veracode cicd
-        - git commit -m "Version ${VERSION}"
-        - git push --set-upstream origin master --force
 
-        # Create release
-        - sed -e "s/VERSION/$VERSION/g" cicd/github_api.json > data
-        - curl --data @data
-          https://api.github.com/repos/chuckorde/veracode-python/releases?access_token=${GITHUB_API_TOKEN}
+        - export GIT_USER_NAME="chuckorde"
+        - export GIT_USER_EMAIL="chuckorde@gmail.com"
+        - export GIT_HOST="github.com"
+        - export SSH_PRIVATE_KEY=${GITHUB_SSH_PRIVATE_KEY}
+        - *configure_git_repo
 
-    only:
-        - master # only deploy on merge into master
-
-publish to pypi: # publish on PyPi
-    stage: deploy
-    tags: 
-        - python
-
-    script:
-         - rm -rf dist
-         - pip3 install twine
-         - python3 setup.py sdist
-         - twine upload dist/*
+        - git push -u origin master
+        - pip3 install requests # needed for github release
+        - python3 setup.py github --create-release ${GITHUB_API_TOKEN}
 
     only: 
-        - master # only on merge into master
+        - master 
+ 
+Publish to PyPi: # publish on PyPi
+    stage: publish
+    tags: 
+        - test_runner
 
-# define TWINE_USER...
+    script:
+        - *install_common_tools
+        - git pull origin master
+        - git checkout master
+        - rm -rf dist
+        - pip3 install twine
+        - python3 setup.py sdist
+        - twine upload -u ${TWINE_USERNAME} -p ${TWINE_PASSWORD} dist/*
+
+    only: 
+        - master 
+

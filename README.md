@@ -1,5 +1,4 @@
 # Veracode API wrapper
-[![veracode_badge](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/chuckorde/veracode-python/master/cicd/veracode_score.json)](https://veracode.com)
 
 ### A python wrapper for communicating with the [Veracode](https://www.veracode.com) APIs.
 This python module currently supports the following APIs.
