@@ -44,7 +44,7 @@ Unit Test:
     stage: test
 
     tags:
-        - test_runner
+        - python
 
     script: 
         - echo 'unit test...'
@@ -53,7 +53,7 @@ SCA Test:
     stage: test
 
     tags:
-        - test_runner
+        - python
 
     script: 
         - *install_common_tools
@@ -63,7 +63,7 @@ SAST Test:
     stage: test
 
     tags:
-        - test_runner
+        - python
 
     script: 
         - echo 'SAST Test...'
@@ -73,7 +73,7 @@ SAST Test:
 Create Release:
     stage: package
     tags:
-        - test_runner
+        - python
 
     script:
         - *install_common_tools
@@ -101,7 +101,7 @@ Create Release:
 Github Mirror: # mirror Github and use API to create release
     stage: publish
     tags:
-        - test_runner
+        - python
 
     script:
         - *install_common_tools
@@ -124,7 +124,7 @@ Github Mirror: # mirror Github and use API to create release
 Publish to PyPi: # publish on PyPi
     stage: publish
     tags: 
-        - test_runner
+        - python
 
     script:
         - *install_common_tools
