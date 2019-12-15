@@ -9,11 +9,11 @@ import re
 name = 'veracode-python'
 description = 'Python wrapper for the Veracode XML APIs'
 install_requires = [
-    'lxml==4.4.1',
-    'python-dateutil==2.8.1',
-    'requests==2.22.0',
-    'strconv==0.4.2',
-    'xmltodict==0.12.0',
+    'lxml>=4.4.1',
+    'python-dateutil>=2.8.1',
+    'requests>=2.22.0',
+    'strconv>=0.4.2',
+    'xmltodict>=0.12.0',
 ]
 keywords = []
 python_requires='>= 3.5'
