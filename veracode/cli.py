@@ -30,6 +30,7 @@ def scan(app, name, files, sandbox=None, timeout=None):
     app.build.scan()
 
     if timeout:
+        timeout = int(timeout)
         for w in range(timeout * 60):
             time.sleep(60)
             if app.build.analysis.status == 'Results Ready':

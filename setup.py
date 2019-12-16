@@ -36,6 +36,7 @@ classifiers=[
  ]
 
 repo_name = name
+
 repo_url = 'https://github.com/{}'
 download_url = '{}/archive/v{}/.tar.gz'
 release_api_url = 'https://api.github.com/repos/{}/{}/releases?access_token={}'
