@@ -180,4 +180,3 @@ Publish to PyPi: # publish on PyPi
 
     only: 
         - master 
-
