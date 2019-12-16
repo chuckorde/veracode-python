@@ -18,10 +18,7 @@ def scan(app, name, files, sandbox=None, timeout=None):
     app = Application(app)
     
     app.sandbox = sandbox
-    app.build = None
-    b = Build()
-    b.version = name
-    app.build = b
+    app.build = name
 
     app.build.upload([files])
     app.build.scan()
@@ -30,13 +27,12 @@ def scan(app, name, files, sandbox=None, timeout=None):
         timeout = int(timeout)
         for w in range(timeout):
             time.sleep(60)
-            print('Scan status: {}'.format(app.build.analysis.status))
-
             if app.build.analysis.status == 'Results Ready':
                 print('Veracode Security Policy: {}'.format(
-                        app.build.policy.compliance))
-                return app.build.policy.compliance == 'Pass'
-
+                        app.build.report.policy_rules_status))
+                return 'Pass' in app.build.report.policy_rules_status
+            app = Application(app.name, sandbox=sandbox, build=name)
+            print('Scan status: {}'.format(app.build.analysis.status))
         print('Scan timeout after {} minutes'.format(timeout))
         return 1
 

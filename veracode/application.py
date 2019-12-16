@@ -333,12 +333,15 @@ class ExistingApplication(object):
         if obj == None:
             self._build = build.NewBuild(app=self)
         elif isinstance(obj, basestring):
-            self._build = self._get_build_by_name(obj)
-        elif isinstance(obj, build.NewBuild):
-            SDK.upload.CreateBuild(
-                    version=obj.version,
-                    app_id=self.id,
-                    sandbox_id=self.sandbox.id)
-
-            # self._build = self._get_build_by_name(obj.version)
+            try:
+                self._build = self._get_build_by_name(obj)
+            except: 
+                new_build = SDK.upload.CreateBuild(
+                            version=obj,
+                            app_id=self.id,
+                            sandbox_id=self.sandbox.id)
+            self._build = build.NewBuild(app=self, obj=new_build)
+            # self._build = None
+            # self._builds = []
+        # elif isinstance(obj, build.NewBuild):
 
