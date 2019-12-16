@@ -33,10 +33,13 @@ def scan(app, name, files, sandbox=None, timeout=None):
         timeout = int(timeout)
         for w in range(timeout * 60):
             time.sleep(60)
+            print('Scan status: {}'.format(app.build.analysis.status)
+
             if app.build.analysis.status == 'Results Ready':
-                if app.build.policy.compliance == 'Pass':
-                    return 0
-                return 1
+                print('Veracode Security Policy: {}'.format(
+                        app.build.policy.compliance)
+                return  app.build.policy.compliance == 'Pass'
+
         print('Scan timeout after {} minutes'.format(timeout * 60))
         return 1
 
