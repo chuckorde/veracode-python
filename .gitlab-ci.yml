@@ -59,17 +59,7 @@ SCA Test:
 
     script: 
         - *install_common_tools
-        - *create_veracode_credentials
-
-        - zip project.zip setup.* LICENCE.txt -r veracode/ 
-        - pip3 install -e .
-
-        - veracode-cli scan
-            --app="${CI_PROJECT_NAME}"
-            --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
-            --sandbox='Development Build'
-            --files='project.zip'
-            --timeout=30
+        - curl -sSL https://download.sourceclear.com/ci.sh | bash 
 
     except:
         - master
