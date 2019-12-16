@@ -40,26 +40,26 @@ stages:
 
 ############################## All Branches ###################################
 
-Unit Test:
-    stage: test
-
-    tags:
-        - python
-
-    script: # Set up API credentials and run tests
-        - *create_veracode_credentials
-        - pip3 install -r cicd/requirements.txt
-        - python3 tests.py
-    
-SCA Test:
-    stage: test
-
-    tags:
-        - python
-
-    script: 
-        - *install_common_tools
-        - curl -sSL https://download.sourceclear.com/ci.sh | bash 
+# Unit Test:
+#     stage: test
+#
+#     tags:
+#         - python
+#
+#     script: # Set up API credentials and run tests
+#         - *create_veracode_credentials
+#         - pip3 install -r cicd/requirements.txt
+#         - python3 tests.py
+#     
+# SCA Test:
+#     stage: test
+#
+#     tags:
+#         - python
+#
+#     script: 
+#         - *install_common_tools
+#         - curl -sSL https://download.sourceclear.com/ci.sh | bash 
 
 SAST Sandbox Test:
     stage: test
