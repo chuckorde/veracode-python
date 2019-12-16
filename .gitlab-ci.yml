@@ -44,9 +44,9 @@ Unit Test:
     stage: test
 
     tags:
-        - python-runner-1
-        - python-runner-3
-        - python-runner-3
+        - python_runner_1
+        - python_runner_3
+        - python_runner_3
 
     script: # Set up API credentials and run tests
         - *create_veracode_credentials
@@ -57,9 +57,9 @@ SCA Test:
     stage: test
 
     tags:
-        - python-runner-1
-        - python-runner-3
-        - python-runner-3
+        - python_runner_1
+        - python_runner_3
+        - python_runner_3
 
     script: 
         - *install_common_tools
@@ -69,9 +69,9 @@ SAST Sandbox Test:
     stage: test
 
     tags:
-        - python-runner-1
-        - python-runner-3
-        - python-runner-3
+        - python_runner_1
+        - python_runner_3
+        - python_runner_3
 
     script: 
         - *install_common_tools
@@ -96,9 +96,9 @@ SAST Policy Test:
     stage: test
 
     tags:
-        - python-runner-1
-        - python-runner-3
-        - python-runner-3
+        - python_runner_1
+        - python_runner_3
+        - python_runner_3
 
     script: 
         - *install_common_tools
@@ -119,9 +119,9 @@ SAST Policy Test:
 Create Release:
     stage: package
     tags:
-        - python-runner-1
-        - python-runner-3
-        - python-runner-3
+        - python_runner_1
+        - python_runner_3
+        - python_runner_3
 
     script:
         - *install_common_tools
@@ -148,9 +148,9 @@ Create Release:
 Github Mirror: # mirror Github and use API to create release
     stage: publish
     tags:
-        - python-runner-1
-        - python-runner-3
-        - python-runner-3
+        - python_runner_1
+        - python_runner_3
+        - python_runner_3
 
     script:
         - *install_common_tools
@@ -173,9 +173,9 @@ Github Mirror: # mirror Github and use API to create release
 Publish to PyPi: # publish on PyPi
     stage: publish
     tags: 
-        - python-runner-1
-        - python-runner-3
-        - python-runner-3
+        - python_runner_1
+        - python_runner_3
+        - python_runner_3
 
     script:
         - *install_common_tools
