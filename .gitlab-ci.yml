@@ -44,9 +44,7 @@ Unit Test:
     stage: test
 
     tags:
-        - python_runner_1
-        - python_runner_3
-        - python_runner_3
+        - python
 
     script: # Set up API credentials and run tests
         - *create_veracode_credentials
@@ -57,21 +55,7 @@ SCA Test:
     stage: test
 
     tags:
-        - python_runner_1
-        - python_runner_3
-        - python_runner_3
-
-    script: 
-        - *install_common_tools
-        - curl -sSL https://download.sourceclear.com/ci.sh | bash 
-
-SAST Sandbox Test:
-    stage: test
-
-    tags:
-        - python_runner_1
-        - python_runner_3
-        - python_runner_3
+        - python
 
     script: 
         - *install_common_tools
