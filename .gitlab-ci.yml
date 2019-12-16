@@ -2,7 +2,7 @@
 
 .install_common_tools: &install_common_tools |
     apt-get update -yqq
-    apt-get -qy install ssh git curl > /dev/null
+    apt-get -qy install ssh git curl zip > /dev/null
 
 .configure_git_repo: &configure_git_repo |
     export GIT_PROJECT_URL=\
@@ -68,11 +68,15 @@ SAST Sandbox Test:
         - python
 
     script: 
+        - *install_common_tools
         - *create_veracode_credentials
+
+        - zip project.zip setup.* LICENCE.txt -r veracode/ 
         - pip3 install -e .
+
         - veracode-cli scan
             --app="${CI_PROJECT_NAME}"
-            --name="$(date) ${CI_COMMIT_SHORT_SHA}" 
+            --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
             --sandbox='Development Build'
             --files='project.zip'
             --timeout=30
