@@ -28,7 +28,7 @@ def scan(app, name, files, sandbox=None, timeout=None):
 
     if timeout:
         timeout = int(timeout)
-        for w in range(timeout * 60):
+        for w in range(timeout):
             time.sleep(60)
             print('Scan status: {}'.format(app.build.analysis.status))
 
@@ -37,7 +37,7 @@ def scan(app, name, files, sandbox=None, timeout=None):
                         app.build.policy.compliance))
                 return app.build.policy.compliance == 'Pass'
 
-        print('Scan timeout after {} minutes'.format(timeout * 60))
+        print('Scan timeout after {} minutes'.format(timeout))
         return 1
 
 main = click.CommandCollection(sources=[cli])
