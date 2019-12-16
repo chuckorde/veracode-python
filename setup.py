@@ -14,6 +14,7 @@ install_requires = [
     'requests>=2.22.0',
     'strconv>=0.4.2',
     'xmltodict>=0.12.0',
+    'Click>=7.0',
 ]
 keywords = []
 entry_points = {'console_scripts': ['veracode-cli=veracode.cli:main']}
