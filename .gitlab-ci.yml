@@ -96,9 +96,7 @@ SAST Policy Test:
     stage: test
 
     tags:
-        - python_runner_1
-        - python_runner_3
-        - python_runner_3
+        - python
 
     script: 
         - *install_common_tools
@@ -119,9 +117,7 @@ SAST Policy Test:
 Create Release:
     stage: package
     tags:
-        - python_runner_1
-        - python_runner_3
-        - python_runner_3
+        - python
 
     script:
         - *install_common_tools
@@ -148,9 +144,7 @@ Create Release:
 Github Mirror: # mirror Github and use API to create release
     stage: publish
     tags:
-        - python_runner_1
-        - python_runner_3
-        - python_runner_3
+        - python
 
     script:
         - *install_common_tools
@@ -173,9 +167,7 @@ Github Mirror: # mirror Github and use API to create release
 Publish to PyPi: # publish on PyPi
     stage: publish
     tags: 
-        - python_runner_1
-        - python_runner_3
-        - python_runner_3
+        - python
 
     script:
         - *install_common_tools
