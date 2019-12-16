@@ -334,10 +334,11 @@ class ExistingApplication(object):
             self._build = build.NewBuild(app=self)
         elif isinstance(obj, basestring):
             self._build = self._get_build_by_name(obj)
-        elif not obj.id:
+        elif isinstance(obj, build.NewBuild):
             SDK.upload.CreateBuild(
                     version=obj.version,
                     app_id=self.id,
                     sandbox_id=self.sandbox.id)
-            self._build = self._get_build_by_name(obj.version)
+
+            # self._build = self._get_build_by_name(obj.version)
 

@@ -68,14 +68,21 @@ SAST Sandbox Test:
         - python
 
     script: 
-        - echo 'SAST Sandbox Test...'
+        - *create_veracode_credentials
+        - pip3 install -e .
+        - veracode-cli scan
+            --app="${CI_PROJECT_NAME}"
+            --name="$(date) ${CI_COMMIT_SHORT_SHA}" 
+            --sandbox='Development Build'
+            --files='project.zip'
+            --timeout=30
 
     except:
         - master
 
 ############################## Master Only ####################################
 
-SAST Test:
+SAST Policy Test:
     stage: test
 
     tags:

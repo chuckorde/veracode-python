@@ -16,6 +16,7 @@ install_requires = [
     'xmltodict>=0.12.0',
 ]
 keywords = []
+entry_points = {'console_scripts': ['veracode-cli=veracode.cli:main']}
 python_requires='>= 3.5'
 
 author = 'Chuck Orde'
@@ -146,5 +147,6 @@ setuptools.setup(
     classifiers = classifiers,
     python_requires = python_requires,
     cmdclass = { 'version': Version, 'github': Github },
+    entry_points = entry_points,
 )
 
