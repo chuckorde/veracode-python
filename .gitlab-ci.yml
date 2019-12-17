@@ -61,9 +61,6 @@ SCA Test:
         - *install_common_tools
         - curl -sSL https://download.sourceclear.com/ci.sh | bash 
 
-    except:
-        - master
-
 SAST Sandbox Test:
     stage: test
 
