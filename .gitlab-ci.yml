@@ -60,6 +60,11 @@ SCA Test:
     script: 
         - *install_common_tools
         - curl -sSL https://download.sourceclear.com/ci.sh | bash 
+          | tee sca_results.txt
+
+    artifacts:
+        paths:
+            - sca_results.txt
 
 SAST Sandbox Test:
     stage: test
@@ -126,7 +131,13 @@ Create Release:
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
-        - git add .
+
+        - *create_veracode_credentials
+        - pip3 install veracode-python
+        - git clone git@gitlab.mothership:chuck/cicd-test.git
+        - python3 cicd-test/update_readme.py "${CI_PROJECT_NAME}"
+
+        - git add -u
         - git commit -m "Release v${VERSION} [skip ci]"
         - git push origin master
         - git tag -a v${VERSION} -m "Release ${VERSION}"
