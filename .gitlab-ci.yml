@@ -77,7 +77,7 @@ SAST Sandbox Test:
         - *create_veracode_credentials
 
         - zip project.zip setup.* LICENCE.txt -r veracode/ 
-        - pip3 install -e .
+        - pip3 install veracode-python
 
         - veracode-cli scan
             --app="${CI_PROJECT_NAME}"
@@ -99,16 +99,16 @@ SAST Policy Test:
 
     script: 
         - *install_common_tools
-        # - *create_veracode_credentials
-        #
-        # - zip project.zip setup.* LICENCE.txt -r veracode/ 
-        # - pip3 install -e .
-        #
-        # - veracode-cli scan
-        #     --app="${CI_PROJECT_NAME}"
-        #     --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
-        #     --files='project.zip'
-        #     --timeout=30
+        - *create_veracode_credentials
+
+        - zip project.zip setup.* LICENCE.txt -r veracode/ 
+        - pip3 install veracode-python
+
+        - veracode-cli scan
+            --app="${CI_PROJECT_NAME}"
+            --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
+            --files='project.zip'
+            --timeout=30
 
     only:
         - master
@@ -132,10 +132,10 @@ Create Release:
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
 
-        # - *create_veracode_credentials
-        # - pip3 install veracode-python
-        # - git clone git@gitlab.mothership:chuck/cicd-test.git
-        # - python3 cicd-test/update_readme.py "${CI_PROJECT_NAME}"
+        - *create_veracode_credentials
+        - pip3 install veracode-python
+        - git clone git@gitlab.mothership:chuck/cicd-test.git
+        - python3 cicd-test/update_readme.py "${CI_PROJECT_NAME}"
 
         - git add -u
         - git commit -m "Release v${VERSION} [skip ci]"
