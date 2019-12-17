@@ -77,7 +77,7 @@ SAST Sandbox Test:
         - *create_veracode_credentials
 
         - zip project.zip setup.* LICENCE.txt -r veracode/ 
-        - pip3 install -e .
+        - pip3 install veracode-python
 
         - veracode-cli scan
             --app="${CI_PROJECT_NAME}"
@@ -102,7 +102,7 @@ SAST Policy Test:
         - *create_veracode_credentials
 
         - zip project.zip setup.* LICENCE.txt -r veracode/ 
-        - pip3 install -e .
+        - pip3 install veracode-python
 
         - veracode-cli scan
             --app="${CI_PROJECT_NAME}"
