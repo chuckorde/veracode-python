@@ -2,7 +2,7 @@
 
 ## Pipeline Security Testing Results
 
-
+<!-- results -->
 <table>
 <tr><th>Veracode SCA Results</th><th>Veracode SAST Results</th></tr>
 <tr>
@@ -28,7 +28,7 @@
     </td>
 </tr>
 </table>
-
+<!-- end results -->
 
 ## A python wrapper for communicating with the [Veracode](https://www.veracode.com) APIs.
 This python module currently supports the following APIs.
