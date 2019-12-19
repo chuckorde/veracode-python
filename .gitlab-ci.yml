@@ -11,16 +11,15 @@
         - git remote rm origin
         - git remote add origin ${ORIGIN}
 
-.use_gitlab_repo: &use_gitlab_repo
-    script:
-        - eval $(ssh-agent -s)
-        - ssh-add ~/.ssh/${GITLAB_HOST}
+.use_gitlab_repo: &use_gitlab_repo |
+        eval $(ssh-agent -s)
+        ssh-add ~/.ssh/${GITLAB_HOST}
 
-        - ORIGIN="git@${GITLAB_HOST}:${GITLAB_NAME}/${CI_PROJECT_NAME}.git"
-        - git config --global user.name  ${GITLAB_NAME}
-        - git config --global user.email ${GITLAB_EMAIL}
-        - git remote rm origin
-        - git remote add origin ${ORIGIN}
+        ORIGIN="git@${GITLAB_HOST}:${GITLAB_NAME}/${CI_PROJECT_NAME}.git"
+        git config --global user.name  ${GITLAB_NAME}
+        git config --global user.email ${GITLAB_EMAIL}
+        git remote rm origin
+        git remote add origin ${ORIGIN}
 
 ################################# Set Up ######################################
 
@@ -140,13 +139,12 @@ Create Release:
         - python
 
     script:
+        - *use_gitlab_repo        
         - git pull origin master
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
 
-    <<: *use_gitlab_repo        
-    script:
         - git add -u
         - git commit -m "Release v${VERSION} [skip ci]"
         - git push origin master
