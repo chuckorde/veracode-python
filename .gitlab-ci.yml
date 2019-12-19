@@ -139,12 +139,14 @@ Create Release:
     tags:
         - python
 
-    <<: *use_gitlab_repo        
+    script:
         - git pull origin master
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
 
+    <<: *use_gitlab_repo        
+    script:
         - git add -u
         - git commit -m "Release v${VERSION} [skip ci]"
         - git push origin master
