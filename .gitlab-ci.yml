@@ -1,15 +1,14 @@
 ############################ Helper Anchors ###################################
 
-.use_github_repo: &use_github_repo
-    script:
-        - eval $(ssh-agent -s)
-        - ssh-add ~/.ssh/${GITHUB_HOST}
+.use_github_repo: &use_github_repo |
+        eval $(ssh-agent -s)
+        ssh-add ~/.ssh/${GITHUB_HOST}
 
-        - ORIGIN="git@${GITHUB_HOST}:${GITHUB_NAME}/${CI_PROJECT_NAME}.git"
-        - git config --global user.name  ${GITHUB_NAME}
-        - git config --global user.email ${GITHUB_EMAIL}
-        - git remote rm origin
-        - git remote add origin ${ORIGIN}
+        ORIGIN="git@${GITHUB_HOST}:${GITHUB_NAME}/${CI_PROJECT_NAME}.git"
+        git config --global user.name  ${GITHUB_NAME}
+        git config --global user.email ${GITHUB_EMAIL}
+        git remote rm origin
+        git remote add origin ${ORIGIN}
 
 .use_gitlab_repo: &use_gitlab_repo |
         eval $(ssh-agent -s)
@@ -59,79 +58,79 @@ stages:
 ############################ Branchs Dev / Master  ############################
 
 
-# Unit Test:
-#     stage: test
-#
-#     tags:
-#         - python
-#
-#     script:
-#         - pip3 install -e .
-#         - python3 tests.py
-#
-#     only:
-#         - dev
-#         - master
-#
-# SCA Test:
-#     stage: test
-#
-#     tags:
-#         - python
-#
-#     script: 
-#         - curl -sSL https://download.sourceclear.com/ci.sh | bash 
-#           | tee sca_results.txt
-#
-#     artifacts:
-#         paths:
-#             - sca_results.txt
-#
-#     only:
-#         - dev
-#         - master
-#
-# SAST Sandbox Test:
-#     stage: test
-#
-#     tags:
-#         - python
-#
-#     script: 
-#         - zip project.zip 
-#           setup.* LICENCE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
-#         - pip3 install veracode-python
-#
-#         - veracode-cli scan
-#             --app="${CI_PROJECT_NAME}"
-#             --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
-#             --sandbox='Development Build'
-#             --files='project.zip'
-#             --timeout=30
-#
-#     only:
-#         - dev
-#
-# ############################## Master Only ####################################
-#
-# SAST Policy Test:
-#     stage: test
-#
-#     tags:
-#         - python
-#
-#     script: 
-#         - zip project.zip setup.* LICENCE.txt -r veracode/ 
-#         - pip3 install veracode-python
-#
-#         - veracode-cli scan
-#             --app="${CI_PROJECT_NAME}"
-#             --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
-#             --files='project.zip'
-#             --timeout=30
-#
-#     only:
-#         - master
+Unit Test:
+    stage: test
+
+    tags:
+        - python
+
+    script:
+        - pip3 install -e .
+        - python3 tests.py
+
+    only:
+        - dev
+        - master
+
+SCA Test:
+    stage: test
+
+    tags:
+        - python
+
+    script: 
+        - curl -sSL https://download.sourceclear.com/ci.sh | bash 
+          | tee sca_results.txt
+
+    artifacts:
+        paths:
+            - sca_results.txt
+
+    only:
+        - dev
+        - master
+
+SAST Sandbox Test:
+    stage: test
+
+    tags:
+        - python
+
+    script: 
+        - zip project.zip 
+          setup.* LICENCE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
+        - pip3 install veracode-python
+
+        - veracode-cli scan
+            --app="${CI_PROJECT_NAME}"
+            --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
+            --sandbox='Development Build'
+            --files='project.zip'
+            --timeout=30
+
+    only:
+        - dev
+
+############################## Master Only ####################################
+
+SAST Policy Test:
+    stage: test
+
+    tags:
+        - python
+
+    script: 
+        - zip project.zip setup.* LICENCE.txt -r veracode/ 
+        - pip3 install veracode-python
+
+        - veracode-cli scan
+            --app="${CI_PROJECT_NAME}"
+            --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
+            --files='project.zip'
+            --timeout=30
+
+    only:
+        - master
 
 Create Release:
     stage: package
@@ -154,36 +153,35 @@ Create Release:
     only: 
         - master 
 
-# Mirror to Github: # mirror Github and use API to create release
-#     stage: publish
-#     tags:
-#         - python
-#
-#     script:
-#         - git pull origin master
-#         - git checkout master
-#
-#     <<: *use_github_repo
-#     script:
-#         - git push -u origin master --force
-#         - pip3 install requests # needed for github release
-#         - python3 setup.py github --create-release ${GITHUB_API_TOKEN}
-#
-#     only: 
-#         - master 
-#
-# Publish to PyPi: # publish on PyPi
-#     stage: publish
-#     tags: 
-#         - python
-#
-#     script:
-#         - rm -rf dist
-#         - pip3 install twine
-#         - python3 setup.py sdist
-#         - twine upload -u ${TWINE_USERNAME} -p ${TWINE_PASSWORD} dist/*
-#
-#     only: 
-#         - master 
+Mirror to Github: # mirror Github and use API to create release
+    stage: publish
+    tags:
+        - python
+
+    script:
+        - git pull origin master
+        - git checkout master
+
+        - *use_github_repo
+        - git push -u origin master --force
+        - pip3 install requests # needed for github release
+        - python3 setup.py github --create-release ${GITHUB_API_TOKEN}
+
+    only: 
+        - master 
+
+Publish to PyPi: # publish on PyPi
+    stage: publish
+    tags: 
+        - python
+
+    script:
+        - rm -rf dist
+        - pip3 install twine
+        - python3 setup.py sdist
+        - twine upload -u ${TWINE_USERNAME} -p ${TWINE_PASSWORD} dist/*
+
+    only: 
+        - master 
 
 
