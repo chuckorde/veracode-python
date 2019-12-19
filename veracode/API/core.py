@@ -21,18 +21,16 @@ class REST(object):
             self.res = res
 
     def __init__(self, end_point, api_version, server=None):
-        self.profile = os.environ.get('VERACODE_API_PROFILE', 'DEFAULT')
-        conf = configparser.ConfigParser()
-        conf.read(os.path.expanduser('~/.veracode/credentials'))
-        have_credentials = \
-                conf.has_option(self.profile, 'VERACODE_API_ID') and \
-                conf.has_option(self.profile, 'VERACODE_API_SECRET')
-        if not have_credentials:
-            raise VeracodeConfigError(
-                    'There is a problem with your credentials')
+        self.__api_id = os.environ.get('VERACODE_API_ID', None)
+        self.__api_secret = os.environ.get('VERACODE_API_SECRET', None)
+    
+        if not (self.__api_id and self.__api_secret):
+            self.profile = os.environ.get('VERACODE_API_PROFILE', 'DEFAULT')
+            conf = configparser.ConfigParser()
+            conf.read(os.path.expanduser('~/.veracode/credentials'))
+            self.__api_id = conf.get(self.profile, 'VERACODE_API_ID')
+            self.__api_secret = conf.get(self.profile, 'VERACODE_API_SECRET')
 
-        self.__api_id = conf.get(self.profile, 'VERACODE_API_ID')
-        self.__api_secret = conf.get(self.profile, 'VERACODE_API_SECRET')
         self.__api_server = server or 'https://analysiscenter.veracode.com/api/'
         self.__end_point = end_point
         if api_version:
