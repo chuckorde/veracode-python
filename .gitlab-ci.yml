@@ -113,7 +113,8 @@ SAST Policy Test: # this is on master so run a SAST policy scan
         - python
 
     script: 
-        - zip project.zip setup.* LICENCE.txt -r veracode/ 
+        - zip project.zip 
+          setup.* LICENCE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
         - pip3 install veracode-python
 
         - veracode-cli scan
