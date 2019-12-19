@@ -92,8 +92,7 @@ SAST Sandbox Test: # this only runs on the dev branch, so run a Sandbox scan
     script: 
         - zip project.zip 
           setup.* LICENCE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
-        # - pip3 install veracode-python
-        - pip3 install -e .
+        - pip3 install veracode-python
 
         - veracode-cli scan
             --app="${CI_PROJECT_NAME}"
@@ -115,8 +114,7 @@ SAST Policy Test: # this is on master so run a SAST policy scan
 
     script: 
         - zip project.zip setup.* LICENCE.txt -r veracode/ 
-        - pip3 install -e .
-        # - pip3 install veracode-python
+        - pip3 install veracode-python
 
         - veracode-cli scan
             --app="${CI_PROJECT_NAME}"

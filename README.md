@@ -1,7 +1,5 @@
 # Veracode API wrapper
 
-## Pipeline Security Testing Results
-
 ## A python wrapper for communicating with the [Veracode](https://www.veracode.com) APIs.
 This python module currently supports the following APIs.
 - [Results](https://help.veracode.com/reader/LMv_dtSHyb7iIxAQznC~9w/WgCXPStuSb3isrDrHlmV9Q)
