@@ -1,26 +1,24 @@
 ############################ Helper Anchors ###################################
 
-.use_github_repo: &use_github_repo
-    script:
-        - eval $(ssh-agent -s)
-        - ssh-add ~/.ssh/${GITHUB_HOST}
+.use_github_repo: &use_github_repo |
+        eval $(ssh-agent -s)
+        ssh-add ~/.ssh/${GITHUB_HOST}
 
-        - ORIGIN="git@${GITHUB_HOST}:${GITHUB_NAME}/${CI_PROJECT_NAME}.git"
-        - git config user.name  ${GITHUB_NAME}
-        - git config user.email ${GITHUB_EMAIL}
-        - git remote rm origin
-        - git remote add origin ${ORIGIN}
+        ORIGIN="git@${GITHUB_HOST}:${GITHUB_NAME}/${CI_PROJECT_NAME}.git"
+        git config --global user.name  ${GITHUB_NAME}
+        git config --global user.email ${GITHUB_EMAIL}
+        git remote rm origin
+        git remote add origin ${ORIGIN}
 
-.use_gitlab_repo: &use_gitlab_repo
-    script:
-        - eval $(ssh-agent -s)
-        - ssh-add ~/.ssh/${GITLAB_HOST}
+.use_gitlab_repo: &use_gitlab_repo |
+        eval $(ssh-agent -s)
+        ssh-add ~/.ssh/${GITLAB_HOST}
 
-        - ORIGIN="git@${GITLAB_HOST}:${GITLAB_NAME}/${CI_PROJECT_NAME}.git"
-        - git config user.name  ${GITLAB_NAME}
-        - git config user.email ${GITLAB_EMAIL}
-        - git remote rm origin
-        - git remote add origin ${ORIGIN}
+        ORIGIN="git@${GITLAB_HOST}:${GITLAB_NAME}/${CI_PROJECT_NAME}.git"
+        git config --global user.name  ${GITLAB_NAME}
+        git config --global user.email ${GITLAB_EMAIL}
+        git remote rm origin
+        git remote add origin ${ORIGIN}
 
 ################################# Set Up ######################################
 
@@ -139,16 +137,12 @@ Create Release:
     tags:
         - python
 
-    <<: *use_gitlab_repo        
     script:
+        - *use_gitlab_repo        
         - git pull origin master
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
-
-        - pip3 install veracode-python
-        - git clone git@gitlab.mothership:chuck/cicd-test.git
-        - python3 cicd-test/update_readme.py "${CI_PROJECT_NAME}"
 
         - git add -u
         - git commit -m "Release v${VERSION} [skip ci]"
@@ -168,8 +162,7 @@ Mirror to Github: # mirror Github and use API to create release
         - git pull origin master
         - git checkout master
 
-    <<: *use_github_repo
-    script:
+        - *use_github_repo
         - git push -u origin master --force
         - pip3 install requests # needed for github release
         - python3 setup.py github --create-release ${GITHUB_API_TOKEN}
