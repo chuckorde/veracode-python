@@ -1,8 +1,0 @@
-{
-        "tag_name": "vVERSION",
-        "target_commitish": "master",
-        "name": "vVERSION",
-        "body": "Release of version vVERSION",
-        "draft": false,
-        "prerelease": false
-}

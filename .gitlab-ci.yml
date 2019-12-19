@@ -38,7 +38,7 @@ stages:
     - package
     - publish
 
-############################## All Branches ###################################
+############################ Branchs Dev / Master  ############################
 
 Unit Test:
     stage: test
@@ -50,6 +50,10 @@ Unit Test:
         - *create_veracode_credentials
         - pip3 install -r cicd/requirements.txt
         - python3 tests.py
+
+    only:
+        - dev
+        - master
 
 SCA Test:
     stage: test
@@ -65,6 +69,10 @@ SCA Test:
     artifacts:
         paths:
             - sca_results.txt
+
+    only:
+        - dev
+        - master
 
 SAST Sandbox Test:
     stage: test
@@ -86,8 +94,8 @@ SAST Sandbox Test:
             --files='project.zip'
             --timeout=30
 
-    except:
-        - master
+    only:
+        - dev
 
 ############################## Master Only ####################################
 
@@ -146,7 +154,7 @@ Create Release:
     only: 
         - master 
 
-Github Mirror: # mirror Github and use API to create release
+Mirror to Github: # mirror Github and use API to create release
     stage: publish
     tags:
         - python
