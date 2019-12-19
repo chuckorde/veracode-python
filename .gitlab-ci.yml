@@ -140,7 +140,6 @@ Create Release:
         - python
 
     <<: *use_gitlab_repo        
-    script:
         - git pull origin master
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
@@ -155,36 +154,36 @@ Create Release:
     only: 
         - master 
 
-Mirror to Github: # mirror Github and use API to create release
-    stage: publish
-    tags:
-        - python
-
-    script:
-        - git pull origin master
-        - git checkout master
-
-    <<: *use_github_repo
-    script:
-        - git push -u origin master --force
-        - pip3 install requests # needed for github release
-        - python3 setup.py github --create-release ${GITHUB_API_TOKEN}
-
-    only: 
-        - master 
-
-Publish to PyPi: # publish on PyPi
-    stage: publish
-    tags: 
-        - python
-
-    script:
-        - rm -rf dist
-        - pip3 install twine
-        - python3 setup.py sdist
-        - twine upload -u ${TWINE_USERNAME} -p ${TWINE_PASSWORD} dist/*
-
-    only: 
-        - master 
+# Mirror to Github: # mirror Github and use API to create release
+#     stage: publish
+#     tags:
+#         - python
+#
+#     script:
+#         - git pull origin master
+#         - git checkout master
+#
+#     <<: *use_github_repo
+#     script:
+#         - git push -u origin master --force
+#         - pip3 install requests # needed for github release
+#         - python3 setup.py github --create-release ${GITHUB_API_TOKEN}
+#
+#     only: 
+#         - master 
+#
+# Publish to PyPi: # publish on PyPi
+#     stage: publish
+#     tags: 
+#         - python
+#
+#     script:
+#         - rm -rf dist
+#         - pip3 install twine
+#         - python3 setup.py sdist
+#         - twine upload -u ${TWINE_USERNAME} -p ${TWINE_PASSWORD} dist/*
+#
+#     only: 
+#         - master 
 
 
