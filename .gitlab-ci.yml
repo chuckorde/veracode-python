@@ -183,8 +183,6 @@ Publish to PyPi: # publish on PyPi
         - python
 
     script:
-        # - git pull origin master
-        # - git checkout master
         - rm -rf dist
         - pip3 install twine
         - python3 setup.py sdist
