@@ -6,8 +6,8 @@
         - ssh-add ~/.ssh/${GITHUB_HOST}
 
         - ORIGIN="git@${GITHUB_HOST}:${GITHUB_NAME}/${CI_PROJECT_NAME}.git"
-        - git config user.name  ${GITHUB_NAME}
-        - git config user.email ${GITHUB_EMAIL}
+        - git config --global user.name  ${GITHUB_NAME}
+        - git config --global user.email ${GITHUB_EMAIL}
         - git remote rm origin
         - git remote add origin ${ORIGIN}
 
@@ -17,8 +17,8 @@
         - ssh-add ~/.ssh/${GITLAB_HOST}
 
         - ORIGIN="git@${GITLAB_HOST}:${GITLAB_NAME}/${CI_PROJECT_NAME}.git"
-        - git config user.name  ${GITLAB_NAME}
-        - git config user.email ${GITLAB_EMAIL}
+        - git config --global user.name  ${GITLAB_NAME}
+        - git config --global user.email ${GITLAB_EMAIL}
         - git remote rm origin
         - git remote add origin ${ORIGIN}
 
