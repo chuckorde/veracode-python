@@ -38,12 +38,6 @@ before_script:
     - apt-get -qy install ssh git curl zip > /dev/null
     - umask 077
 
-    - mkdir -p ~/.veracode
-    - echo "[DEFAULT]" > ~/.veracode/credentials
-    - echo "VERACODE_API_ID = ${VERACODE_API_ID}" >> ~/.veracode/credentials
-    - echo "VERACODE_API_SECRET = ${VERACODE_API_SECRET}" >> 
-      ~/.veracode/credentials
-
     - mkdir -p ~/.ssh
     - echo "${GITLAB_SSH_PRIVATE_KEY}" > ~/.ssh/${GITLAB_HOST}
     - ssh-keyscan -H ${GITLAB_HOST}  > ~/.ssh/known_hosts
@@ -72,7 +66,7 @@ Unit Test:
         - dev
         - master
 
-SCA Test:
+SCA Test: # run SCA on any branch
     stage: test
 
     tags:
@@ -90,7 +84,7 @@ SCA Test:
         - dev
         - master
 
-SAST Sandbox Test:
+SAST Sandbox Test: # this only runs on the dev branch, so run a Sandbox scan
     stage: test
 
     tags:
@@ -113,7 +107,7 @@ SAST Sandbox Test:
 
 ############################## Master Only ####################################
 
-SAST Policy Test:
+SAST Policy Test: # this is on master so run a SAST policy scan
     stage: test
 
     tags:
@@ -132,7 +126,7 @@ SAST Policy Test:
     only:
         - master
 
-Create Release:
+Create Release: # increment version and create release tag
     stage: package
     tags:
         - python
