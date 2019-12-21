@@ -1,6 +1,6 @@
-############################ Helper Anchors ###################################
+############################# Helper Anchors ##################################
 
-.use_github_repo: &use_github_repo |
+
         eval $(ssh-agent -s)
         ssh-add ~/.ssh/${GITHUB_HOST}
 
@@ -51,7 +51,6 @@ stages:
 
 ############################ Branchs Dev / Master  ############################
 
-
 Unit Test:
     stage: test
 
@@ -74,10 +73,11 @@ SCA Test: # run SCA on any branch
 
     script: 
         - curl -sSL https://download.sourceclear.com/ci.sh | bash 
-
-    artifacts:
-        paths:
-            - sca_results.txt
+    #       | tee sca_results.txt
+    #
+    # artifacts:
+    #     paths:
+    #         - sca_results.txt
 
     only:
         - dev
@@ -138,6 +138,7 @@ Create Release: # increment version and create release tag
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
+        - echo 'Creating: ' ${RELEASE} ${VERSION}
 
         - git add -u
         - git commit -m "Release v${VERSION} [skip ci]"
@@ -156,6 +157,7 @@ Mirror to Github: # mirror Github and use API to create release
     script:
         - git pull origin master
         - git checkout master
+        - echo 'Packaging version: ' $(python3 setup.py -d version)
 
         - *use_github_repo
         - git push -u origin master --force
@@ -171,6 +173,9 @@ Publish to PyPi: # publish on PyPi
         - python
 
     script:
+        - git pull origin master
+        - git checkout master
+
         - rm -rf dist
         - pip3 install twine
         - python3 setup.py sdist

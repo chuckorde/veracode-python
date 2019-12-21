@@ -16,7 +16,7 @@ def cli():
 @click.option('--timeout')
 def scan(app, name, files, sandbox=None, timeout=None):
     app = Application(app)
-    
+
     app.sandbox = sandbox
     app.build = name
 
@@ -34,7 +34,7 @@ def scan(app, name, files, sandbox=None, timeout=None):
             app = Application(app.name, sandbox=sandbox, build=name)
             print('Scan status: {}'.format(app.build.analysis.status))
         print('Scan timeout after {} minutes'.format(timeout))
-        return 1
+        return False
 
 main = click.CommandCollection(sources=[cli])
 

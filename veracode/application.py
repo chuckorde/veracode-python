@@ -122,7 +122,7 @@ class ExistingApplication(object):
     >>> isinstance(app, ExistingApplication)
     True
 
-    # attempting to fetch an app that doesn't exist should raise 
+    # attempting to fetch an app that doesn't exist should raise
     # VeracodeApplicationError
     >>> app = Application('APPLICATION_DOESNT_EXIST')
     Traceback (most recent call last):
@@ -148,6 +148,7 @@ class ExistingApplication(object):
 
         self._sandbox = self._get_sandbox_by_name(sandbox_name)
         self._build = self._get_build_by_name(build_name)
+        self._builds = []
 
         props = [
             'business_criticality',
@@ -249,7 +250,7 @@ class ExistingApplication(object):
 
     @property
     def sandboxes(self):
-        """ property: a list of zero or more sandboxes for the current 
+        """ property: a list of zero or more sandboxes for the current
         application.
 
             args: None
@@ -332,16 +333,15 @@ class ExistingApplication(object):
     def build(self, obj):
         if obj == None:
             self._build = build.NewBuild(app=self)
-        elif isinstance(obj, basestring):
-            try:
+        else:
+            if isinstance(obj, basestring):
                 self._build = self._get_build_by_name(obj)
-            except: 
+            if isinstance(obj, build.NewBuild):
                 new_build = SDK.upload.CreateBuild(
-                            version=obj,
+                            version=obj.version,
                             app_id=self.id,
                             sandbox_id=self.sandbox.id)
+
             self._build = build.NewBuild(app=self, obj=new_build)
-            # self._build = None
-            # self._builds = []
-        # elif isinstance(obj, build.NewBuild):
+        self._builds = []
 
