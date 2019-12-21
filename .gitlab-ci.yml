@@ -1,6 +1,6 @@
 ############################# Helper Anchors ##################################
 
-
+.use_github_repo: &use_github_repo |
         eval $(ssh-agent -s)
         ssh-add ~/.ssh/${GITHUB_HOST}
 
@@ -71,8 +71,8 @@ SCA Test: # run SCA on any branch
     tags:
         - python
 
-    script: 
-        - curl -sSL https://download.sourceclear.com/ci.sh | bash 
+    script:
+        - curl -sSL https://download.sourceclear.com/ci.sh | bash
     #       | tee sca_results.txt
     #
     # artifacts:
@@ -89,14 +89,14 @@ SAST Sandbox Test: # this only runs on the dev branch, so run a Sandbox scan
     tags:
         - python
 
-    script: 
-        - zip project.zip 
+    script:
+        - zip project.zip
           setup.* LICENCE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
         - pip3 install veracode-python
 
         - veracode-cli scan
             --app="${CI_PROJECT_NAME}"
-            --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
+            --name="$(date) - ${CI_COMMIT_SHORT_SHA}"
             --sandbox='Development Build'
             --files='project.zip'
             --timeout=30
@@ -112,15 +112,14 @@ SAST Policy Test: # this is on master so run a SAST policy scan
     tags:
         - python
 
-    script: 
-        - zip project.zip 
+    script:
+        - zip project.zip
           setup.* LICENCE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
-        # - pip3 install veracode-python
-        - pip3 install -e .
+        - pip3 install veracode-python
 
         - veracode-cli scan
             --app="${CI_PROJECT_NAME}"
-            --name="$(date) - ${CI_COMMIT_SHORT_SHA}" 
+            --name="$(date) - ${CI_COMMIT_SHORT_SHA}"
             --files='project.zip'
             --timeout=30
 
@@ -133,7 +132,7 @@ Create Release: # increment version and create release tag
         - python
 
     script:
-        - *use_gitlab_repo        
+        - *use_gitlab_repo
         - git pull origin master
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
@@ -146,8 +145,8 @@ Create Release: # increment version and create release tag
         - git tag -a v${VERSION} -m "Release ${VERSION}"
         - git push origin v${VERSION}
 
-    only: 
-        - master 
+    only:
+        - master
 
 Mirror to Github: # mirror Github and use API to create release
     stage: publish
@@ -155,6 +154,7 @@ Mirror to Github: # mirror Github and use API to create release
         - python
 
     script:
+        - *use_gitlab_repo
         - git pull origin master
         - git checkout master
         - echo 'Packaging version: ' $(python3 setup.py -d version)
@@ -164,15 +164,16 @@ Mirror to Github: # mirror Github and use API to create release
         - pip3 install requests # needed for github release
         - python3 setup.py github --create-release ${GITHUB_API_TOKEN}
 
-    only: 
-        - master 
+    only:
+        - master
 
 Publish to PyPi: # publish on PyPi
     stage: publish
-    tags: 
+    tags:
         - python
 
     script:
+        - *use_gitlab_repo
         - git pull origin master
         - git checkout master
 
@@ -181,6 +182,6 @@ Publish to PyPi: # publish on PyPi
         - python3 setup.py sdist
         - twine upload -u ${TWINE_USERNAME} -p ${TWINE_PASSWORD} dist/*
 
-    only: 
-        - master 
+    only:
+        - master
 

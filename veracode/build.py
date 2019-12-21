@@ -66,6 +66,14 @@ class NewBuild(Properties):
                 self.analysis = Analysis(info.build)
                 self.policy = Policy(info.build)
 
+    @property
+    def name(self):
+        return self.version
+
+    @name.setter
+    def name(self, name):
+        self.version = name
+
     def upload(self, files, compress=False):
         if isinstance(files, list):
             self._modules = [os.path.expanduser(f) for f in files]
@@ -128,11 +136,11 @@ class Analysis(Properties):
         self._properties = [
             'analysis_type',
             'engine_version',
-            'publish_date',
+            'published_date',
             'status'
         ]
         self._renamed_properties = [
-                'type', 'engine_version','publish_date','status']
+                'type', 'engine_version','published_date','status']
         self._update_properties()
 
         if hasattr(obj, 'analysis_unit'):
@@ -154,7 +162,7 @@ class Policy(Properties):
             'policy_version'
         ]
         self._renamed_properties = [
-                'compliance', 'name', 'updated', 'version']
+                'compliance', 'name', 'updated_date', 'version']
         self._update_properties(obj)
 
     def __repr__(self):
@@ -196,7 +204,7 @@ class Report(object):
             self.sandbox_name = None
         return ("<Veracode Report: application='{}', sandbox='{}',"
                 "build='{}', flaws={}>".format(
-                     self._app_name, self.sandbox_name,
+                     self.app_name, self.sandbox_name,
                      self._build.version, self.total_flaws))
 
 class Flaw(Properties):
