@@ -91,7 +91,7 @@ SAST Sandbox Test: # this only runs on the dev branch, so run a Sandbox scan
 
     script:
         - zip project.zip
-          setup.* LICENCE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
+          setup.* LICENSE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
         - pip3 install veracode-python
 
         - veracode-cli scan
@@ -114,7 +114,7 @@ SAST Policy Test: # this is on master so run a SAST policy scan
 
     script:
         - zip project.zip
-          setup.* LICENCE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
+          setup.* LICENSE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
         - pip3 install veracode-python
 
         - veracode-cli scan
@@ -137,7 +137,7 @@ Create Release: # increment version and create release tag
         - git checkout master
         - export RELEASE=$(git log -1 --pretty='format:%B' | cut -d':' -f1)
         - export VERSION=$(python3 setup.py -q version --increment ${RELEASE})
-        - echo "Creating:  ${RELEASE} ${VERSION}"
+        - echo "Creating ${RELEASE} ${VERSION}"
 
         - git add -u
         - git commit -m "Release v${VERSION} [skip ci]"
@@ -157,7 +157,7 @@ Mirror to Github: # mirror Github and use API to create release
         - *use_gitlab_repo
         - git pull origin master
         - git checkout master
-        - echo "Packaging version: $(python3 setup.py -d version)"
+        - echo "Packaging version $(python3 setup.py -q version)"
 
         - *use_github_repo
         - git push -u origin master --force
