@@ -47,24 +47,39 @@ class NewBuild(Properties):
         self._renamed_properties = ['id', 'version']
         self._update_properties(obj)
 
-        self.info = Info()
-        self.analysis = Analysis()
-        self.policy = Policy()
-
+        self._info = None
         self._report = None
         self._modules = []
 
-        if not self.version:
-            # match the Veracode default
-            self.version = datetime.today().strftime("%d %b %Y Static")
+        if obj:
+            self.obj = obj
+            if hasattr(obj, 'build'):
+                self.version = obj.build.version
 
-        if self._app.id:
-            info = SDK.upload.GetBuildInfo(app_id=self._app.id,
-                                           build_id=self.id)
-            if hasattr(info, 'build'):
-                self.info = Info(info.build)
-                self.analysis = Analysis(info.build)
-                self.policy = Policy(info.build)
+    def _get_build_info(self):
+        if self._info is None:
+            try:
+                self._info = SDK.upload.GetBuildInfo(
+                                        app_id=self._app.id,
+                                        build_id=self.id)
+            except VeracodeInvalidArgumentError:
+                raise VeracodeBuildError(
+                        'The application does not have any builds.')
+
+    @property
+    def info(self):
+        self._get_build_info()
+        return Info(self._info.build)
+
+    @property
+    def analysis(self):
+        self._get_build_info()
+        return Analysis(self._info.build)
+
+    @property
+    def policy(self):
+        self._get_build_info()
+        return Policy(self._info.build)
 
     @property
     def name(self):
@@ -202,7 +217,7 @@ class Report(object):
     def __repr__(self):
         if not hasattr(self, 'sandbox_name'):
             self.sandbox_name = None
-        return ("<Veracode Report: application='{}', sandbox='{}',"
+        return ("<Veracode Report: application='{}', sandbox='{}', "
                 "build='{}', flaws={}>".format(
                      self.app_name, self.sandbox_name,
                      self._build.version, self.total_flaws))

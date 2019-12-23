@@ -24,7 +24,7 @@ class Application(object):
             return NewApplication()
 
     @classmethod
-    def list(self):
+    def list(self, name_only=True):
         """ Returns a list of applications for the current account
 
         >>> apps = Application.list()
@@ -32,7 +32,9 @@ class Application(object):
         True
         """
         apps = SDK.upload.GetAppList()
-        return [app.app_name for app in apps.app]
+        if name_only:
+            return [app.app_name for app in apps.app]
+        return [ExistingApplication(app) for app in apps.app]
 
 
 class NewApplication(object):
@@ -336,12 +338,15 @@ class ExistingApplication(object):
         else:
             if isinstance(obj, basestring):
                 self._build = self._get_build_by_name(obj)
-            if isinstance(obj, build.NewBuild):
-                new_build = SDK.upload.CreateBuild(
+
+            elif isinstance(obj, build.NewBuild):
+                try:
+                    self._build = self._get_build_by_name(obj.version)
+                except:
+                    new_build = SDK.upload.CreateBuild(
                             version=obj.version,
                             app_id=self.id,
                             sandbox_id=self.sandbox.id)
-
-            self._build = build.NewBuild(app=self, obj=new_build)
+                    self._build = build.NewBuild(app=self, obj=new_build)
         self._builds = []
 

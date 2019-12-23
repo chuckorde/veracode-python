@@ -17,7 +17,10 @@ install_requires = [
     'Click>=7.0',
 ]
 keywords = []
-entry_points = {'console_scripts': ['veracode-cli=veracode.cli:main']}
+entry_points = {'console_scripts': [
+    'veracode-cli=veracode.old:main',
+    'veracode=veracode.cli.cli:main'
+    ]}
 python_requires='>= 3.5'
 
 author = 'Chuck Orde'
