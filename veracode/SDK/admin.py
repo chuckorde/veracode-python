@@ -2,8 +2,8 @@ from veracode.SDK.core import Base
 
 class DeleteUser(Base):
     """ class: veracode.SDK.admin.DeleteUser
-    
-        params: 
+
+        params:
 			username: required
 			custom_id: optional
 
@@ -13,20 +13,20 @@ class DeleteUser(Base):
 				username,
 				custom_id=None,
         ):
-        
+
         super(DeleteUser, self).__init__(
             module='admin',
             cls='DeleteUser',
-            fn='get', 
+            fn='get',
             args={
 				'username':username,
 				'custom_id':custom_id,
             })
-    
+
 class UpdateUser(Base):
     """ class: veracode.SDK.admin.UpdateUser
-    
-        params: 
+
+        params:
 			username: required
 			teams: optional
 			roles: optional
@@ -80,11 +80,11 @@ class UpdateUser(Base):
 				custom_five=None,
 				allowed_ip_addresses=None,
         ):
-        
+
         super(UpdateUser, self).__init__(
             module='admin',
             cls='UpdateUser',
-            fn='get', 
+            fn='get',
             args={
 				'username':username,
 				'teams':teams,
@@ -111,11 +111,11 @@ class UpdateUser(Base):
 				'custom_five':custom_five,
 				'allowed_ip_addresses':allowed_ip_addresses,
             })
-    
+
 class GetTrackList(Base):
     """ class: veracode.SDK.admin.GetTrackList
-    
-        params: 
+
+        params:
 
 
         returns: A python object that represents the returned API data.
@@ -123,19 +123,19 @@ class GetTrackList(Base):
     def __init__(self,
 
         ):
-        
+
         super(GetTrackList, self).__init__(
             module='admin',
             cls='GetTrackList',
-            fn='get', 
+            fn='get',
             args={
 
             })
-    
+
 class GetMaintenanceScheduleInfo(Base):
     """ class: veracode.SDK.admin.GetMaintenanceScheduleInfo
-    
-        params: 
+
+        params:
 
 
         returns: A python object that represents the returned API data.
@@ -143,19 +143,19 @@ class GetMaintenanceScheduleInfo(Base):
     def __init__(self,
 
         ):
-        
+
         super(GetMaintenanceScheduleInfo, self).__init__(
             module='admin',
             cls='GetMaintenanceScheduleInfo',
-            fn='get', 
+            fn='get',
             args={
 
             })
-    
+
 class GetTeamList(Base):
     """ class: veracode.SDK.admin.GetTeamList
-    
-        params: 
+
+        params:
 
 
         returns: A python object that represents the returned API data.
@@ -163,19 +163,19 @@ class GetTeamList(Base):
     def __init__(self,
 
         ):
-        
+
         super(GetTeamList, self).__init__(
             module='admin',
             cls='GetTeamList',
-            fn='get', 
+            fn='get',
             args={
 
             })
-    
+
 class GetUserInfo(Base):
     """ class: veracode.SDK.admin.GetUserInfo
-    
-        params: 
+
+        params:
 			username: required
 			custom_id: optional
 
@@ -185,20 +185,20 @@ class GetUserInfo(Base):
 				username,
 				custom_id=None,
         ):
-        
+
         super(GetUserInfo, self).__init__(
             module='admin',
             cls='GetUserInfo',
-            fn='get', 
+            fn='get',
             args={
 				'username':username,
 				'custom_id':custom_id,
             })
-    
+
 class DeleteTeam(Base):
     """ class: veracode.SDK.admin.DeleteTeam
-    
-        params: 
+
+        params:
 			team_id: required
 
         returns: A python object that represents the returned API data.
@@ -206,19 +206,19 @@ class DeleteTeam(Base):
     def __init__(self,
 				team_id,
         ):
-        
+
         super(DeleteTeam, self).__init__(
             module='admin',
             cls='DeleteTeam',
-            fn='get', 
+            fn='get',
             args={
 				'team_id':team_id,
             })
-    
+
 class CreateUser(Base):
     """ class: veracode.SDK.admin.CreateUser
-    
-        params: 
+
+        params:
 			last_name: required
 			first_name: required
 			email_address: required
@@ -246,11 +246,11 @@ class CreateUser(Base):
 				is_saml_user=None,
 				custom_id=None,
         ):
-        
+
         super(CreateUser, self).__init__(
             module='admin',
             cls='CreateUser',
-            fn='get', 
+            fn='get',
             args={
 				'last_name':last_name,
 				'first_name':first_name,
@@ -264,14 +264,14 @@ class CreateUser(Base):
 				'is_saml_user':is_saml_user,
 				'custom_id':custom_id,
             })
-    
+
 class GetUserList(Base):
     """ class: veracode.SDK.admin.GetUserList
-    
-        params: 
-			last_name: required
-			first_name: required
-			email_address: required
+
+        params:
+			last_name: optional
+			first_name: optional
+			email_address: optional
 			teams: optional
 			roles: optional
 			requires_token: optional
@@ -294,9 +294,9 @@ class GetUserList(Base):
         returns: A python object that represents the returned API data.
     """
     def __init__(self,
-				last_name,
-				first_name,
-				email_address,
+				last_name=None,
+				first_name=None,
+				email_address=None,
 				teams=None,
 				roles=None,
 				requires_token=None,
@@ -316,11 +316,11 @@ class GetUserList(Base):
 				custom_four=None,
 				custom_five=None,
         ):
-        
+
         super(GetUserList, self).__init__(
             module='admin',
             cls='GetUserList',
-            fn='get', 
+            fn='get',
             args={
 				'last_name':last_name,
 				'first_name':first_name,
@@ -344,11 +344,11 @@ class GetUserList(Base):
 				'custom_four':custom_four,
 				'custom_five':custom_five,
             })
-    
+
 class GetTeamInfo(Base):
     """ class: veracode.SDK.admin.GetTeamInfo
-    
-        params: 
+
+        params:
 			team_id: required
 			include_users: optional
 			include_applications: optional
@@ -360,21 +360,21 @@ class GetTeamInfo(Base):
 				include_users=None,
 				include_applications=None,
         ):
-        
+
         super(GetTeamInfo, self).__init__(
             module='admin',
             cls='GetTeamInfo',
-            fn='get', 
+            fn='get',
             args={
 				'team_id':team_id,
 				'include_users':include_users,
 				'include_applications':include_applications,
             })
-    
+
 class GetCurricumList(Base):
     """ class: veracode.SDK.admin.GetCurricumList
-    
-        params: 
+
+        params:
 
 
         returns: A python object that represents the returned API data.
@@ -382,19 +382,19 @@ class GetCurricumList(Base):
     def __init__(self,
 
         ):
-        
+
         super(GetCurricumList, self).__init__(
             module='admin',
             cls='GetCurricumList',
-            fn='get', 
+            fn='get',
             args={
 
             })
-    
+
 class CreateTeam(Base):
     """ class: veracode.SDK.admin.CreateTeam
-    
-        params: 
+
+        params:
 			team_name: optional
 			members: optional
 
@@ -404,20 +404,20 @@ class CreateTeam(Base):
 				team_name=None,
 				members=None,
         ):
-        
+
         super(CreateTeam, self).__init__(
             module='admin',
             cls='CreateTeam',
-            fn='get', 
+            fn='get',
             args={
 				'team_name':team_name,
 				'members':members,
             })
-    
+
 class UpdateTeam(Base):
     """ class: veracode.SDK.admin.UpdateTeam
-    
-        params: 
+
+        params:
 			team_id: required
 			members: required
 			team_name: optional
@@ -429,14 +429,14 @@ class UpdateTeam(Base):
 				members,
 				team_name=None,
         ):
-        
+
         super(UpdateTeam, self).__init__(
             module='admin',
             cls='UpdateTeam',
-            fn='get', 
+            fn='get',
             args={
 				'team_id':team_id,
 				'members':members,
 				'team_name':team_name,
             })
-    
+
