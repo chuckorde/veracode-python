@@ -1,7 +1,9 @@
 import click
 import sys
+import time
 from veracode.application import Application
 from veracode.sandbox import Sandbox
+from veracode.build import Build
 from veracode.utils.report import display
 
 @click.group()
@@ -70,6 +72,35 @@ def update(name, rename=None, criticality=None):
 
 
 @app.command()
-def scan():
-    click.echo('scan')
+@click.option('--app', '-a', required=True,
+        help='Name of the application.')
+@click.option('--files', '-f', required=True,
+        help='Files to upload.')
+@click.option('--name', '-n',
+        help='Name of the new scan.')
+@click.option('--sandbox', '-s',
+        help='Name of the sandbox.')
+@click.option('--timeout', '-t', type=int,
+        help='Timeout in minutes for scan results.')
+def scan(app, files, name=None, sandbox=None, timeout=None):
+    app = Application(app)
+    app.sandbox = sandbox
+    build = Build()
+    build.name = name
+    app.build = build
+    app.build.upload([files])
+    app.build.scan()
+
+    if timeout:
+        for w in range(timeout):
+            time.sleep(60)
+            if app.build.analysis.status == 'Results Ready':
+                click.echo('Veracode Security Policy: {}'.format(
+                        app.build.report.policy_rules_status))
+                return 'Pass' in app.build.report.policy_rules_status
+            app = Application(app.name, sandbox=sandbox, build=name)
+            click.echo('Scan status: {}'.format(app.build.analysis.status))
+        click.echo('Scan timeout after {} minutes'.format(timeout))
+        return False
+
 
