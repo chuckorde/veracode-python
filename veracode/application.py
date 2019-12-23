@@ -24,7 +24,7 @@ class Application(object):
             return NewApplication()
 
     @classmethod
-    def list(self, name_only=True):
+    def list(self, id=False):
         """ Returns a list of applications for the current account
 
         >>> apps = Application.list()
@@ -32,9 +32,9 @@ class Application(object):
         True
         """
         apps = SDK.upload.GetAppList()
-        if name_only:
-            return [app.app_name for app in apps.app]
-        return [ExistingApplication(app) for app in apps.app]
+        if id:
+            return [(app.app_id, app.app_name) for app in apps.app]
+        return [app.app_name for app in apps.app]
 
 
 class NewApplication(object):
@@ -48,6 +48,7 @@ class NewApplication(object):
     True
     """
     def __init__(self):
+        # TODO: Properties class!
         self.id = None
         self.name = None
         self.vendor_id = None

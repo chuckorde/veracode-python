@@ -2,6 +2,7 @@ import click
 import sys
 from veracode.application import Application
 from veracode.sandbox import Sandbox
+from tabulate import tabulate
 
 @click.group()
 def app():
@@ -9,9 +10,11 @@ def app():
 
 
 @app.command()
-def list():
-    for app in Application.list():
-        click.echo(app)
+@click.option('--format', '-f',
+        help='Show app id and app name.')
+def list(format='simple'):
+    headers = ['App ID', 'App Name']
+    click.echo(tabulate(Application.list(id=True), headers=headers, tablefmt=format))
 
 
 @app.command()
