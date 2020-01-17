@@ -3,8 +3,9 @@ from .app import commands as app
 from .sandbox import commands as sandbox
 from .user import commands as user
 from .report import commands as report
-from veracode.log import veracode_logger
-logger = veracode_logger('veracode')
+
+# import logging
+# logger = logging.getLogger('veracode')
 
 @click.group()
 def main():

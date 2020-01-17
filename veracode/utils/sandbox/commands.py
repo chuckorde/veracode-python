@@ -1,6 +1,6 @@
 import click
 
-@click.group()
+@click.group(help='Perform actions on an application sandbox.')
 def sandbox():
     pass
 

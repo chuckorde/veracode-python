@@ -52,7 +52,6 @@ class NewBuild(Properties):
         self._modules = []
 
         if obj:
-            self.obj = obj
             if hasattr(obj, 'build'):
                 self.version = obj.build.version
 

@@ -76,7 +76,8 @@ class NewSandbox(object):
             self.customfield = obj.customfield
 
     def __repr__(self):
-        return "<Veracode Sandbox: name='{}', id={}>".format(self.name, self.id)
+        return "<Veracode Sandbox: name='{}', id={}>".format(
+                self.name, self.id)
 
     def __bool__(self):
         return self.name is not None

@@ -73,11 +73,6 @@ SCA Test: # run SCA on any branch
 
     script:
         - curl -sSL https://download.sourceclear.com/ci.sh | bash
-    #       | tee sca_results.txt
-    #
-    # artifacts:
-    #     paths:
-    #         - sca_results.txt
 
     only:
         - dev
