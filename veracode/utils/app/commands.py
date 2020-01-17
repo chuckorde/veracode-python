@@ -6,12 +6,12 @@ from veracode.sandbox import Sandbox
 from veracode.build import Build
 from veracode.utils.report import display
 
-@click.group()
+@click.group(help='Perform actions on an application.')
 def app():
     pass
 
 
-@app.command()
+@app.command(help='List applications.')
 @click.option('--format', '-f',
         help='Output format.')
 def list(format='simple'):
@@ -20,10 +20,12 @@ def list(format='simple'):
     display(data=data, headers=headers, format=format)
 
 
-@app.command()
-@click.option('--name', '-n', required=True)
-@click.option('--criticality', '-c', required=True, type=click.Choice(
-    [ 'Very High', 'High', 'Medium', 'Low', 'Very Low' ]))
+@app.command(help='Create a new Application.')
+@click.option('--name', '-n', required=True,
+        help='Name of application to create.')
+@click.option('--criticality', '-c', required=True,
+        type=click.Choice(['Very High', 'High', 'Medium', 'Low', 'Very Low']),
+        help='Business criticality of new application.')
 
 @click.option('--sandbox', '-s')
 def create(name, criticality, sandbox=None):
@@ -37,9 +39,9 @@ def create(name, criticality, sandbox=None):
         app.sandbox = sbx
 
 
-@app.command()
+@app.command(help='Delete an existing application.')
 @click.option('--name', '-n', required=True,
-        help='Name of application to update')
+        help='Name of application to update.')
 @click.confirmation_option('--force', '-f',
         help='Suppress prompt before removal.',
         prompt='Are you sure you want to delete this application')
@@ -48,7 +50,7 @@ def delete(name):
     return app.delete()
 
 
-@app.command()
+@app.command(help='Update an existing application.')
 @click.option('--name', '-n', required=True,
         help='Name of application to update.')
 @click.option('--rename', '-r',
@@ -57,7 +59,6 @@ def delete(name):
         [ 'Very High', 'High', 'Medium', 'Low', 'Very Low' ],
         case_sensitive=True), # update app to snake case so we can go -i
         help='New criticality for the application.')
-
 def update(name, rename=None, criticality=None):
     # this isn't the right way to do this, google more
     if not (rename or criticality):
@@ -71,7 +72,7 @@ def update(name, rename=None, criticality=None):
     app.save()
 
 
-@app.command()
+@app.command(help='Launch a new SAST scan.')
 @click.option('--app', '-a', required=True,
         help='Name of the application.')
 @click.option('--files', '-f', required=True,

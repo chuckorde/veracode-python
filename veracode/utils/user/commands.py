@@ -2,11 +2,11 @@ import click
 from veracode.user import User
 from veracode.utils.report import display
 
-@click.group()
+@click.group(help='Perform actions on a platform user account.')
 def user():
     pass
 
-@user.command()
+@user.command(help='List users.')
 @click.option('--format', '-f',
         help='Output format.')
 @click.option('--email', '-e',
@@ -21,7 +21,7 @@ def list(email=None, first_name=None, last_name=None, format='simple'):
                      last_name=last_name)
     display(data=data, headers=headers, format=format)
 
-@user.command()
+@user.command(help='Create a new user.')
 @click.option('--email', '-e', required=True,
         help="The new user's email address.")
 @click.option('--first-name', '-n', required=True,
@@ -41,14 +41,14 @@ def create(email, first_name, last_name, roles, teams):
     user.teams = [t.strip() for t in teams.split(',')]
     user.save()
 
-@user.command()
+@user.command(help='Delete an existing user.')
 @click.option('--username', '-u', required=True,
         help="The username of the user to delete")
 def delete(username):
     user = User(username=username)
     user.delete()
 
-@user.command()
+@user.command(help='Update an existing user.')
 @click.option('--username', '-u', required=True,
         help="The existing user's username.")
 @click.option('--first-name', '-n',
@@ -65,8 +65,8 @@ def update(username, first_name=None, last_name=None, roles=None, teams=None):
     user.first_name = first_name
     user.last_name = last_name
     if roles:
-        user.roles = roles.split(',')
+        user.roles = [r.strip() for r in roles.split(',')]
     if teams:
-        user.teams = teams.split(',')
+        user.teams = [t.strip() for t in teams.split(',')]
     user.save()
 

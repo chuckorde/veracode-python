@@ -19,7 +19,6 @@ install_requires = [
 ]
 keywords = []
 entry_points = {'console_scripts': [
-    'veracode-cli=veracode.old:main',
     'veracode=veracode.utils.cli:main'
     ]}
 python_requires='>= 3.5'

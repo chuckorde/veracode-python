@@ -16,6 +16,9 @@ def display(data, headers, format):
                 user_data[header] = d
             json_data.append(user_data)
         click.echo(json.dumps(json_data, indent=4))
+    elif format == 'list':
+        for idx, header in enumerate(headers):
+            click.echo('{0:20} {1}'.format(header, data[0][idx]))
     else:
         click.echo(tabulate(data, headers=headers, tablefmt=format))
 

@@ -73,11 +73,6 @@ SCA Test: # run SCA on any branch
 
     script:
         - curl -sSL https://download.sourceclear.com/ci.sh | bash
-    #       | tee sca_results.txt
-    #
-    # artifacts:
-    #     paths:
-    #         - sca_results.txt
 
     only:
         - dev
@@ -94,15 +89,15 @@ SCA Test: # run SCA on any branch
 #           setup.* LICENSE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
 #         - pip3 install veracode-python
 #
-#         - veracode-cli scan
+#         - veracode app scan
 #             --app="${CI_PROJECT_NAME}"
 #             --name="$(date) - ${CI_COMMIT_SHORT_SHA}"
 #             --sandbox='Development Build'
 #             --files='project.zip'
 #             --timeout=30
 #
-#     only:
-#         - dev
+    only:
+        - dev
 
 ############################## Master Only ####################################
 
@@ -117,7 +112,7 @@ SCA Test: # run SCA on any branch
 #           setup.* LICENSE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
 #         - pip3 install veracode-python
 #
-#         - veracode-cli scan
+#         - veracode app scan
 #             --app="${CI_PROJECT_NAME}"
 #             --name="$(date) - ${CI_COMMIT_SHORT_SHA}"
 #             --files='project.zip'
