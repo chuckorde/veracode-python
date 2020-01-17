@@ -78,48 +78,48 @@ SCA Test: # run SCA on any branch
         - dev
         - master
 
-SAST Sandbox Test: # this only runs on the dev branch, so run a Sandbox scan
-    stage: test
-
-    tags:
-        - python
-
-    script:
-        - zip project.zip
-          setup.* LICENSE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
-        - pip3 install veracode-python
-
-        - veracode app scan
-            --app="${CI_PROJECT_NAME}"
-            --name="$(date) - ${CI_COMMIT_SHORT_SHA}"
-            --sandbox='Development Build'
-            --files='project.zip'
-            --timeout=30
-
+# SAST Sandbox Test: # this only runs on the dev branch, so run a Sandbox scan
+#     stage: test
+#
+#     tags:
+#         - python
+#
+#     script:
+#         - zip project.zip
+#           setup.* LICENSE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
+#         - pip3 install veracode-python
+#
+#         - veracode app scan
+#             --app="${CI_PROJECT_NAME}"
+#             --name="$(date) - ${CI_COMMIT_SHORT_SHA}"
+#             --sandbox='Development Build'
+#             --files='project.zip'
+#             --timeout=30
+#
     only:
         - dev
 
 ############################## Master Only ####################################
 
-SAST Policy Test: # this is on master so run a SAST policy scan
-    stage: test
-
-    tags:
-        - python
-
-    script:
-        - zip project.zip
-          setup.* LICENSE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
-        - pip3 install veracode-python
-
-        - veracode app scan
-            --app="${CI_PROJECT_NAME}"
-            --name="$(date) - ${CI_COMMIT_SHORT_SHA}"
-            --files='project.zip'
-            --timeout=30
-
-    only:
-        - master
+# SAST Policy Test: # this is on master so run a SAST policy scan
+#     stage: test
+#
+#     tags:
+#         - python
+#
+#     script:
+#         - zip project.zip
+#           setup.* LICENSE.txt -r $(echo ${CI_PROJECT_NAME} | cut -d'-' -f1)
+#         - pip3 install veracode-python
+#
+#         - veracode app scan
+#             --app="${CI_PROJECT_NAME}"
+#             --name="$(date) - ${CI_COMMIT_SHORT_SHA}"
+#             --files='project.zip'
+#             --timeout=30
+#
+#     only:
+#         - master
 
 Create Release: # increment version and create release tag
     stage: package
