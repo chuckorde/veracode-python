@@ -3,6 +3,6 @@ __pycache__
 *.ipynb
 *.ipynb_checkpoints/
 *.egg-info/
-
+*.iml
 *.zip
 tools/

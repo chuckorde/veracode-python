@@ -114,7 +114,10 @@ class NewBuild(Properties):
     def delete(self):
         res = SDK.upload.DeleteBuild(app_id=self._app.id,
                 sandbox_id=self._app.sandbox.id)
-        return res.status_code == 200
+        rv = res.status_code == 200
+        if rv and self._app._builds:
+            del self._app._builds[-1]
+        return rv
 
     @property
     def report(self):
