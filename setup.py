@@ -16,6 +16,7 @@ install_requires = [
     'xmltodict>=0.12.0',
     'Click>=7.0',
     'tabulate>=0.8.6',
+    'veracode-api-signing>=19.9.0'
 ]
 keywords = []
 entry_points = {'console_scripts': [
