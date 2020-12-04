@@ -7,8 +7,8 @@ class ThirdPartyReportPDF(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(ThirdPartyReportPDF, self).__init__('thirdpartyreportpdf.do', 4.0)
+    def __init__(self, **kwargs):
+        super(ThirdPartyReportPDF, self).__init__('thirdpartyreportpdf.do', 4.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -22,8 +22,8 @@ class GetAccountCustomFieldList(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetAccountCustomFieldList, self).__init__('getaccountcustomfieldlist.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetAccountCustomFieldList, self).__init__('getaccountcustomfieldlist.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -37,8 +37,8 @@ class DetailedReport(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(DetailedReport, self).__init__('detailedreport.do', 5.0)
+    def __init__(self, **kwargs):
+        super(DetailedReport, self).__init__('detailedreport.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -52,8 +52,8 @@ class GetAppBuilds(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetAppBuilds, self).__init__('getappbuilds.do', 4.0)
+    def __init__(self, **kwargs):
+        super(GetAppBuilds, self).__init__('getappbuilds.do', 4.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -67,8 +67,8 @@ class SummaryReport(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(SummaryReport, self).__init__('summaryreport.do', 4.0)
+    def __init__(self, **kwargs):
+        super(SummaryReport, self).__init__('summaryreport.do', 4.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -82,8 +82,8 @@ class DetailedReportPDF(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(DetailedReportPDF, self).__init__('detailedreportpdf.do', 5.0)
+    def __init__(self, **kwargs):
+        super(DetailedReportPDF, self).__init__('detailedreportpdf.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -97,8 +97,8 @@ class SummaryReportPDF(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(SummaryReportPDF, self).__init__('summaryreportpdf.do', 4.0)
+    def __init__(self, **kwargs):
+        super(SummaryReportPDF, self).__init__('summaryreportpdf.do', 4.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -112,8 +112,8 @@ class GetCallStacks(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetCallStacks, self).__init__('getcallstacks.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetCallStacks, self).__init__('getcallstacks.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
