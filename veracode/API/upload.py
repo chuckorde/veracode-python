@@ -7,8 +7,8 @@ class GetAppList(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetAppList, self).__init__('getapplist.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetAppList, self).__init__('getapplist.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -22,8 +22,8 @@ class UpdateBuild(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(UpdateBuild, self).__init__('updatebuild.do', 5.0)
+    def __init__(self, **kwargs):
+        super(UpdateBuild, self).__init__('updatebuild.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -37,8 +37,8 @@ class DeleteBuild(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(DeleteBuild, self).__init__('deletebuild.do', 5.0)
+    def __init__(self, **kwargs):
+        super(DeleteBuild, self).__init__('deletebuild.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -52,8 +52,8 @@ class GetBuildInfo(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetBuildInfo, self).__init__('getbuildinfo.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetBuildInfo, self).__init__('getbuildinfo.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -67,8 +67,8 @@ class GetAppInfo(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetAppInfo, self).__init__('getappinfo.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetAppInfo, self).__init__('getappinfo.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -82,8 +82,8 @@ class GetPolicyList(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetPolicyList, self).__init__('getpolicylist.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetPolicyList, self).__init__('getpolicylist.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -97,8 +97,8 @@ class BeginPrescan(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(BeginPrescan, self).__init__('beginprescan.do', 5.0)
+    def __init__(self, **kwargs):
+        super(BeginPrescan, self).__init__('beginprescan.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -112,8 +112,8 @@ class UploadLargeFile(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(UploadLargeFile, self).__init__('uploadlargefile.do', 5.0)
+    def __init__(self, **kwargs):
+        super(UploadLargeFile, self).__init__('uploadlargefile.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -127,8 +127,8 @@ class GetVendorList(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetVendorList, self).__init__('getvendorlist.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetVendorList, self).__init__('getvendorlist.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -142,8 +142,8 @@ class UpdateApp(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(UpdateApp, self).__init__('updateapp.do', 5.0)
+    def __init__(self, **kwargs):
+        super(UpdateApp, self).__init__('updateapp.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -157,8 +157,8 @@ class GetFileList(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetFileList, self).__init__('getfilelist.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetFileList, self).__init__('getfilelist.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -172,8 +172,8 @@ class CreateBuild(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(CreateBuild, self).__init__('createbuild.do', 5.0)
+    def __init__(self, **kwargs):
+        super(CreateBuild, self).__init__('createbuild.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -187,8 +187,8 @@ class GetPreScanResults(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetPreScanResults, self).__init__('getprescanresults.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetPreScanResults, self).__init__('getprescanresults.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -202,8 +202,8 @@ class CreateApp(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(CreateApp, self).__init__('createapp.do', 5.0)
+    def __init__(self, **kwargs):
+        super(CreateApp, self).__init__('createapp.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -217,8 +217,8 @@ class GetBuildList(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetBuildList, self).__init__('getbuildlist.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetBuildList, self).__init__('getbuildlist.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -232,8 +232,8 @@ class UploadFile(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(UploadFile, self).__init__('uploadfile.do', 5.0)
+    def __init__(self, **kwargs):
+        super(UploadFile, self).__init__('uploadfile.do', 5.0, **kwargs)
 
     @classmethod
     def post(self, **args):
@@ -249,8 +249,8 @@ class BeginScan(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(BeginScan, self).__init__('beginscan.do', 5.0)
+    def __init__(self, **kwargs):
+        super(BeginScan, self).__init__('beginscan.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -263,8 +263,8 @@ class RemoveFile(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(RemoveFile, self).__init__('removefile.do', 5.0)
+    def __init__(self, **kwargs):
+        super(RemoveFile, self).__init__('removefile.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -278,8 +278,8 @@ class DeleteApp(REST):
 
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(DeleteApp, self).__init__('deleteapp.do', 5.0)
+    def __init__(self, **kwargs):
+        super(DeleteApp, self).__init__('deleteapp.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):

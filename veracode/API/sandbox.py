@@ -7,8 +7,8 @@ class UpdateSandbox(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(UpdateSandbox, self).__init__('updatesandbox.do', 5.0)
+    def __init__(self, **kwargs):
+        super(UpdateSandbox, self).__init__('updatesandbox.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -22,8 +22,8 @@ class CreateSandbox(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(CreateSandbox, self).__init__('createsandbox.do', 5.0)
+    def __init__(self, **kwargs):
+        super(CreateSandbox, self).__init__('createsandbox.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -37,8 +37,8 @@ class GetSandboxList(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetSandboxList, self).__init__('getsandboxlist.do', 5.0)
+    def __init__(self, **kwargs):
+        super(GetSandboxList, self).__init__('getsandboxlist.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -52,8 +52,8 @@ class PromoteSandbox(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(PromoteSandbox, self).__init__('promotesandbox.do', 5.0)
+    def __init__(self, **kwargs):
+        super(PromoteSandbox, self).__init__('promotesandbox.do', 5.0, **kwargs)
 
     @classmethod
     def get(self, **args):

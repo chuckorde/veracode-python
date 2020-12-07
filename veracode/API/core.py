@@ -34,7 +34,12 @@ class REST(object):
         request = requests.Request(method, self.__server, params=query,
                 files=file, auth=RequestsAuthPluginVeracodeHMAC())
         prepared_request = request.prepare()
-        res = session.send(prepared_request)
+
+        # Merge environment settings into session
+        # This allows things like, REQUESTS_CA_BUNDLE, to be used
+        settings = session.merge_environment_settings(
+                prepared_request.url, {}, None, None, None)
+        res = session.send(prepared_request, **settings)
 
         logger.debug('{}, {}, COMPLETED'.format(self.__end_point, query))
         logger.info('request URL: {}'.format(res.request.path_url))

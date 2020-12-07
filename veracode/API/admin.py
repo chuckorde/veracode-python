@@ -7,8 +7,8 @@ class DeleteUser(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(DeleteUser, self).__init__('deleteuser.do', 3.0)
+    def __init__(self, **kwargs):
+        super(DeleteUser, self).__init__('deleteuser.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -22,8 +22,8 @@ class UpdateUser(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(UpdateUser, self).__init__('updateuser.do', 3.0)
+    def __init__(self, **kwargs):
+        super(UpdateUser, self).__init__('updateuser.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -37,8 +37,8 @@ class GetTrackList(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetTrackList, self).__init__('gettracklist.do', 3.0)
+    def __init__(self, **kwargs):
+        super(GetTrackList, self).__init__('gettracklist.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -52,8 +52,8 @@ class GetMaintenanceScheduleInfo(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetMaintenanceScheduleInfo, self).__init__('getmaintenancescheduleinfo.do', 3.0)
+    def __init__(self, **kwargs):
+        super(GetMaintenanceScheduleInfo, self).__init__('getmaintenancescheduleinfo.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -67,8 +67,8 @@ class GetTeamList(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetTeamList, self).__init__('getteamlist.do', 3.0)
+    def __init__(self, **kwargs):
+        super(GetTeamList, self).__init__('getteamlist.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -82,8 +82,8 @@ class GetUserInfo(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetUserInfo, self).__init__('getuserinfo.do', 3.0)
+    def __init__(self, **kwargs):
+        super(GetUserInfo, self).__init__('getuserinfo.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -97,8 +97,8 @@ class DeleteTeam(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(DeleteTeam, self).__init__('deleteteam.do', 3.0)
+    def __init__(self, **kwargs):
+        super(DeleteTeam, self).__init__('deleteteam.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -112,8 +112,8 @@ class CreateUser(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(CreateUser, self).__init__('createuser.do', 3.0)
+    def __init__(self, **kwargs):
+        super(CreateUser, self).__init__('createuser.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -127,8 +127,8 @@ class GetUserList(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetUserList, self).__init__('getuserlist.do', 3.0)
+    def __init__(self, **kwargs):
+        super(GetUserList, self).__init__('getuserlist.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -142,8 +142,8 @@ class GetTeamInfo(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetTeamInfo, self).__init__('getteaminfo.do', 3.0)
+    def __init__(self, **kwargs):
+        super(GetTeamInfo, self).__init__('getteaminfo.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -157,8 +157,8 @@ class GetCurricumList(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetCurricumList, self).__init__('getcurricumlist.do', 3.0)
+    def __init__(self, **kwargs):
+        super(GetCurricumList, self).__init__('getcurricumlist.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -172,8 +172,8 @@ class CreateTeam(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(CreateTeam, self).__init__('createteam.do', 3.0)
+    def __init__(self, **kwargs):
+        super(CreateTeam, self).__init__('createteam.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):
@@ -187,8 +187,8 @@ class UpdateTeam(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(UpdateTeam, self).__init__('updateteam.do', 3.0)
+    def __init__(self, **kwargs):
+        super(UpdateTeam, self).__init__('updateteam.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):

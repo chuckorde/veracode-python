@@ -7,8 +7,8 @@ class GenerateFlawReport(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GenerateFlawReport, self).__init__('generateflawreport.do', 3.0)
+    def __init__(self, **kwargs):
+        super(GenerateFlawReport, self).__init__('generateflawreport.do', 3.0, **kwargs)
 
     @classmethod
     def get(self, **args):

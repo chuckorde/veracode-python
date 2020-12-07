@@ -7,8 +7,8 @@ class GetMinigationInfo(REST):
         
         returns: XML data from veracode API
     """
-    def __init__(self, args=None):
-        super(GetMinigationInfo, self).__init__('getminigationinfo.do', None)
+    def __init__(self, **kwargs):
+        super(GetMinigationInfo, self).__init__('getminigationinfo.do', None, **kwargs)
 
     @classmethod
     def get(self, **args):
