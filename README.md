@@ -1,3 +1,5 @@
+# This is not an official Veracode repo.  I no longer work at Veracode and this project is unmaintained.
+
 # Veracode API wrapper
 
 ## A python wrapper for communicating with the [Veracode](https://www.veracode.com) APIs.
